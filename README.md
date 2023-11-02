@@ -6,7 +6,7 @@ Play truco in truco.com, the best card game to play 1v1, 2v2 or 3v3
 
 you will first need to `npm install` all dependencies of both the backend and frontend..
 
-```raw
+```shell
 cd ./truco-front/
 npm run build # -> this will generate a dist folder in the current dir
 # or npm run dev if you want to run the frontend only
