@@ -4,8 +4,6 @@ Play truco in truco.com, the best card game to play 1v1, 2v2 or 3v3
 
 ## How to run locally (linux)
 
-you will first need to `npm install` all dependencies of both the backend and frontend..
-
 ```shell
 ./run-locally.sh
 ```
