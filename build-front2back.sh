@@ -16,8 +16,9 @@ if [ $? -eq 0 ]; then
     # Navigate back to the original directory
     cd ..
 
+    rm -rf ./truco-back/src/public/
     # Copy the contents of frontend/dist to backend/src/public
-    cp -r ./truco-front/dist/* ./truco-back/src/public/
+    cp -r ./truco-front/dist/ ./truco-back/src/public/
 
     echo "Copy completed."
 else

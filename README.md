@@ -2,6 +2,10 @@
 
 Play truco in truco.com, the best card game to play 1v1, 2v2 or 3v3
 
+## READ the [contribution standards](./CONTRIBS.md)
+
+The contribution standards are important to keep an organized and speedy workflow!
+
 ## How to run locally (linux)
 
 ```shell
