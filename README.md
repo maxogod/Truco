@@ -34,11 +34,8 @@ Play truco on truco.com, the best card game to play 1v1
 ```
 
 ## How to run with docker (recommended)
-
+remove sudo if running on windows
 ```shell
-./build-front2back.sh
-
-cd ./truco-back/
 
 sudo docker build -t truco-img .
 sudo docker run -p 8080:8080 --name truco-app truco-img
