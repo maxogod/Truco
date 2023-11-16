@@ -70,9 +70,9 @@ sudo docker start truco-app
 
 Thanks for passing by!
 
-[^1]: https://nodejs.org/en/about
-[^2]: https://expressjs.com/
-[^3]: https://legacy.reactjs.org/
-[^4]: https://tailwindcss.com/
-[^5]: https://www.mongodb.com/basics/mongodb-atlas-tutorial#:~:text=MongoDB%20Atlas%20is%20a%20fully,scale%20MongoDB%20in%20the%20cloud.
-[^6]: https://pusher.com/websockets/
+[^1]: [Nodejs documentation](https://nodejs.org/en/about)
+[^2]: [Expressjs documentation](https://expressjs.com/)
+[^3]: [Reactjs documentation](https://legacy.reactjs.org/)
+[^4]: [Tailwind documentation](https://tailwindcss.com/)
+[^5]: [MongoDB documentation](https://www.mongodb.com/basics/mongodb-atlas-tutorial#:~:text=MongoDB%20Atlas%20is%20a%20fully,scale%20MongoDB%20in%20the%20cloud.)
+[^6]: [Pusher documentation](https://pusher.com/websockets/) 
