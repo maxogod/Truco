@@ -19,12 +19,12 @@ Play truco on truco.com, the best card game to play 1v1
 * React + Tailwind for the frontend
 * MongoDB (MongoAtlas) for the no-sql database
 
-1.**Node**: A asynchronous event-driven JavaScript runtime, Node.js is designed to build scalable network applications₁.
-1.**Express**: Minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications₂.
-1.**React**: A JavaScript library for building user interfaces₃.
-1.**Tailwind**: A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup₄.
-1.**MongoDB**: A fully-managed cloud database that handles all the complexity of deploying, managing, and healing your deployments on the cloud service provider of your choice (AWS , Azure, and GCP)₅.
-1.**Pusher**: Pusher Channels is a hosted WebSockets(helps communication between client and server) solution for building powerful realtime interactive apps₆.
+1. **Node**: A asynchronous event-driven JavaScript runtime, Node.js is designed to build scalable network applications₁.
+1. **Express**: Minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications₂.
+1. **React**: A JavaScript library for building user interfaces₃.
+1. **Tailwind**: A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup₄.
+1. **MongoDB**: A fully-managed cloud database that handles all the complexity of deploying, managing, and healing your deployments on the cloud service provider of your choice (AWS , Azure, and GCP)₅.
+1. **Pusher**: Pusher Channels is a hosted WebSockets(helps communication between client and server) solution for building powerful realtime interactive apps₆.
 
 ## Extra
 
