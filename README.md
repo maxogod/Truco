@@ -37,6 +37,20 @@ Play truco on truco.com, the best card game to play 1v1
 remove sudo if running on windows
 ```shell
 
+optional
+********************************************************************
+#to check if docker is installed (linux)
+docker --version
+
+#to install docker if it isn't installed 
+Linux:
+sudo snap install docker     # version 20.10.24, or
+sudo apt  install docker.io  # version 24.0.5-0ubuntu1~20.04.1
+
+windows:
+https://docs.docker.com/desktop/install/windows-install/
+********************************************************************
+
 sudo docker build -t truco-img .
 sudo docker run -p 8080:8080 --name truco-app truco-img
 
