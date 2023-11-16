@@ -19,6 +19,13 @@ Play truco on truco.com, the best card game to play 1v1
 * React + Tailwind for the frontend
 * MongoDB (MongoAtlas) for the no-sql database
 
+Node: A asynchronous event-driven JavaScript runtime, Node.js is designed to build scalable network applications₁.
+Express: Minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications₂.
+React: A JavaScript library for building user interfaces₃.
+Tailwind: A utility-first CSS framework packed with classes like flex, pt-4, text-center and rotate-90 that can be composed to build any design, directly in your markup₄.
+MongoDB: A fully-managed cloud database that handles all the complexity of deploying, managing, and healing your deployments on the cloud service provider of your choice (AWS , Azure, and GCP)₅.
+Pusher: Pusher Channels is a hosted WebSockets(helps communication between client and server) solution for building powerful realtime interactive apps₆.
+
 ## Extra
 
 ### [Contribution Standards](./docs/CONTRIBS.md)
@@ -62,3 +69,10 @@ sudo docker start truco-app
 ```
 
 Thanks for passing by!
+
+₁https://nodejs.org/en/about
+₂https://expressjs.com/
+₃https://legacy.reactjs.org/
+₄https://tailwindcss.com/
+₅https://www.mongodb.com/basics/mongodb-atlas-tutorial#:~:text=MongoDB%20Atlas%20is%20a%20fully,scale%20MongoDB%20in%20the%20cloud.
+₆https://pusher.com/websockets/
