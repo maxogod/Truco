@@ -8,7 +8,7 @@ Truco is a card game played between two players (or in pairs) with a spanish dec
 * **Envido**: the players compare two cards of the same suits.
 * **Truco**: the cards are compared individually.
 
-After the **Flor** and **Envido**, the game is divided in three rounds. In each round, each player choose one of the cards in their hand to compete agains the card of the other player. The winner is the one whose wins two rounds. The players can make a bet called "**Truco**" any time in the game. If there is no bet one point goes to the winner of the round. The players can raise the bet only one time in this order:
+After the **Flor** and **Envido**, the game is divided in three rounds. In each round, each player choose one of the cards in their hand to compete agains the card of the other player. The winner is the one who wins two rounds out of three. The players can make a bet called "**Truco**" any time in the game. If there is no bet one point goes to the winner of the round. The players can raise the bet only one time in this order:
 
 * **Truco**: 2 points.
 * **Retruco**: 3 points.
@@ -45,9 +45,11 @@ A player whose three cards are of the same suit is said to have a Flor (flower),
 
 ![trucoCards](https://github.com/maxogod/Truco/assets/85034225/627d81df-2c5d-404a-9927-695783b62e58)
 
+### Sources
 
-https://en.wikipedia.org/wiki/Truco.
-https://www.pagat.com/put/truco_ar.html
-https://turismo.buenosaires.gob.ar/en/article/get-tricks-%E2%80%9Ctruco%E2%80%9D
-https://www.mundigames.com/multiplayer/argentinian-truco/rules/
+[wikipedia truco](https://en.wikipedia.org/wiki/Truco)
+[argentinian truco rules](https://www.pagat.com/put/truco_ar.html)
+[description truco in city Buenos Aires page](https://turismo.buenosaires.gob.ar/en/article/get-tricks-%E2%80%9Ctruco%E2%80%9D)
+[rules truco in a online game](https://www.mundigames.com/multiplayer/argentinian-truco/rules/)
+
 
