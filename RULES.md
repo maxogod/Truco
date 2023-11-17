@@ -10,21 +10,19 @@ Truco is a card game played between two players (or in pairs) with a spanish dec
 
 After the **Flor** and **Envido**, the game is divided in three rounds. In each round, each player choose one of the cards in their hand to compete agains the card of the other player. The winner is the one whose wins two rounds. The players can make a bet called "**Truco**" any time in the game. If there is no bet one point goes to the winner of the round. The players can raise the bet only one time in this order:
 
-    * **Truco**: 2 points.
-    * **Retruco**: 3 points.
-    * **Quiero vale 4**: 4 points.
+* **Truco**: 2 points.
+* **Retruco**: 3 points.
+* **Quiero vale 4**: 4 points.
 
 Players can accept, reject or raise the bet:
     
-    * **accept**: the points in dispute go to the winner of the round.
-    * **reject**: the player loses the round and the points go to the other player.
-    * **raise**: the player can raise the bet in this sequence.
+* **accept**: the points in dispute go to the winner of the round.
+* **reject**: the player loses the round and the points go to the other player.
+* **raise**: the player can raise the bet in this sequence.
     
-    ```
+    
         no bet -> truco -> retruco -> quiero vale 4
-    ```
-
-
+    
 ## Envido
 
 At the beginning of the round, a player in his turn can call for **envido** then an option 'll  apear to the other player to accept this bet in any of these ways:
@@ -32,18 +30,15 @@ At the beginning of the round, a player in his turn can call for **envido** then
    * **Quiero**: accepts to take the bet.
    * **Envido**: raise the bet by 2 points.
    * **Real envido**: raise the bet by 3 points.
-   * **Falta envido**: if the loser of the bet scores less than 15 points (or is in the "malas" half), the winner will get as many points as the loser needs to get to 15 points, and if the loser of the bet scores more than 15 points, the winner gets as many points as the loser needs to get to 30 points.
-   * **No quiero** - refuses to take the last bet. Thus, the challenger team/player earns 1 point if no one raises, and the number of points that were accepted, plus the refuse point (e.g. Envido-Real Envido-No quiero is 3 worth points, and Envido-Envido-Real Envido-No quiero is worth 5 points)[^1].
+   * **No quiero** - refuses to take the last bet. 
 
 ## Flor 
 
 A player whose three cards are of the same suit is said to have a Flor (flower), and must announce this, saying "flor". If more than one person has a Flor, and all of these are simply announced by saying "flor", the team of the person with the best Flor scores 3 points for each Flor that was announced.
 
-    * **Flor**:
-    * **Contra Flor**:
-    * **Contra Flor al resto**:
-    * **Contra Flor quiero**:
-    * **Contra Flor me achico**:
+* **Flor**: 3 points.
+* **Contra Flor**: if it is accepted 6 points to the winner, else 4 points.
+
 
 ## Card Values
 
