@@ -27,6 +27,12 @@ Play truco on truco.com, the best card game to play 1v1
 
 ### [Game Rules](./docs/RULES.md)
 
+## Access point
+```
+http://localhost:3050/  // front-end
+http://localhost:3050/api //back-end
+```
+
 ## How to run locally (linux)
 
 ```shell
@@ -48,3 +54,5 @@ sudo docker start truco-app
 ```
 
 Thanks for passing by!
+
+

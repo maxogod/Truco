@@ -4,6 +4,6 @@ import path from "path";
 const app = express();
 
 app.get("/api", (req, res) => {
-    res.send("Hello World2");
+    res.send("Hello World");
 })
 export default app;
