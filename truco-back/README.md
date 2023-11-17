@@ -3,7 +3,8 @@
 ## How to run
 
 ```shell
-npm run build # compile code 
+npm run build # compile code
+npm run build-windows # For windows
 
 npm run start # run compiled prod-ready server
 
