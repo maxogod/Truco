@@ -47,9 +47,9 @@ A player whose three cards are of the same suit is said to have a Flor (flower),
 
 ### Sources
 
-[wikipedia truco](https://en.wikipedia.org/wiki/Truco)
-[argentinian truco rules](https://www.pagat.com/put/truco_ar.html)
-[description truco in city Buenos Aires page](https://turismo.buenosaires.gob.ar/en/article/get-tricks-%E2%80%9Ctruco%E2%80%9D)
-[rules truco in a online game](https://www.mundigames.com/multiplayer/argentinian-truco/rules/)
+1. [wikipedia truco](https://en.wikipedia.org/wiki/Truco)
+1. [argentinian truco rules](https://www.pagat.com/put/truco_ar.html)
+1. [description truco in city Buenos Aires page](https://turismo.buenosaires.gob.ar/en/article/get-tricks-%E2%80%9Ctruco%E2%80%9D)
+1. [rules truco in a online game](https://www.mundigames.com/multiplayer/argentinian-truco/rules/)
 
 
