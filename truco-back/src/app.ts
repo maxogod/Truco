@@ -3,10 +3,7 @@ import path from "path";
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use("/", (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/index.html'));
+app.get("/api", (req, res) => {
+    res.send("Hello World2");
 })
-
 export default app;
