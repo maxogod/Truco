@@ -10,7 +10,7 @@ Truco is a card game played between two players (or in pairs) with a spanish dec
 
 After the **Flor** and **Envido**, the game is divided in three rounds. In each round, each player chooses one of the cards in their hand to compete against the card of the other player. The winner is the one who wins two rounds out of three. 
 
-The player who first reaches 30 points in total wins the match.
+The player who first reaches 30 points(or 15 points depending the variant of the game) in total wins the match.
 
 ## Truco
 
@@ -18,7 +18,7 @@ The players can make a bet called "**Truco**" any time in the game after envido.
 
 * **Truco**: 2 points.
 * **Retruco**: 3 points.
-* **Quiero vale 4**: 4 points.
+* **Vale 4**: 4 points.
 
 Players can accept, reject or raise the bet:
     
