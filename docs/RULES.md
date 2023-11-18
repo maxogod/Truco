@@ -14,7 +14,7 @@ The player who first reaches 30 points in total wins the match.
 
 ## Truco
 
-The players can make a bet called "**Truco**" any time in the game. If there is no bet one point goes to the winner of the round. The players can raise the bet only one time in this order:
+The players can make a bet called "**Truco**" any time in the game after envido. If **Truco** is called, the players lose the chance to call **Envido**. If there is no bet one point goes to the winner of the round. The players can raise the bet only one time in this order:
 
 * **Truco**: 2 points.
 * **Retruco**: 3 points.
