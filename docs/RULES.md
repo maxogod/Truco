@@ -8,7 +8,9 @@ Truco is a card game played between two players (or in pairs) with a spanish dec
 * **Envido**: the players compare two cards of the same suits.
 * **Truco**: the cards are compared individually.
 
-After the **Flor** and **Envido**, the game is divided in three rounds. In each round, each player choose one of the cards in their hand to compete agains the card of the other player. The winner is the one who wins two rounds out of three. 
+After the **Flor** and **Envido**, the game is divided in three rounds. In each round, each player chooses one of the cards in their hand to compete against the card of the other player. The winner is the one who wins two rounds out of three. 
+
+The player who first reaches 30 points in total wins the match.
 
 ## Truco
 
@@ -29,7 +31,7 @@ Players can accept, reject or raise the bet:
     
 ## Envido
 
-At the beginning of the round, a player in his turn can call for **envido** then an option 'll  apear to the other player to accept this bet in any of these ways:
+At the beginning of the round, a player in his turn can call for **envido** then an option will apear for the other player to respond to this bet in any of these ways:
 
    * **Quiero**: accepts to take the bet.
    * **Envido**: raise the bet by 2 points.
@@ -37,7 +39,7 @@ At the beginning of the round, a player in his turn can call for **envido** then
    * **Falta envido**: if accepted the one who wins, wins the game.
    * **No quiero** - refuses to take the last bet. 
 
-If no one call for envido, there is no score for it.   
+If no one calls for envido, there is no score for it.   
 The cards are counted as follow:
 * same suit: the sum of the two cards + 20 (10,11 and 12 add no value).
 * all different suits: the value of the highest card in the hand.
@@ -50,7 +52,7 @@ The players compare the two cards they have chosen and whoever has the highest s
 A player whose three cards are of the same suit is said to have a Flor (flower), and must announce this, saying "flor". If more than one person has a Flor, and all of these are simply announced by saying "flor", the team of the person with the best Flor scores 3 points for each Flor that was announced.
 The value of flor is the same as the "envido" (sum three cards + 20 if same suit and 10, 11 and 12 have no value).
 
-* **Flor**: 3 points (one player has flor and the other don't).
+* **Flor**: 3 points (one player has flor and the other doesn't).
 * **Contra Flor**: if it is accepted 6 points to the winner, else 4 points (can be called only if both sides have flor).
 
 
