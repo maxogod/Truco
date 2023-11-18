@@ -2,7 +2,7 @@
 
 ## Game
 
-Truco is a card game played between two players (or in pairs) with a spanish deck (40 cards) wihout 8s, 9s or jokers. The game is played anticlock-wise. There are three ways of scoring points:
+Truco is a card game played between two players (or in pairs) with a spanish deck (40 cards) wihout 8s, 9s or jokers. There are three ways of scoring points:
 
 * **Flor**: the players compare three cards of the same suits.
 * **Envido**: the players compare two cards of the same suits.
@@ -47,9 +47,10 @@ The players compare the two cards they have chosen and whoever has the highest s
 ## Flor 
 
 A player whose three cards are of the same suit is said to have a Flor (flower), and must announce this, saying "flor". If more than one person has a Flor, and all of these are simply announced by saying "flor", the team of the person with the best Flor scores 3 points for each Flor that was announced.
+The value of flor is the same as the "envido" (sum three cards + 20 if same suit and king, queen and prince have no value).
 
-* **Flor**: 3 points.
-* **Contra Flor**: if it is accepted 6 points to the winner, else 4 points.
+* **Flor**: 3 points (one player has flor and the other don't).
+* **Contra Flor**: if it is accepted 6 points to the winner, else 4 points (can be called only if both sides have flor).
 
 
 
