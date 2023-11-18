@@ -52,11 +52,11 @@ The player who has the best pair will win 7 points (2 + 2 + 3).
 
 Another example with _No quiero_ could be:
 
-        envido (player 1) -> envido (player 2) -> real envido (player 1) -> real envido (player 2) -> falta envido (player 1) -> no quiero (player 2)
+        envido (player 1) -> envido (player 2) -> real envido (player 1) -> falta envido (player 1) -> no quiero (player 2)
         
-player 1 wins 10 points (2 + 2 + 3 + 3).
+player 1 wins 7 points (2 + 2 + 3).
 
-A player can make any of the envido bets first, for example a player could start with real envido. If any of this bets is rejected wihout a raise the winner obtains 1 point.
+A player can make any of the envido bets first, for example a player could start with real envido. If any of this bets is rejected wihout a raise the winner obtains 1 point. Players can't call **real envido** or **falta envido** more than one time.
 
 If no one calls for envido, there is no score for it.   
 The cards are counted as follow:
@@ -86,6 +86,7 @@ The value of flor is the same as the "envido" (sum three cards + 20 if same suit
 1. [argentinian truco rules](https://www.pagat.com/put/truco_ar.html)
 1. [description truco in city Buenos Aires page](https://turismo.buenosaires.gob.ar/en/article/get-tricks-%E2%80%9Ctruco%E2%80%9D)
 1. [rules truco in a online game](https://www.mundigames.com/multiplayer/argentinian-truco/rules/)
+1. Truco blyts app
 
 
 
