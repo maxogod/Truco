@@ -39,6 +39,25 @@ At the beginning of the round, a player in his turn can call for **envido** then
    * **Falta envido**: if accepted the one who wins, wins the game.
    * **No quiero** - refuses to take the last bet. 
 
+the hierarchy of envido bet is as follows:
+
+        no bet -> envido -> real envido -> falta envido
+
+if a player raises envido bet the other can't go back.
+An example of a envido bet could be like this:
+
+        envido (player 1) -> envido (player 2) -> real envido (player 1) -> quiero (player 2)
+        
+The player who has the best pair will win 7 points (2 + 2 + 3).
+
+Another example with _No quiero_ could be:
+
+        envido (player 1) -> envido (player 2) -> real envido (player 1) -> real envido (player 2) -> falta envido (player 1) -> no quiero (player 2)
+        
+player 1 wins 10 points (2 + 2 + 3 + 3).
+
+A player can make any of the envido bets first, for example a player could start with real envido. If any of this bets is rejected wihout a raise the winner obtains 1 point.
+
 If no one calls for envido, there is no score for it.   
 The cards are counted as follow:
 * same suit: the sum of the two cards + 20 (10,11 and 12 add no value).
