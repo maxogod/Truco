@@ -36,6 +36,14 @@ At the beginning of the round, a player in his turn can call for **envido** then
    * **Real envido**: raise the bet by 3 points.
    * **No quiero** - refuses to take the last bet. 
 
+If no one call for envido, there is no score for it.   
+The cards are counted as follow:
+* same suit: the sum of the two cards + 20.
+* all different suits: the value of the highest card in the hand.
+
+the highest envido is worth 33 (7-6 of the same suit) and the lowest 0 (11-13 different suits; king, queen and prince add no value).
+The players compare the two cards they have chosen and whoever has the highest score wins the points of envido. If there is a tie the winner is the hand-player.
+
 ## Flor 
 
 A player whose three cards are of the same suit is said to have a Flor (flower), and must announce this, saying "flor". If more than one person has a Flor, and all of these are simply announced by saying "flor", the team of the person with the best Flor scores 3 points for each Flor that was announced.
