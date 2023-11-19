@@ -27,13 +27,19 @@ Play truco on truco.com, the best card game to play 1v1
 
 ### [Game Rules](./docs/RULES.md)
 
-## How to run locally (linux)
+## How to run locally
+
+**(BETTER FOR DEVELOPMENT)** Run two servers in two different terminals one for the [backend](./truco-back/README.md) and another one for the [frontend](./truco-front/README.md). *(click the links to see how)*
+
+Alternatively if you want to **test a prod-like** version of the app locally use the following commands (this integrates the frontend and backend together)
 
 ```shell
-./run-locally.sh
+./run-locally.sh # LINUX. Runs the whole app in one prod-like local server
+./run-locally.ps1 # WINDOWS. Runs the whole app in one prod-like local server
 ```
 
-## How to run with docker (recommended)
+
+## How to run with docker (prod ready)
 remove sudo if running on windows
 ```shell
 
