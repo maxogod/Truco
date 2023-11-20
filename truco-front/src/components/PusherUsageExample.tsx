@@ -27,7 +27,7 @@ function PusherUsageExample(params: { channel: Channel | null; }) {
                 The component is also sending a message to the same channel and event.
             </p>
             <p>
-                To test this, open this page in two different browsers or tabs and click the button below.
+                To test this, open this page in two different browsers or tabs and click the button below.(REMEMBER TO HAVE THE BACKEND SERVER RUNNING)
             </p>
             <p>
                 click this button to trigger the event: <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' onClick={triggerEvent}>Trigger Event</button>
