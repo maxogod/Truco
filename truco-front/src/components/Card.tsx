@@ -1,59 +1,75 @@
-import React from 'react'
  
-const MAX_VALUE = 12;
-const MAX_ID = 48;
+const MAX_Number = 12;
 
-const suits = ['gold', 'cup', 'sword', 'club']
-const values: number[] = []
-const ids: number[] = []
 
-for (let newValue: number = 1; newValue <= MAX_VALUE; newValue += 1) {
-  values.push(newValue); 
+const suits = ['sword', 'club', 'gold', 'cup']
+const numbers: number[] = []
+
+
+for (let newNumber: number = 1; newNumber <= MAX_Number; newNumber += 1) {
+  numbers.push(newNumber); 
 }
 
-for (let newId: number = 1; newId <= MAX_ID; newId += 1) {
-    ids.push(newId); 
-  }
+console.log(numbers)
 
-console.log(values)
+const card = (number:number, suit: string) => {return {number, suit}};
 
-const Card = (props) => {
-    return(
-      <div>
-        <p>{props.value}</p>
-        <p>{props.symbol}</p>
-      </div>
-    )
-  }
-
-   const getDeck = () => {
+const getDeck = () => {
     
-    const deck: object[] = [];
+  const deck: object[] = [];
     
-    let j = 0;
+   
 
-    for (let i = 0; i < suits.length; i++) {
-      for (let x = 0; x < values.length; x++) {
+  for (let i = 0; i < suits.length; i++) {
+    for (let x = 0; x < numbers.length; x++) {
         
-        const card = { Id: ids[j], Value: values[x], Suit: suits[i] };
-        deck.push(card);
-        j += 1;
+      const newCard = card(numbers[x], suits[i]);
+      deck.push(newCard);
       }
     }
     
     return deck;
   };
+
+
+  const cardEqual = (card, otherCard) => 
+  {return (card.suit == otherCard.suit && card.number == otherCard.number)}
+
+  console.log(cardEqual(card(1,"sword"),card(1,"sword")))
   
-  console.log(getDeck())
+  const weights:object[] = [
+  [card(1,"sword")], 
+  [card(1,"club")], 
+  [card(7,"sword")],
+  [card(7,"gold")],
+  [card(3,"sword"), card(3,"club"), card(3,"gold"), card(3,"cup")],
+  [card(2,"sword"), card(2,"club"), card(2,"gold"), card(2,"cup")],
+  [card(1, "club"), card(1, "gold")],
+  [card(12,"sword"), card(12,"club"), card(12,"gold"), card(12,"cup")],
+  [card(11,"sword"), card(11,"club"), card(11,"gold"), card(11,"cup")],
+  [card(10,"sword"), card(10,"club"), card(10,"gold"), card(10,"cup")],
+  [card(7, "cup"), card(7, "club")],
+  [card(6,"sword"), card(6,"club"), card(6,"gold"), card(6,"cup")],
+  [card(5,"sword"), card(5,"club"), card(5,"gold"), card(5,"cup")],
+  [card(4,"sword"), card(4,"club"), card(4,"gold"), card(4,"cup")],
+];
+
+const weight = card => weights.findIndex(deck => deck.some(someCard => cardEqual(card, someCard)))
+
+console.log(weight(card(4,"gold")))
+
+
+
+console.log(getDeck())
   
-  const shuffle = (deck: object[]) => { 
-    for (let i = deck.length - 1; i > 0; i--) { 
-      const j = Math.floor(Math.random() * (i + 1)); 
-      [deck[i], deck[j]] = [deck[j], deck[i]]; 
-    } 
-    return deck; 
+const shuffle = (deck: object[]) => { 
+for (let i = deck.length - 1; i > 0; i--) { 
+    const j = Math.floor(Math.random() * (i + 1)); 
+    [deck[i], deck[j]] = [deck[j], deck[i]]; 
+  } 
+  return deck; 
   }; 
 
   console.log(shuffle(getDeck()))
   
- export default Card
+ 
