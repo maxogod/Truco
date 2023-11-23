@@ -1,5 +1,4 @@
 import Pusher, { Channel } from 'pusher-js';
-
 interface ChannelMap {
     [key: string]: Channel;
 }
@@ -10,10 +9,11 @@ export default function connectChannel(channelName: string) {
     if (CHANNELS[channelName]) {
         return CHANNELS[channelName];
     }
-    Pusher.logToConsole = true;
-    const pusher = new Pusher('53ab858f5949e610d7ee', {
+    Pusher.logToConsole = true; // TODO remove in production
+    const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
         cluster: 'sa1',
-        channelAuthorization: //ignore this error, it's a typescript lie
+        // @ts-ignore
+        channelAuthorization:
         {
             endpoint: "http://localhost:8080/api/pusher",
         }
