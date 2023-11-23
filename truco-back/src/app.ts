@@ -3,6 +3,7 @@ import cookieParser from "cookie-parser";
 import path from "path";
 import dotenv from "dotenv";
 import cors from "cors";
+import pusherRouter from "./routers/pusherRouter";
 
 dotenv.config();
 const app = express();
@@ -23,8 +24,11 @@ if (process.env.DEBUG === "true") { // for development
 
 app.use(express.static(path.join(__dirname, 'public'))); // for serving static files
 
+app.use("/api/pusher", pusherRouter);
+
 app.use("/", (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
 })
+
 
 export default app;

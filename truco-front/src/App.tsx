@@ -1,8 +1,18 @@
+import PusherUsageExample from "./components/PusherUsageExample"
+import { useEffect, useState } from "react";
+import connectChannel from "./utils/connectChannel";
+import { getChannelName } from "./utils/pusherNames";
+import Channel from "pusher-js/types/src/core/channels/channel";
 
 function App() {
-
+  const [channel, setChannel] = useState<Channel | null>(null);
+    useEffect(() => {
+      setChannel(connectChannel(getChannelName("test-channel")));
+    }, []);
   return (
-    <h1 className="text-yellow-500">Hi</h1>
+    <div>
+      <PusherUsageExample channel={channel}/>
+    </div>
   )
 }
 
