@@ -1,24 +1,17 @@
+import React from "react";
 
 
 const MAX_Number = 12;
-
 
 const suits = ['sword', 'club', 'gold', 'cup']
 const numbers: number[] = []
 
 interface Card {
-  suit: string;
-  number: number;
+  suit: string,
+  number: number
 }
 
-export default function Card() {
-  return (
-    <img
-      src="./src/assets/Cards/2-espada.png"
-      alt="Spanish card"
-    />
-  );
-}
+
 
 
 
@@ -31,6 +24,17 @@ for (let newNumber: number = 1; newNumber <= MAX_Number; newNumber += 1) {
 console.log(numbers)
 
 const card = (number:number, suit: string) => {return {number, suit}};
+
+
+export default function Card(props) {
+  return (
+    <img
+      src= {`./src/assets/Cards/${props.value}-${props.suit}.png`}
+      alt="Spanish card"
+    />
+  )
+}
+
 
 const getDeck = () => {
     
