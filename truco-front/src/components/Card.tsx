@@ -1,14 +1,23 @@
- 
+
+
 const MAX_Number = 12;
 
 
 const suits = ['sword', 'club', 'gold', 'cup']
 const numbers: number[] = []
 
+interface Card {
+  suit: string;
+  number: number;
+}
+
+
 
 for (let newNumber: number = 1; newNumber <= MAX_Number; newNumber += 1) {
   numbers.push(newNumber); 
 }
+
+
 
 console.log(numbers)
 
@@ -32,7 +41,8 @@ const getDeck = () => {
   };
 
 
-  const cardEqual = (card, otherCard) => 
+
+  const cardEqual = (card:Card, otherCard:Card) => 
   {return (card.suit == otherCard.suit && card.number == otherCard.number)}
 
   console.log(cardEqual(card(1,"sword"),card(1,"sword")))
@@ -54,7 +64,7 @@ const getDeck = () => {
   [card(4,"sword"), card(4,"club"), card(4,"gold"), card(4,"cup")],
 ];
 
-const weight = card => weights.findIndex(deck => deck.some(someCard => cardEqual(card, someCard)))
+const weight = (card:Card) => weights.findIndex(deck => deck.some((someCard:Card) => cardEqual(card, someCard)))
 
 console.log(weight(card(4,"gold")))
 
