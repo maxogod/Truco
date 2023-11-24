@@ -1,15 +1,11 @@
 import React from "react";
-
+import Card from '../@types/card.ts'
 
 const MAX_Number = 12;
 
 const suits = ['sword', 'club', 'gold', 'cup']
 const numbers: number[] = []
 
-interface Card {
-  suit: string,
-  number: number
-}
 
 
 
