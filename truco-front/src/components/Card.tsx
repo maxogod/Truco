@@ -11,6 +11,15 @@ interface Card {
   number: number;
 }
 
+export default function Card() {
+  return (
+    <img
+      src="./src/assets/Cards/2-espada.png"
+      alt="Spanish card"
+    />
+  );
+}
+
 
 
 for (let newNumber: number = 1; newNumber <= MAX_Number; newNumber += 1) {
