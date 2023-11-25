@@ -1,5 +1,5 @@
 import React from "react";
-import Card from '../@types/card.ts'
+import CardType from '../@types/CardType.ts'
 
 const MAX_Number = 12;
 
@@ -7,21 +7,18 @@ const suits = ['espada', 'basto', 'oro', 'copa']
 const numbers: number[] = []
 
 
-
-
-
-
 for (let newNumber: number = 1; newNumber <= MAX_Number; newNumber += 1) {
   numbers.push(newNumber); 
 }
 
-const card = (number:number, suit: string) => {return {number, suit}};
+const card = (value:number, suit: string) => {return {value, suit}};
 
 
-export default function Card(props) {
+export default function Card({ value, suit }:
+  { value: number, suit: string }) {
   return (
     <img
-      src= {`./src/assets/Cards/${props.value}-${props.suit}.png`}
+      src= {`./src/assets/Cards/${value}-${suit}.png`}
       alt="Spanish card"
     />
   )
@@ -30,7 +27,7 @@ export default function Card(props) {
 
 const getDeck = () => {
     
-  const deck: Card[] = [];
+  const deck: CardType[] = [];
     
   for (let i = 0; i < suits.length; i++) {
     for (let x = 0; x < numbers.length; x++) {
@@ -45,8 +42,8 @@ const getDeck = () => {
 
 
 
-  const cardEqual = (card:Card, otherCard:Card) => 
-  {return (card.suit == otherCard.suit && card.number == otherCard.number)}
+  const cardEqual = (card:CardType, otherCard:CardType) => 
+  {return (card.suit == otherCard.suit && card.value == otherCard.value)}
 
   console.log(cardEqual(card(1,"espada"),card(1,"espada")))
   
@@ -67,7 +64,7 @@ const getDeck = () => {
   [card(4,"espada"), card(4,"basto"), card(4,"oro"), card(4,"copa")],
 ];
 
-const weight = (card:Card) => weights.findIndex(deck => deck.some((someCard:Card) => cardEqual(card, someCard)))
+const weight = (card:CardType) => weights.findIndex(deck => deck.some((someCard:CardType) => cardEqual(card, someCard)))
 
 console.log(weight(card(4,"oro")))
 
@@ -75,7 +72,7 @@ console.log(weight(card(4,"oro")))
 
 console.log(getDeck())
   
-const shuffle = (deck: Card[]) => { 
+const shuffle = (deck: CardType[]) => { 
 for (let i = deck.length - 1; i > 0; i--) { 
     const j = Math.floor(Math.random() * (i + 1)); 
     [deck[i], deck[j]] = [deck[j], deck[i]]; 
@@ -83,10 +80,10 @@ for (let i = deck.length - 1; i > 0; i--) {
   return deck; 
   }; 
 
-const draw = (numberOfCardtoDraw: number, deck: Card[]) => {
-  const cardsDrawed:Card[] = [];
+const draw = (numberOfCardtoDraw: number, deck: CardType[]) => {
+  const cardsDrawed:CardType[] = [];
   for(let i = 0; i < numberOfCardtoDraw; i++){
-    cardsDrawed.push(deck.pop() as Card);
+    cardsDrawed.push(deck.pop() as CardType);
   }
   return cardsDrawed;
   
@@ -104,4 +101,4 @@ console.log(deck.length)
 
 
 console.log(shuffle(getDeck()))
-  
+
