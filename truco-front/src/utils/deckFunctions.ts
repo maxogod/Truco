@@ -33,7 +33,7 @@ const getDeck = () => {
 
   console.log(cardEqual(card(1,"espada"),card(1,"espada")))
   
-  const weights:object[] = [
+  const weights:CardType[][] = [
   [card(1,"espada")], 
   [card(1,"basto")], 
   [card(7,"espada")],
