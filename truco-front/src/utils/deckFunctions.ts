@@ -1,7 +1,6 @@
 import CardType from '../@types/CardType.ts'
 
 const MAX_Number = 12;
-
 const suits = ['espada', 'basto', 'oro', 'copa']
 const numbers: number[] = []
 
