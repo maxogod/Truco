@@ -43,3 +43,21 @@ export const deck:CardType[] = [
   {suit:"copa", value: 4,power: 14}
   ];
 
+export function getCards(deck: CardType[]) {
+
+  //Return the cards of tha hand the two players (6 cards)
+
+  const HANDSIZE = 3; 
+  const deckCopy:CardType[] = [...deck];
+const hand:CardType[] = [];
+for(let i = 0; i < (2*HANDSIZE); i++) {
+    const randNum = Math.floor(Math.random()*deckCopy.length);
+    const splicedItem = deckCopy.splice(randNum, 1)[0]
+    hand.push(splicedItem);
+  }
+  return hand;
+}
+
+console.log(getCards(deck))
+
+
