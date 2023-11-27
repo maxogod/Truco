@@ -1,6 +1,7 @@
 
 export default interface CardType {
     suit: string,
-    value: number
+    value: number,
+    power: number
   }
   
