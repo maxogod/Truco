@@ -3,7 +3,7 @@ import send from '../assets/Send_hor_fill.png';
 
 const Chat: React.FC = () => {
   return (
-    <div className='w-[280px] h-[715px] mr-12 border-2 border-primary bg-secondary rounded-3xl relative'>
+    <div className='w-[280px] h-[715px] border-2 border-primary bg-secondary rounded-3xl relative top-[136px]'>
       <div className='absolute bottom-4 right-1/2 translate-x-1/2 w-[80%]'>
         <input
           type="text"

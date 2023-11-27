@@ -5,12 +5,12 @@ import Chat from '../components/Chat';
 
 const InGame: React.FC = () => {
   return (
-    <div className='w-full h-full text-center relative'>
-      <Ratings/>
-      <div className='flex'>
+    <div className='w-full h-screen flex justify-evenly text-center relative'>
+      <div className='w-[70%]'>
+        <Ratings/>
         <GameBoard/>
-        <Chat/>
       </div>
+        <Chat/>
     </div>
   );
 };
