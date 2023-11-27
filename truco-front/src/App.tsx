@@ -8,6 +8,8 @@ import Channel from "pusher-js/types/src/core/channels/channel";
 import { BrowserRouter, Route, Routes} from "react-router-dom";
 import Main from "./pages/Main";
 import InGame from "./pages/InGame";
+import MainSideBar from "./components/MainSideBar";
+import profile from './assets/User_cicrle_duotone.png';
 
 function App() {
   /*
@@ -16,16 +18,19 @@ function App() {
       setChannel(connectChannel(getChannelName("test-channel")));
     }, []);
   */
+  {/*<PusherUsageExample channel={channel}/>*/}
   return (
-    <div>
-      {/*<PusherUsageExample channel={channel}/>*/}
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Main/>}/>
-          <Route path="/play" element={<InGame/>}/>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+      <div className='w-full h-[100vh] flex bg-background text-text'>
+        <img src={profile} alt="" className='absolute w-[86px] h-[86px] top-7 right-6 cursor-pointer z-20'/>
+        <MainSideBar/>
+
+          <Routes>
+            <Route path="/" element={<Main/>}/>
+            <Route path="/play" element={<InGame/>}/>
+          </Routes>
+      </div>
+    </BrowserRouter>
   )
 }
 

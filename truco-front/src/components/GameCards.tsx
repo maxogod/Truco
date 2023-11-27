@@ -1,10 +1,13 @@
 import React from 'react';
+import Card from './Card';
 
 const GameCards: React.FC = () => {
 
   return (
-    <div className='w-[60%] h-full bg-slate-600'>
-      Game Cards
+    <div className='w-[60%] h-full flex justify-center items-center'>
+      <Card value={1} suit='basto' />
+      <Card value={7} suit='espada' />
+      <Card value={3} suit='copa' />
     </div>
   );
 };
