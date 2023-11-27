@@ -1,3 +1,4 @@
+import React from "react";
 
 export default function Card({ value, suit }:
   { value: number, suit: string }) {
@@ -9,4 +10,3 @@ export default function Card({ value, suit }:
     />
   )
 }
-
