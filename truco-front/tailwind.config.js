@@ -5,8 +5,8 @@ export default {
     extend: {
       colors: {
         "primary": "#6282A3",
-        "secondary": "#302F2F",
-        "background": "#152323",
+        "secondary": "#152323",
+        "background": "#302F2F",
         "text": "#F5F2F0",
       },
       boxShadow: {

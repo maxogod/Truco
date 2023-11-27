@@ -1,10 +1,6 @@
 import React from 'react';
 
-interface ScoreProps {
-  // Define the props for your component here
-}
-
-const Score: React.FC<ScoreProps> = (props) => {
+const Score: React.FC = () => {
   // Implement your component logic here
 
   return (
