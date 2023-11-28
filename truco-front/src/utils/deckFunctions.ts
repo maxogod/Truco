@@ -1,6 +1,6 @@
 import CardType from '../@types/CardType.ts'
   
-export const deck:CardType[] = [
+export function deck():CardType[] { return [
   {suit:"espada", value: 1,power: 1}, 
   {suit:"basto", value: 1,power: 2},
   {suit:"espada", value: 7,power: 3},
@@ -41,14 +41,14 @@ export const deck:CardType[] = [
   {suit:"basto", value: 4,power: 14},
   {suit:"oro", value: 4,power: 14}, 
   {suit:"copa", value: 4,power: 14}
-  ];
+  ]}
 
-export function getCards(deck: CardType[]) {
+export function getCards() {
 
 //Return the cards of tha hand the two players (6 cards)
-
+//const deck: CardType[] = deck();
 const HANDSIZE = 3; 
-const deckCopy:CardType[] = [...deck];
+const deckCopy:CardType[] = [...deck()];
 const hand:CardType[] = [];
 for(let i = 0; i < (2*HANDSIZE); i++) {
     const randNum = Math.floor(Math.random()*deckCopy.length);
@@ -60,12 +60,12 @@ for(let i = 0; i < (2*HANDSIZE); i++) {
 
 
 
-export function cardsForTurn(deck: CardType[]){
+export function cardsForTurn(){
   //creates a nested array with all the cards for each turn
-  const cardsForEachTurn:CardType[][] = new Array(getCards(deck));
+  const cardsForEachTurn:CardType[][] = new Array(getCards());
  
   for(let i = 1; i < 20; i++){
-    cardsForEachTurn[i] = getCards(deck);
+    cardsForEachTurn[i] = getCards();
   }
   return cardsForEachTurn;
 }
@@ -83,4 +83,5 @@ const splicedHand:CardType[][] = [[...firstHalf],[...secondHalf]]
 return splicedHand;
 }
 
-console.log(spliceHands(getCards(deck)))
+//console.log(cardsForTurn())
+//console.log(spliceHands(getCards()))
