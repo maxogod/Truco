@@ -6,7 +6,7 @@ export default class GameEventsManager{
 
     onGameStart: () => void = () => {}
 
-    onGetTurn: (gameActionMessage: GameActionMessage) => void = () => {}
+    onOpponentFinishTurn: (gameActionMessage: GameActionMessage) => void = () => {}
 
     onMyTurnEnd: () => void = () => {}
 
@@ -18,8 +18,8 @@ export default class GameEventsManager{
         this.onGameStart = handler
     }
 
-    setOnGetTurn(handler: (gameActionMessage: GameActionMessage) => void){
-        this.onGetTurn = handler
+    setOnOpponentFinishTurn(handler: (gameActionMessage: GameActionMessage) => void){
+        this.onOpponentFinishTurn = handler
     }
 
     setOnMyTurnEnd(handler: () => void){

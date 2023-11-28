@@ -3,7 +3,7 @@ import GameEventsManager from './GameEventsManager'
 import GameMatchmakingManager from './GameMatchmakingManager'
 import GameTurnsManager from './GameTurnsManager'
 import { GameActionMessage, GameAction } from './enum/GameAction'
-import GameState from './GameState'
+import GameActionsManager from './GameActionsManager'
 
 export default class GameManager {
     public static instance: GameManager
@@ -11,13 +11,13 @@ export default class GameManager {
     private gameEventsManager: GameEventsManager
     private gameMatchmakingManager: GameMatchmakingManager
     private gameTurnsManager: GameTurnsManager
-    private gameState: GameState;
+    private gameActionsManager: GameActionsManager;
 
     private constructor() {
         this.pusherManager = new PusherManager()
         this.gameEventsManager = new GameEventsManager()
         this.gameMatchmakingManager = new GameMatchmakingManager(this.pusherManager, this.gameEventsManager)
-        this.gameState = new GameState()
+        this.gameActionsManager = new GameActionsManager()
         this.gameTurnsManager = new GameTurnsManager(this.gameEventsManager, 10000) // 10 seconds for testing
     }
 
@@ -49,8 +49,8 @@ export default class GameManager {
         this.gameEventsManager.setOnGameStart(handler)
     }
 
-    public setOnGetTurn(handler: (gameActionMessage: GameActionMessage) => void) {
-        this.gameEventsManager.setOnGetTurn(handler)
+    public setOnOpponentFinishTurn(handler: (gameActionMessage: GameActionMessage) => void) {
+        this.gameEventsManager.setOnOpponentFinishTurn(handler)
     }
 
     public setOnMyTurnEnd(handler: () => void) {
@@ -58,22 +58,20 @@ export default class GameManager {
     }
 
     public getPossibleActions(): Map<GameAction, boolean> {
-        return this.gameState.getPossibleActions()
+        return this.gameActionsManager.getPossibleActions()
     }
 
     public setLastAction(action: GameAction) {
-        this.gameState.setLastAction(action)
+        this.gameActionsManager.setLastAction(action)
     }
 
     public finishFirstTurn() {
-        this.gameState.finishFirstTurn()
+        this.gameActionsManager.finishFirstTurn()
     }
 
     public resetPossibleActions() {
-        this.gameState.resetPossibleActions()
+        this.gameActionsManager.resetPossibleActions()
     }
-
-
 
     public static getInstance(): GameManager {
         if (!GameManager.instance) {

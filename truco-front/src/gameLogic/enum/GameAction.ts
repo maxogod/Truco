@@ -13,8 +13,21 @@ export enum GameAction{
     NONE = "none"
 }
 
-
 export interface GameActionMessage{
     action: GameAction
     payload: any
+}
+
+export const isResponseAction = (action: GameAction): boolean => {
+    return action === GameAction.ACCEPTED || action === GameAction.DENIED
+}
+
+export const isTrucoAction = (action: GameAction): boolean => {
+    return action === GameAction.CALL_TRUCO || action === GameAction.CALL_RETRUCO || action === GameAction.CALL_VALE4
+}
+
+export const isEnvidoAction = (action: GameAction): boolean => {
+    return action === GameAction.CALL_ENVIDO || action === GameAction.CALL_ENVIDO_ENVIDO ||
+        action === GameAction.CALL_REAL_ENVIDO || action === GameAction.CALL_FALTA_ENVIDO ||
+        action === GameAction.CALL_ENVIDO_VA_PRIMERO
 }

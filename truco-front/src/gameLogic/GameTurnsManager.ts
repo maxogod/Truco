@@ -28,17 +28,17 @@ export default class GameTurnsManager {
     }
 
     public sendAction(action: GameActionMessage){
-        this.gameChannel?.trigger(EventName.GET_TURN, action)
+        this.gameChannel?.trigger(EventName.SEND_ACTION, action)
         this.onMyTurnEnd()
     }
 
     private setUpGameChannel(){
-        this.gameChannel?.bind(EventName.GET_TURN, this.onGetTurn.bind(this))
+        this.gameChannel?.bind(EventName.FINISH_TURN, this.onOpponentFinishTurn.bind(this))
     }
 
-    private onGetTurn(gameActionMessage: GameActionMessage){
+    private onOpponentFinishTurn(gameActionMessage: GameActionMessage){
         this.startTurnTimer()
-        this.gameEventsManager.onGetTurn(gameActionMessage);
+        this.gameEventsManager.onOpponentFinishTurn(gameActionMessage);
     }
 
     private onMyTurnEnd(){

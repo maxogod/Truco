@@ -1,6 +1,6 @@
-import { GameAction } from "./enum/GameAction";
+import { GameAction, isEnvidoAction, isResponseAction, isTrucoAction } from "./enum/GameAction";
 
-export default class GameState {
+export default class GameActionsManager {
     private calledAction: GameAction
     private lastAction: GameAction;
     private isFirstTurn: boolean
@@ -33,7 +33,7 @@ export default class GameState {
     }
 
     public setLastAction(action: GameAction) {
-        if (this.isResponseAction(action)) {
+        if (isResponseAction(action)) {
             this.updatePossibleActions(true)
         } else {
             this.lastAction = this.calledAction
@@ -47,10 +47,6 @@ export default class GameState {
         this.disableEnvidoActions()
     }
 
-    private isResponseAction(action: GameAction): boolean {
-        return action === GameAction.ACCEPTED || action === GameAction.DENIED || action === GameAction.NONE
-    }
-
     private updatePossibleActions(isResponse: boolean = false) {
         this.disableLastAction()
         if (isResponse) {
@@ -58,7 +54,7 @@ export default class GameState {
         } else {
             this.enableResponseActions()
         }
-        if (this.isTrucoAction(this.calledAction)) {
+        if (isTrucoAction(this.calledAction)) {
             if (isResponse) {
                 this.possibleActions.set(GameAction.PLACE_CARD, true)
                 return;
@@ -72,7 +68,7 @@ export default class GameState {
             }
         }
 
-        if (this.isEnvidoAction(this.calledAction) && this.isFirstTurn) {
+        if (isEnvidoAction(this.calledAction) && this.isFirstTurn) {
             if (isResponse) {
                 this.finishFirstTurn();
                 this.possibleActions.set(GameAction.CALL_TRUCO, true)
@@ -96,15 +92,6 @@ export default class GameState {
         }
     }
 
-
-    private isTrucoAction(action: GameAction): boolean {
-        return action === GameAction.CALL_TRUCO || action === GameAction.CALL_RETRUCO || action === GameAction.CALL_VALE4
-    }
-
-    private isEnvidoAction(action: GameAction): boolean {
-        return action === GameAction.CALL_ENVIDO || action === GameAction.CALL_ENVIDO_ENVIDO ||
-            action === GameAction.CALL_REAL_ENVIDO || action === GameAction.CALL_FALTA_ENVIDO || action === GameAction.CALL_ENVIDO_VA_PRIMERO
-    }
 
     private disableTrucoActions() {
         this.possibleActions.set(GameAction.CALL_TRUCO, false)
