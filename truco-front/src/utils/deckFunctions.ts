@@ -45,10 +45,10 @@ export const deck:CardType[] = [
 
 export function getCards(deck: CardType[]) {
 
-  //Return the cards of tha hand the two players (6 cards)
+//Return the cards of tha hand the two players (6 cards)
 
-  const HANDSIZE = 3; 
-  const deckCopy:CardType[] = [...deck];
+const HANDSIZE = 3; 
+const deckCopy:CardType[] = [...deck];
 const hand:CardType[] = [];
 for(let i = 0; i < (2*HANDSIZE); i++) {
     const randNum = Math.floor(Math.random()*deckCopy.length);
@@ -58,6 +58,17 @@ for(let i = 0; i < (2*HANDSIZE); i++) {
   return hand;
 }
 
-console.log(getCards(deck))
 
 
+export function cardsForTurn(deck: CardType[]){
+  //creates a nested array with all the cards for each turn
+  const cardsForEachTurn:CardType[][] = new Array(getCards(deck));
+ 
+  for(let i = 1; i < 20; i++){
+    cardsForEachTurn[i] = getCards(deck);
+  }
+  return cardsForEachTurn;
+
+}
+
+console.log(cardsForTurn(deck))
