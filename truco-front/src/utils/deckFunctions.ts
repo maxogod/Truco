@@ -68,7 +68,17 @@ export function cardsForTurn(deck: CardType[]){
     cardsForEachTurn[i] = getCards(deck);
   }
   return cardsForEachTurn;
-
 }
 
-console.log(cardsForTurn(deck))
+export function spliceHands(hand:CardType[]){
+  //divide the cards in two sets (one for each player)
+const MIDPOINT = 3;
+const firstHalf = hand.slice(0, MIDPOINT);
+const secondHalf = hand.slice(-MIDPOINT);
+
+const splicedHand:CardType[][] = [[...firstHalf],[...secondHalf]]
+
+return splicedHand;
+}
+
+console.log(spliceHands(getCards(deck)))
