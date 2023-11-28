@@ -72,6 +72,8 @@ export function cardsForTurn(deck: CardType[]){
 
 export function spliceHands(hand:CardType[]){
   //divide the cards in two sets (one for each player)
+  //pre: hand must be an array of 6 cards
+  //post: return an nested array of 2 elements with 3 cards
 const MIDPOINT = 3;
 const firstHalf = hand.slice(0, MIDPOINT);
 const secondHalf = hand.slice(-MIDPOINT);
