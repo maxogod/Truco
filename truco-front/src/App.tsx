@@ -8,6 +8,7 @@ import Channel from "pusher-js/types/src/core/channels/channel";
 import { BrowserRouter, Route, Routes} from "react-router-dom";
 import Main from "./pages/Main";
 import InGame from "./pages/InGame";
+import Rules from "./pages/Rules";
 import MainSideBar from "./components/MainSideBar";
 import profile from './assets/User_cicrle_duotone.png';
 
@@ -28,6 +29,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Main/>}/>
             <Route path="/play" element={<InGame/>}/>
+            <Route path="/rules" element={<Rules/>}/>
           </Routes>
       </div>
     </BrowserRouter>
