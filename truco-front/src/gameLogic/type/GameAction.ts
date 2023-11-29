@@ -14,12 +14,12 @@ export enum GameAction{
 }
 
 export const getEnvidoPoints = (action: GameAction): number => {
-    if(action === GameAction.CALL_ENVIDO) return 2
-    if(action === GameAction.CALL_ENVIDO_ENVIDO) return 4
+    if(action === GameAction.CALL_ENVIDO) return 1
+    if(action === GameAction.CALL_ENVIDO_ENVIDO) return 2
     if(action === GameAction.CALL_REAL_ENVIDO) return 3
     if(action === GameAction.CALL_FALTA_ENVIDO) return 15
-    if(action === GameAction.CALL_ENVIDO_VA_PRIMERO) return 2
-    return 1
+    if(action === GameAction.CALL_ENVIDO_VA_PRIMERO) return 1
+    return 0
 }
 
 export const getTrucoPoints = (action: GameAction): number => {

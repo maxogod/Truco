@@ -23,7 +23,7 @@ export default class GameMatchmakingManager {
     constructor(pusherManger: PusherManager) {
         this.pusherManager = pusherManger
         this.gameEventsManager = GameEventsManager.getInstance()
-        this.userName = generateRandomName();
+        this.userName = ""
     }
 
     public setUserName(userName: string) {
@@ -43,7 +43,7 @@ export default class GameMatchmakingManager {
                 otherMember = member
             })
             if (otherMember) {
-                this.onMatchFound({user_id: otherMember.info.name,join:true})
+                this.onMatchFound({opponentName: otherMember.info.name,join:true})
             }
         }
 
@@ -57,7 +57,7 @@ export default class GameMatchmakingManager {
     }
 
     private onMatchFound(data:any) {
-        const opponentName = data.user_id
+        const opponentName = data.opponentName
         this.pusherManager.disconnectChannel(ChannelName.Matchmaking)
         if(data.join){
             this.onJoiningLobby(opponentName)
@@ -69,7 +69,7 @@ export default class GameMatchmakingManager {
 
     private onJoiningLobby(opponentName: string){
         this.matchChannel = this.pusherManager.connectChannel(makeChannel(opponentName), (_, opponentChannel) =>{
-            opponentChannel.trigger(EventName.MATCH_FOUND, {join:false})
+            opponentChannel.trigger(EventName.MATCH_FOUND, {join:false,opponentName:this.userName})
         })
         this.pusherManager.disconnectChannel(makeChannel(this.userName))
         this.gameEventsManager.triggerOnJoiningLobby(opponentName)

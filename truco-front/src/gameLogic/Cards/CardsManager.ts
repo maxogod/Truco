@@ -19,11 +19,17 @@ export default class CardsManager {
     public giveCards(): Card[]{
         const hands = this.generateHands()
         this.myCards = hands[0]
+        this.myPlayedCards = []
+        this.opponentPlayedCards = []
+        this.gameEventsManager.triggerOnGetCards(this.myCards)
         return hands[1]
     }
 
     public receiveCards(cards: Card[]): void {
         this.myCards = cards
+        this.myPlayedCards = []
+        this.opponentPlayedCards = []
+        this.gameEventsManager.triggerOnGetCards(this.myCards)
     }
 
     public playOpponentCard(card: Card): void {
@@ -60,6 +66,7 @@ export default class CardsManager {
             }
             points = Math.max(points, suitPoints)
         }
+        console.log("ENVIDO POINTS: " + points)
         return points
     }
 
@@ -67,7 +74,7 @@ export default class CardsManager {
         const myCard = this.getMyLastCard()
         const opponentCard = this.getOpponentLastCard()
 
-        return myCard === opponentCard ? 0 : (myCard.power > opponentCard.power ? 1 : -1)
+        return myCard.power === opponentCard.power ? 0 : (myCard.power > opponentCard.power ? 1 : -1)
     }
 
     private getMyLastCard(): Card {

@@ -33,6 +33,10 @@ export default class GameEventsManager {
 
     onTrucoWinnerListeners: ((IWon: boolean) => void)[] = []
 
+    onGetCardsListeners: ((cards: Card[]) => void)[] = []
+
+    onMyTurnStartListeners: (() => void)[] = []
+
 
 
     addOnMatchFoundListener(handler: (opponentName: string) => void) {
@@ -68,7 +72,7 @@ export default class GameEventsManager {
     }
 
     addOnTrucoDeniedListener(handler: (IDeny:boolean) => void) {
-        this.onEnvidoPlayedListeners.push(handler)
+        this.onTrucoDeniedListeners.push(handler)
     }
 
     addOnOpponentPlayCardListener(handler: (card: Card) => void) {
@@ -89,6 +93,14 @@ export default class GameEventsManager {
 
     addOnMyEnvidoPlayedListener(handler: (isAccepted: boolean) => void) {
         this.onMyEnvidoPlayedListeners.push(handler)
+    }
+
+    addOnGetCardsListener(handler: (cards: Card[]) => void) {
+        this.onGetCardsListeners.push(handler)
+    }
+
+    addOnMyTurnStartListener(handler: () => void) {
+        this.onMyTurnStartListeners.push(handler)
     }
 
     triggerOnMatchFound(opponentName: string) {
@@ -147,6 +159,13 @@ export default class GameEventsManager {
         this.onTrucoWinnerListeners.forEach(listener => listener(IWon))
     }
 
+    triggerOnGetCards(cards: Card[]) {
+        this.onGetCardsListeners.forEach(listener => listener(cards))
+    }
+
+    triggerOnMyTurnStart() {
+        this.onMyTurnStartListeners.forEach(listener => listener())
+    }
 
     static getInstance(): GameEventsManager {
         if (!GameEventsManager.instance) {

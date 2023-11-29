@@ -10,6 +10,7 @@ import CardsManager from './Cards/CardsManager'
 import { Channel } from 'pusher-js';
 import { EventName } from './type/EventName'
 import { Card } from './Cards/Card'
+import GameEventsAdder from './GameEventsAdder'
 
 export default class GameManager {
     public static instance: GameManager
@@ -20,6 +21,7 @@ export default class GameManager {
     private gameActionsManager: GameActionsManager;
     private gameStateManager: GameStateManager;
     private cardsManager: CardsManager;
+    public events: GameEventsAdder;
 
     private constructor() {
         this.pusherManager = new PusherManager()
@@ -29,12 +31,14 @@ export default class GameManager {
         this.gameTurnsManager = new GameTurnsManager(10000) // 1 seconds for testing
         this.gameStateManager = new GameStateManager()
         this.cardsManager = new CardsManager()
+        this.events = new GameEventsAdder()
 
         this.setLocalListeners()
     }
 
     public initPusher(username: string) {
         this.pusherManager.initPusher(username)
+        if (this.gameMatchmakingManager.getUserName()) return
         this.setUserName(username)
     }
 
@@ -45,7 +49,7 @@ export default class GameManager {
     public leaveMatchmaking() {
         this.gameMatchmakingManager.leaveMatchmaking()
     }
-    
+
     public setUserName(userName: string) {
         this.gameMatchmakingManager.setUserName(userName)
     }
@@ -55,26 +59,9 @@ export default class GameManager {
     }
 
     public sendAction(action: GameActionMessage) {
+        if (!this.gameStateManager.isMyTurn()) throw new Error("Not my turn")
         this.gameTurnsManager.sendAction(action)
         this.gameActionsManager.processMyAction(action)
-    }
-    
-
-    public addMatchFoundListener(handler: (opponentName: string) => void) {
-        this.gameEventsManager.addOnMatchFoundListener(handler)
-        this.gameEventsManager.addOnJoiningLobbyListener(handler)
-    }
-
-    public addOnGameStartListener(handler: () => void) {
-        this.gameEventsManager.addOnGameStartListener(handler)
-    }
-
-    public addOnOpponentFinishTurnListener(handler: (gameActionMessage: GameActionMessage) => void) {
-        this.gameEventsManager.addOnOpponentFinishTurnListener(handler)
-    }
-
-    public addOnMyTurnEndListener(handler: () => void) {
-        this.gameEventsManager.addOnMyTurnEndListener(handler)
     }
 
     public getPossibleActions(): Map<GameAction, boolean> {
@@ -84,7 +71,7 @@ export default class GameManager {
     public setLastAction(action: GameAction) {
         this.gameActionsManager.setLastAction(action)
     }
-    
+
 
     public finishFirstTurn() {
         this.gameActionsManager.finishFirstTurn()
@@ -98,6 +85,7 @@ export default class GameManager {
         this.gameTurnsManager.setUpGameChannel(this.gameMatchmakingManager.getMatchChannel())
         this.setGameChannelListeners()
         this.gameStateManager.setOpponentTurn()
+        this.gameStateManager.startNewRound()
     }
     private onMatchFound() {
         this.gameTurnsManager.setUpGameChannel(this.gameMatchmakingManager.getMatchChannel())
@@ -105,29 +93,31 @@ export default class GameManager {
         this.gameStateManager.setMyTurn()
         this.gameStateManager.setImHand()
         this.gameEventsManager.triggerOnGameStart()
+        this.gameEventsManager.triggerOnMyTurnStart()
+        this.gameStateManager.startNewRound()
     }
 
     private onEnvidoPlayed(isAccepted: boolean) {
         const gameChannel = this.gameTurnsManager.getGameChannel() as Channel;
         if (isAccepted) {
-            gameChannel?.trigger(EventName.SHOW_ENVIDO, this.cardsManager.getEnvidoPoints())
+            gameChannel?.trigger(EventName.SHOW_ENVIDO, { value: this.cardsManager.getEnvidoPoints() })
         } else {
-            this.gameStateManager.envidoEnded(true, this.gameActionsManager.getLastAction())
+            this.gameStateManager.givePoints(true, this.gameActionsManager.getEnvidoAccum(true))
         }
     }
 
     private onMyEnvidoPlayed(isAccepted: boolean) {
         const gameChannel = this.gameTurnsManager.getGameChannel() as Channel;
         if (isAccepted) {
-            gameChannel?.trigger(EventName.ACCEPT_ENVIDO,{})
+            gameChannel?.trigger(EventName.ACCEPT_ENVIDO, {})
         } else {
-            this.gameStateManager.envidoEnded(false, this.gameActionsManager.getLastAction())
+            this.gameStateManager.givePoints(false, this.gameActionsManager.getEnvidoAccum(true))
         }
     }
 
     private onTrucoDenied(IDeny: boolean) {
-        this.gameStateManager.givePoints(!IDeny, this.gameActionsManager.getLastAction())
-        //this.gameEventsManager.triggerOnRoundStart()
+        this.gameStateManager.givePoints(!IDeny, this.gameActionsManager.getTrucoAccum(true))
+        this.startNewRound()
     }
 
     private onMyTurnEnd() {
@@ -139,29 +129,53 @@ export default class GameManager {
     }
 
     private onTrucoWinner(IWon: boolean) {
-        this.gameStateManager.givePoints(IWon, this.gameActionsManager.getCalledAction())
-        //this.gameEventsManager.triggerOnRoundStart()
+        this.gameStateManager.givePoints(IWon, this.gameActionsManager.getTrucoAccum())
+        this.startNewRound()
+    }
+
+    private startNewRound() {
+        this.gameActionsManager.resetPossibleActions()
+        if (!this.gameStateManager.amIHand()) {
+            this.gameStateManager.setMyTurn()
+            this.gameStateManager.setImHand()
+            this.gameTurnsManager.giveCards(this.cardsManager.giveCards())
+            this.gameEventsManager.triggerOnMyTurnStart()
+            this.gameStateManager.startNewRound()
+        } else {
+            this.gameStateManager.setOpponentTurn()
+            this.gameStateManager.setImNotHand()
+            this.gameEventsManager.triggerOnMyTurnEnd()
+        }
     }
 
     private onMyPlayCard(card: Card) {
         this.cardsManager.playCard(card)
     }
-    
+
     private onTurnMissed() {
         //TODO
     }
 
     private onOpponentFinishTurn(gameActionMessage: GameActionMessage) {
-        if(gameActionMessage.action === GameAction.PLACE_CARD){
+        if (gameActionMessage.action === GameAction.PLACE_CARD) {
             this.cardsManager.playOpponentCard(gameActionMessage.payload.card)
         }
         this.gameActionsManager.setLastAction(gameActionMessage.action)
+        if (!this.gameStateManager.isRoundEnded()) {
+            this.gameEventsManager.triggerOnMyTurnStart()
+        } else {
+            this.gameStateManager.startNewRound()
+        }
     }
 
     private onGameStart() {
         const opponentCards = this.cardsManager.giveCards()
         this.gameTurnsManager.giveCards(opponentCards)
 
+    }
+
+    private onMyTurnStart() {
+        this.gameStateManager.setMyTurn()
     }
 
     private setLocalListeners() {
@@ -178,6 +192,7 @@ export default class GameManager {
         this.gameEventsManager.addOnTurnMissedListener(this.onTurnMissed.bind(this))
         this.gameEventsManager.addOnOpponentFinishTurnListener(this.onOpponentFinishTurn.bind(this))
         this.gameEventsManager.addOnGameStartListener(this.onGameStart.bind(this))
+        this.gameEventsManager.addOnMyTurnStartListener(this.onMyTurnStart.bind(this))
     }
 
     private setGameChannelListeners() {
@@ -186,13 +201,15 @@ export default class GameManager {
         gameChannel.bind(EventName.GIVE_CARDS, (newCards: Card[]) => {
             this.cardsManager.receiveCards(newCards)
         })
-        gameChannel.bind(EventName.SHOW_ENVIDO, (value: number) => {
-            const opponentWon = this.gameStateManager.envidoPlayed(value, this.cardsManager.getEnvidoPoints())
-            this.gameStateManager.envidoEnded(!opponentWon, this.gameActionsManager.getCalledAction())
-            gameChannel.trigger(EventName.ENVIDO_ENDED, opponentWon)
+        gameChannel.bind(EventName.SHOW_ENVIDO, (data: { value: number }) => {
+            const opponentWon = this.gameStateManager.envidoPlayed(data.value, this.cardsManager.getEnvidoPoints())
+            console.log("SHOW_ENVIDO points:", this.gameActionsManager.getEnvidoAccum())
+            this.gameStateManager.givePoints(!opponentWon, this.gameActionsManager.getEnvidoAccum())
+            gameChannel.trigger(EventName.ENVIDO_ENDED, { opponentWon: opponentWon })
         })
-        gameChannel.bind(EventName.ENVIDO_ENDED, (IWon: boolean) => {
-            this.gameStateManager.envidoEnded(IWon, this.gameActionsManager.getCalledAction())
+        gameChannel.bind(EventName.ENVIDO_ENDED, (result: { opponentWon: boolean }) => {
+            console.log("ENVIDO_ENDED points:", this.gameActionsManager.getEnvidoAccum())
+            this.gameStateManager.givePoints(result.opponentWon, this.gameActionsManager.getEnvidoAccum())
         })
 
     }

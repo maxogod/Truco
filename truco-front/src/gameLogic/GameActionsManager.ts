@@ -1,5 +1,5 @@
 import GameEventsManager from "./GameEventsManager";
-import { GameAction, isEnvidoAction, isResponseAction, isTrucoAction } from "./type/GameAction";
+import { GameAction, getEnvidoPoints, getTrucoPoints, isEnvidoAction, isResponseAction, isTrucoAction } from "./type/GameAction";
 import { GameActionMessage } from "./type/GameActionMessage";
 
 /* 
@@ -15,10 +15,14 @@ export default class GameActionsManager {
     private isFirstTurn: boolean
     private possibleActions: Map<GameAction, boolean>
     private gameEventsManager: GameEventsManager
+    private trucoAccumulated: number
+    private envidoAccumulated: number
 
     constructor() {
         this.calledAction = GameAction.NONE
         this.lastAction = GameAction.NONE
+        this.trucoAccumulated = 1
+        this.envidoAccumulated = 1
         this.response = GameAction.NONE
         this.isFirstTurn = true
         this.possibleActions = new Map<GameAction, boolean>()
@@ -31,22 +35,28 @@ export default class GameActionsManager {
     }
 
     public processMyAction(action: GameActionMessage) {
-        if(action.action === GameAction.PLACE_CARD) this.gameEventsManager.triggerOnMyPlayCard(action.payload.card)
+        if(action.action === GameAction.PLACE_CARD){
+            this.gameEventsManager.triggerOnMyPlayCard(action.payload.card)
+        }
         if (isResponseAction(action.action)) {
             if (isTrucoAction(this.calledAction)) {
                 if (action.action === GameAction.DENIED) {
                     this.gameEventsManager.triggerOnTrucoDenied(true)
                 }
             }
-            if(isEnvidoAction(this.calledAction)){
-                this.gameEventsManager.triggerOnMyEnvidoPlayed(action.action === GameAction.ACCEPTED)
-            }
+            this.possibleActions.set(GameAction.PLACE_CARD, true)
         }else{
             this.setLastAction(action.action)
         }
     }
 
     public resetPossibleActions() {
+        this.calledAction = GameAction.NONE
+        this.lastAction = GameAction.NONE
+        this.response = GameAction.NONE
+        this.isFirstTurn = true
+        this.trucoAccumulated = 1
+        this.envidoAccumulated = 1
         this.possibleActions.set(GameAction.CALL_ENVIDO, true)
         this.possibleActions.set(GameAction.CALL_ENVIDO_ENVIDO, false)
         this.possibleActions.set(GameAction.CALL_REAL_ENVIDO, true)
@@ -65,6 +75,8 @@ export default class GameActionsManager {
             this.response = action as GameAction.ACCEPTED | GameAction.DENIED
             this.updatePossibleActions(true)
         } else {
+            if(isTrucoAction(action)) this.trucoAccumulated = getTrucoPoints(action)
+            if(isEnvidoAction(action)) this.envidoAccumulated += getEnvidoPoints(action)
             this.response = GameAction.NONE
             this.lastAction = this.calledAction
             this.calledAction = action
@@ -81,27 +93,47 @@ export default class GameActionsManager {
         return this.calledAction
     }
 
+    public getTrucoAccum(denied:boolean = false): number {
+        return !denied?this.trucoAccumulated:getTrucoPoints(this.lastAction) 
+    }
+
+    public getEnvidoAccum(denied:boolean = false): number {
+        return !denied?this.envidoAccumulated:this.envidoAccumulated - getEnvidoPoints(this.calledAction)
+    }
+
     public getLastAction(): GameAction {
         return this.lastAction
     }
 
     private updatePossibleActions(isResponse: boolean = false) {
+        if (this.calledAction === GameAction.PLACE_CARD) {
+            this.disableEnvidoActions()
+            this.disableResponseActions()
+            return
+        }
         this.disableLastAction()
         if (isResponse) {
             this.disableResponseActions()
         } else {
+            this.response = GameAction.NONE
             this.enableResponseActions()
         }
         if (isTrucoAction(this.calledAction)) {
             if (isResponse) {
+                if (this.response === GameAction.DENIED){
+                    this.gameEventsManager.triggerOnTrucoDenied(false)
+                    return;
+                }
+                this.disableTrucoActions()
                 this.possibleActions.set(GameAction.PLACE_CARD, true)
-                if (this.response === GameAction.DENIED) this.gameEventsManager.triggerOnTrucoDenied(false)
+                this.possibleActions.set(GameAction.CALL_ENVIDO_VA_PRIMERO, false)
                 return;
             }
+            this.possibleActions.set(GameAction.PLACE_CARD, false)
             this.disableEnvidoActions()
             if (this.calledAction === GameAction.CALL_TRUCO) {
                 this.possibleActions.set(GameAction.CALL_RETRUCO, true)
-                if (this.isFirstTurn) this.possibleActions.set(GameAction.CALL_ENVIDO_VA_PRIMERO, true)
+                if (this.isFirstTurn && this.envidoAccumulated === 1) this.possibleActions.set(GameAction.CALL_ENVIDO_VA_PRIMERO, true)
             } else if (this.calledAction === GameAction.CALL_RETRUCO) {
                 this.possibleActions.set(GameAction.CALL_VALE4, true)
             }
@@ -111,10 +143,12 @@ export default class GameActionsManager {
             if (isResponse) {
                 this.finishFirstTurn();
                 this.possibleActions.set(GameAction.CALL_TRUCO, true)
+                this.possibleActions.set(GameAction.PLACE_CARD, true)
                 this.gameEventsManager.triggerOnEnvidoPlayed(this.response === GameAction.ACCEPTED)
                 return;
             }
             this.disableTrucoActions()
+            this.possibleActions.set(GameAction.PLACE_CARD, false)
             if (this.calledAction === GameAction.CALL_ENVIDO) {
                 this.possibleActions.set(GameAction.CALL_ENVIDO_ENVIDO, true)
                 this.possibleActions.set(GameAction.CALL_REAL_ENVIDO, true)
@@ -132,10 +166,6 @@ export default class GameActionsManager {
                 this.possibleActions.set(GameAction.CALL_FALTA_ENVIDO, true)
             }
         }
-
-        if (this.calledAction === GameAction.PLACE_CARD) {
-            this.disableEnvidoActions()
-        }
     }
 
 
@@ -143,7 +173,6 @@ export default class GameActionsManager {
         this.possibleActions.set(GameAction.CALL_TRUCO, false)
         this.possibleActions.set(GameAction.CALL_RETRUCO, false)
         this.possibleActions.set(GameAction.CALL_VALE4, false)
-        this.possibleActions.set(GameAction.PLACE_CARD, false)
     }
 
     private disableEnvidoActions() {
@@ -155,7 +184,7 @@ export default class GameActionsManager {
     }
 
     private disableLastAction() {
-        this.possibleActions.set(this.lastAction, false)
+        this.possibleActions.set(this.calledAction, false)
     }
 
     private enableResponseActions() {

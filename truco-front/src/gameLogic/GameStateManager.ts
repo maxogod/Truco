@@ -10,8 +10,9 @@ export default class GameStateManager{
     private opponentTrucoPoints: number
     private imHand: boolean
     private pardas: number
+    private firstTurnPoint: number
+    private roundEnded: boolean
     private gameEventsManager: GameEventsManager
-
 
     constructor(){
         this.myPoints = 0
@@ -21,7 +22,13 @@ export default class GameStateManager{
         this.opponentTrucoPoints = 0
         this.imHand = false
         this.pardas = 0
+        this.roundEnded = false
+        this.firstTurnPoint = 0
         this.gameEventsManager = GameEventsManager.getInstance()
+    }
+
+    public isMyTurn(): boolean{
+        return this.myTurn
     }
 
     public setMyTurn(){
@@ -32,59 +39,84 @@ export default class GameStateManager{
         this.imHand = true
     }
 
+    public setImNotHand(){
+        this.imHand = false
+    }
+
+    public amIHand(): boolean{
+        return this.imHand
+    }
+
+    public startNewRound(){
+        this.roundEnded = false
+    }
+
+    public isRoundEnded(): boolean{
+        return this.roundEnded
+    }
+
     public setOpponentTurn(){
         this.myTurn = false
     }
 
     public envidoPlayed(opponentEnvidoPoints: number, myEnvidoPoints: number,): boolean{
         // returns true if opponent wins
-        return opponentEnvidoPoints === myEnvidoPoints? !this.imHand : opponentEnvidoPoints > myEnvidoPoints
-    }
-
-    public envidoEnded(Iwon: boolean, calledAction: GameAction){
-        if(Iwon){
-            this.myPoints += getEnvidoPoints(calledAction)
-        }else{
-            this.opponentPoints += getEnvidoPoints(calledAction)
-        }
+        console.log(this.imHand)
+        return opponentEnvidoPoints === myEnvidoPoints? !this.imHand : (opponentEnvidoPoints > myEnvidoPoints)
     }
 
     public trucoPointCalculation(Iwon: number){
+        const isFirstTurn = this.opponentTrucoPoints === 0 && this.myTrucoPoints === 0 && this.pardas === 0
         switch(Iwon){
             case -1:
                 this.opponentTrucoPoints += 1
+                if(isFirstTurn)this.firstTurnPoint = -1
                 break;
             case 0:
                 this.pardas += 1
                 break;
             case 1:
+                if(isFirstTurn)this.firstTurnPoint = 1
                 this.myTrucoPoints += 1
                 break;
         }
+        console.log("myTrucoPoints: " + this.myTrucoPoints)
+        console.log("opponentTrucoPoints: " + this.opponentTrucoPoints)
+        console.log("pardas: " + this.pardas)
         this.checkTrucoWinner()
     }
 
     private checkTrucoWinner(){
-        let gameEnded = false
+        let roundEnded = false
         let IWon = false
-        if(this.pardas > 0 && this.myTrucoPoints !== this.opponentTrucoPoints){
-            gameEnded = true
-            IWon = this.myTrucoPoints > this.opponentTrucoPoints
+        if(this.pardas > 0 && (this.myTrucoPoints !== 0 || this.opponentTrucoPoints !== 0)){
+            roundEnded = true
+            IWon = (this.myTrucoPoints + this.firstTurnPoint) > this.opponentTrucoPoints
         }else if(this.myTrucoPoints === 2){
-            gameEnded = true
+            roundEnded = true
             IWon = true
         }else if(this.opponentTrucoPoints === 2){
-            gameEnded = true
+            roundEnded = true
             IWon = false
         }
-        if(gameEnded){
+        this.roundEnded = roundEnded
+        if(roundEnded){
+            this.myTrucoPoints = 0
+            this.opponentTrucoPoints = 0
+            this.pardas = 0
+            this.firstTurnPoint = 0
+            console.log("ENDED ROUND")
+            console.log("IWon: " + IWon)
             this.gameEventsManager.triggerOnTrucoWinner(IWon)
         }
     }
 
-    public givePoints(toMe:boolean, calledAction: GameAction){
-        if(toMe)this.myPoints += getTrucoPoints(calledAction)
-        else this.opponentPoints += getTrucoPoints(calledAction)
+    public givePoints(toMe:boolean, points: number){
+        if(toMe)this.myPoints += points
+        else this.opponentPoints += points
+        console.log("GLOBAL POINTS")
+        console.log("myPoints: " + this.myPoints)
+        console.log("opponentPoints: " + this.opponentPoints)
     }
     
 
