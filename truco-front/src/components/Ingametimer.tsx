@@ -13,7 +13,7 @@ const Ingametimer = () => {
 
     // Cleanup function to clear the interval when the component is unmounted
     return () => clearInterval(intervalId);
-  }, [seconds]); // Empty dependency array ensures the effect runs only once on mount
+  }, [seconds]); // Dependency array ensures the effect runs everytime seconds changes
 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
