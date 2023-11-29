@@ -39,6 +39,9 @@ export default class CardsManager {
         if(calcualtePointWinner){
             this.gameEventsManager.triggerOnTrucoPointCalculation(this.amIWinner())
         }
+        if(this.myPlayedCards.length === 1 && this.opponentPlayedCards.length === 1){
+            this.gameEventsManager.triggerOnFinishFirstTurn()
+        }
     }
 
     public playCard(playedCard: Card): void {
@@ -47,6 +50,9 @@ export default class CardsManager {
         const calcualtePointWinner = this.myPlayedCards.length === this.opponentPlayedCards.length
         if(calcualtePointWinner){
             this.gameEventsManager.triggerOnTrucoPointCalculation(this.amIWinner())
+        }
+        if(this.myPlayedCards.length === 1 && this.opponentPlayedCards.length === 1){
+            this.gameEventsManager.triggerOnFinishFirstTurn()
         }
     }
     public getFirstCard(): Card {

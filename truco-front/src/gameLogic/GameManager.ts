@@ -77,7 +77,7 @@ export default class GameManager {
     }
 
 
-    public finishFirstTurn() {
+    private finishFirstTurn() {
         this.gameActionsManager.finishFirstTurn()
     }
 
@@ -209,6 +209,7 @@ export default class GameManager {
         this.gameEventsManager.addOnOpponentFinishTurnListener(this.onOpponentFinishTurn.bind(this))
         this.gameEventsManager.addOnGameStartListener(this.onGameStart.bind(this))
         this.gameEventsManager.addOnMyTurnStartListener(this.onMyTurnStart.bind(this))
+        this.gameEventsManager.addOnFinishFirstTurnListener(this.finishFirstTurn.bind(this))
     }
 
     private setGameChannelListeners() {

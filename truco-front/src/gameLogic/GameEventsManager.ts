@@ -37,6 +37,8 @@ export default class GameEventsManager {
 
     onMyTurnStartListeners: (() => void)[] = []
 
+    onFinishFirstTurnListeners: (() => void)[] = []
+
 
 
     addOnMatchFoundListener(handler: (opponentName: string) => void) {
@@ -103,6 +105,10 @@ export default class GameEventsManager {
         this.onMyTurnStartListeners.push(handler)
     }
 
+    addOnFinishFirstTurnListener(handler: () => void) {
+        this.onFinishFirstTurnListeners.push(handler)
+    }
+
     triggerOnMatchFound(opponentName: string) {
         this.onMatchFoundListeners.forEach(listener => listener(opponentName))
     }
@@ -165,6 +171,10 @@ export default class GameEventsManager {
 
     triggerOnMyTurnStart() {
         this.onMyTurnStartListeners.forEach(listener => listener())
+    }
+
+    triggerOnFinishFirstTurn() {
+        this.onFinishFirstTurnListeners.forEach(listener => listener())
     }
 
     static getInstance(): GameEventsManager {
