@@ -13,9 +13,20 @@ export enum GameAction{
     NONE = "none"
 }
 
-export interface GameActionMessage{
-    action: GameAction
-    payload: any
+export const getEnvidoPoints = (action: GameAction): number => {
+    if(action === GameAction.CALL_ENVIDO) return 2
+    if(action === GameAction.CALL_ENVIDO_ENVIDO) return 4
+    if(action === GameAction.CALL_REAL_ENVIDO) return 3
+    if(action === GameAction.CALL_FALTA_ENVIDO) return 15
+    if(action === GameAction.CALL_ENVIDO_VA_PRIMERO) return 2
+    return 1
+}
+
+export const getTrucoPoints = (action: GameAction): number => {
+    if(action === GameAction.CALL_TRUCO) return 2
+    if(action === GameAction.CALL_RETRUCO) return 3
+    if(action === GameAction.CALL_VALE4) return 4
+    return 1
 }
 
 export const isResponseAction = (action: GameAction): boolean => {

@@ -1,7 +1,20 @@
 import { Channel } from 'pusher-js';
 import GameEventsManager from './GameEventsManager';
-import { EventName } from './enum/EventName';
-import { GameActionMessage } from './enum/GameAction';
+import { EventName } from './type/EventName';
+import { GameActionMessage } from './type/GameActionMessage';
+import { Card } from './Cards/Card';
+
+/* 
+Local triggers:
+    - OnGameStart
+    - OpponentFinishTurn
+    - OnMyTurnEnd
+    - OnTurnMissed
+
+Socket triggers:
+    - EventName.SEND_ACTION
+    - EventName.GIVE_CARDS
+*/
 
 export default class GameTurnsManager {
 
@@ -10,21 +23,13 @@ export default class GameTurnsManager {
     private gameEventsManager: GameEventsManager
     private turnDuration: number
 
-    constructor(gameEventsManager: GameEventsManager, turnDuration: number) {
-        this.gameEventsManager = gameEventsManager
+    constructor(turnDuration: number) {
+        this.gameEventsManager = GameEventsManager.getInstance()
         this.turnDuration = turnDuration
     }
 
-    public startMatch(gameChannel: Channel | null){
-        if(!gameChannel) throw new Error("Unable to start match")
-        this.gameChannel = gameChannel
-        this.setUpGameChannel()
-        this.gameEventsManager.onGameStart()
-        this.startTurnTimer()
-    }
-
     private startTurnTimer(){
-        this.currentTimer = setTimeout(this.onMyTurnEnd.bind(this), this.turnDuration) // 10 seconds for testing
+        this.currentTimer = setTimeout(this.onTurnMissed.bind(this), this.turnDuration)
     }
 
     public sendAction(action: GameActionMessage){
@@ -32,18 +37,35 @@ export default class GameTurnsManager {
         this.onMyTurnEnd()
     }
 
-    private setUpGameChannel(){
-        this.gameChannel?.bind(EventName.FINISH_TURN, this.onOpponentFinishTurn.bind(this))
+    public giveCards(cards: Card[]){
+        this.gameChannel?.trigger(EventName.GIVE_CARDS, cards)
+        this.startTurnTimer()
+    }
+
+    public getGameChannel(): Channel | null{
+        return this.gameChannel
+    }
+
+    public setUpGameChannel(gameChannel: Channel | null){
+        if(!gameChannel) throw new Error("Could not set up game channel")
+        this.gameChannel = gameChannel
+        this.gameChannel?.bind(EventName.SEND_ACTION, this.onOpponentFinishTurn.bind(this))
     }
 
     private onOpponentFinishTurn(gameActionMessage: GameActionMessage){
         this.startTurnTimer()
-        this.gameEventsManager.onOpponentFinishTurn(gameActionMessage);
+        this.gameEventsManager.triggerOnOpponentFinishTurn(gameActionMessage)
     }
 
     private onMyTurnEnd(){
         clearTimeout(this.currentTimer)
         this.currentTimer = 0
-        this.gameEventsManager.onMyTurnEnd()
+        this.gameEventsManager.triggerOnMyTurnEnd();
+    }
+
+    private onTurnMissed(){
+        clearTimeout(this.currentTimer)
+        this.currentTimer = 0
+        this.gameEventsManager.triggerOnTurnMissed()
     }
 }

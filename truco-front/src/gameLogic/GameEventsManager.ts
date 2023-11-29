@@ -1,29 +1,158 @@
-import { GameActionMessage } from "./enum/GameAction"
+import { Card } from "./Cards/Card";
+import { GameActionMessage } from "./type/GameActionMessage";
 
-export default class GameEventsManager{
+export default class GameEventsManager {
 
-    onMatchFound: (opponentName: string) => void = () => {}
+    public static instance: GameEventsManager
 
-    onGameStart: () => void = () => {}
+    onMatchFoundListeners: ((opponentName: string) => void)[] = []
 
-    onOpponentFinishTurn: (gameActionMessage: GameActionMessage) => void = () => {}
+    onJoiningLobbyListeners: ((opponentName: string) => void)[] = []
 
-    onMyTurnEnd: () => void = () => {}
+    onGameStartListeners: (() => void)[] = []
 
-    setOnMatchFound(handler: (opponentName: string) => void){
-        this.onMatchFound = handler
+    onOpponentFinishTurnListeners: ((gameActionMessage: GameActionMessage) => void)[] = []
+
+    onMyTurnEndListeners: (() => void)[] = []
+
+    onTurnMissedListeners: (() => void)[] = []
+
+    onGiveCardsListeners: (() => void)[] = []
+
+    onOpponentPlayCardListeners: ((card: Card) => void)[] = []
+
+    onMyPlayCardListeners: ((card: Card) => void)[] = []
+
+    onTrucoPointCalculationListeners: ((amIWinner: number) => void)[] = []
+
+    onEnvidoPlayedListeners: ((isAccepted: boolean) => void)[] = []
+
+    onMyEnvidoPlayedListeners: ((isAccepted: boolean) => void)[] = []
+
+    onTrucoDeniedListeners: ((iDeny: boolean) => void)[] = []
+
+    onTrucoWinnerListeners: ((IWon: boolean) => void)[] = []
+
+
+
+    addOnMatchFoundListener(handler: (opponentName: string) => void) {
+        this.onMatchFoundListeners.push(handler)
     }
 
-    setOnGameStart(handler: () => void){
-        this.onGameStart = handler
+    addOnJoiningLobbyListener(handler: (opponentName: string) => void) {
+        this.onJoiningLobbyListeners.push(handler)
     }
 
-    setOnOpponentFinishTurn(handler: (gameActionMessage: GameActionMessage) => void){
-        this.onOpponentFinishTurn = handler
+    addOnGameStartListener(handler: () => void) {
+        this.onGameStartListeners.push(handler)
     }
 
-    setOnMyTurnEnd(handler: () => void){
-        this.onMyTurnEnd = handler
+    addOnOpponentFinishTurnListener(handler: (gameActionMessage: GameActionMessage) => void) {
+        this.onOpponentFinishTurnListeners.push(handler)
+    }
+
+    addOnMyTurnEndListener(handler: () => void) {
+        this.onMyTurnEndListeners.push(handler)
+    }
+
+    addOnTurnMissedListener(handler: () => void) {
+        this.onTurnMissedListeners.push(handler)
+    }
+
+    addOnGiveCardsListener(handler: () => void) {
+        this.onGiveCardsListeners.push(handler)
+    }
+
+    addOnEnvidoPlayedListener(handler: (isAccepted: boolean) => void) {
+        this.onEnvidoPlayedListeners.push(handler)
+    }
+
+    addOnTrucoDeniedListener(handler: (IDeny:boolean) => void) {
+        this.onEnvidoPlayedListeners.push(handler)
+    }
+
+    addOnOpponentPlayCardListener(handler: (card: Card) => void) {
+        this.onOpponentPlayCardListeners.push(handler)
+    }
+
+    addOnMyPlayCardListener(handler: (card: Card) => void) {
+        this.onMyPlayCardListeners.push(handler)
+    }
+
+    addOnTrucoPointCalculationListener(handler: (amIWinner: number) => void) {
+        this.onTrucoPointCalculationListeners.push(handler)
+    }
+
+    addOnTrucoWinnerListener(handler: (IWon: boolean) => void) {
+        this.onTrucoWinnerListeners.push(handler)
+    }
+
+    addOnMyEnvidoPlayedListener(handler: (isAccepted: boolean) => void) {
+        this.onMyEnvidoPlayedListeners.push(handler)
+    }
+
+    triggerOnMatchFound(opponentName: string) {
+        this.onMatchFoundListeners.forEach(listener => listener(opponentName))
+    }
+
+    triggerOnJoiningLobby(opponentName: string) {
+        this.onJoiningLobbyListeners.forEach(listener => listener(opponentName))
+    }
+
+    triggerOnGameStart() {
+        this.onGameStartListeners.forEach(listener => listener())
+    }
+
+    triggerOnOpponentFinishTurn(gameActionMessage: GameActionMessage) {
+        this.onOpponentFinishTurnListeners.forEach(listener => listener(gameActionMessage))
+    }
+
+    triggerOnMyTurnEnd() {
+        this.onMyTurnEndListeners.forEach(listener => listener())
+    }
+
+    triggerOnTurnMissed() {
+        this.onTurnMissedListeners.forEach(listener => listener())
+    }
+
+    triggerOnGiveCards() {
+        this.onGiveCardsListeners.forEach(listener => listener())
+    }
+
+    triggerOnEnvidoPlayed(isAccepted: boolean) {
+        this.onEnvidoPlayedListeners.forEach(listener => listener(isAccepted))
+    }
+
+    triggerOnMyEnvidoPlayed(isAccepted: boolean) {
+        this.onMyEnvidoPlayedListeners.forEach(listener => listener(isAccepted))
+    }
+
+    triggerOnTrucoDenied(iDeny: boolean) {
+        this.onTrucoDeniedListeners.forEach(listener => listener(iDeny))
+    }
+
+    triggerOnOpponentPlayCard(card: Card) {
+        this.onOpponentPlayCardListeners.forEach(listener => listener(card))
+    }
+
+    triggerOnMyPlayCard(card: Card) {
+        this.onMyPlayCardListeners.forEach(listener => listener(card))
+    }
+
+    triggerOnTrucoPointCalculation(amIWinner: number) {
+        this.onTrucoPointCalculationListeners.forEach(listener => listener(amIWinner))
+    }
+
+    triggerOnTrucoWinner(IWon: boolean) {
+        this.onTrucoWinnerListeners.forEach(listener => listener(IWon))
+    }
+
+
+    static getInstance(): GameEventsManager {
+        if (!GameEventsManager.instance) {
+            GameEventsManager.instance = new GameEventsManager()
+        }
+        return GameEventsManager.instance
     }
 
 }

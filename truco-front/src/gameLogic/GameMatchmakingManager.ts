@@ -1,10 +1,17 @@
 import generateRandomName from "../utils/generateRandomName";
 import GameEventsManager from "./GameEventsManager";
 import PusherManager from "./PusherManager";
-import { ChannelName, makeChannel } from "./enum/ChannelName";
-import { EventName } from "./enum/EventName";
+import { ChannelName, makeChannel } from "./type/ChannelName";
+import { EventName } from "./type/EventName";
 import { Members, Channel } from 'pusher-js';
 
+/* 
+Local triggers:
+    - OnMatchFound
+    - OnJoiningLobby
+Socket triggers:
+    - EventName.MATCH_FOUND
+*/
 
 export default class GameMatchmakingManager {
 
@@ -13,16 +20,14 @@ export default class GameMatchmakingManager {
     private userName: string
     private matchChannel: Channel | null = null
 
-    constructor(pusherManger: PusherManager, gameEventsManager: GameEventsManager) {
+    constructor(pusherManger: PusherManager) {
         this.pusherManager = pusherManger
-        this.gameEventsManager = gameEventsManager
+        this.gameEventsManager = GameEventsManager.getInstance()
         this.userName = generateRandomName();
     }
 
     public setUserName(userName: string) {
-        this.pusherManager.disconnectChannel(makeChannel(this.userName))
         this.userName = userName
-        this.joinSelfLobby()
     }
 
     public getUserName(): string {
@@ -38,7 +43,7 @@ export default class GameMatchmakingManager {
                 otherMember = member
             })
             if (otherMember) {
-                this.onMatchFound({opponentName: otherMember.info.name}, true)
+                this.onMatchFound({user_id: otherMember.info.name,join:true})
             }
         }
 
@@ -47,17 +52,27 @@ export default class GameMatchmakingManager {
         this.pusherManager.connectChannel(ChannelName.Matchmaking, this.onConnectedToMatchmaking.bind(this))
     }
 
-    private onMatchFound(data:{opponentName:string}, joiningLobby: boolean = false) {
-        const opponentName = data.opponentName
+    public leaveMatchmaking() {
         this.pusherManager.disconnectChannel(ChannelName.Matchmaking)
-        this.matchChannel = this.pusherManager.connectChannel(makeChannel(this.userName))
-        if(joiningLobby){
-            this.matchChannel = this.pusherManager.connectChannel(makeChannel(opponentName), (_, opponentChannel) =>{
-                opponentChannel.trigger(EventName.MATCH_FOUND, { opponentName: this.userName })
-            })
-            this.pusherManager.disconnectChannel(makeChannel(this.userName))
+    }
+
+    private onMatchFound(data:any) {
+        const opponentName = data.user_id
+        this.pusherManager.disconnectChannel(ChannelName.Matchmaking)
+        if(data.join){
+            this.onJoiningLobby(opponentName)
+        }else{
+            this.matchChannel = this.pusherManager.connectChannel(makeChannel(this.userName))
+            this.gameEventsManager.triggerOnMatchFound(opponentName)
         }
-        this.gameEventsManager.onMatchFound(opponentName)
+    }
+
+    private onJoiningLobby(opponentName: string){
+        this.matchChannel = this.pusherManager.connectChannel(makeChannel(opponentName), (_, opponentChannel) =>{
+            opponentChannel.trigger(EventName.MATCH_FOUND, {join:false})
+        })
+        this.pusherManager.disconnectChannel(makeChannel(this.userName))
+        this.gameEventsManager.triggerOnJoiningLobby(opponentName)
     }
 
     public getMatchChannel(): Channel | null {
