@@ -24,7 +24,6 @@ function App() {
       <div className='w-full h-[100vh] flex bg-background text-text'>
         <img src={profile} alt="" className='absolute w-[86px] h-[86px] top-7 right-6 cursor-pointer z-20'/>
         <MainSideBar/>
-
           <Routes>
             <Route path="/" element={<Main/>}/>
             <Route path="/play" element={<InGame/>}/>
