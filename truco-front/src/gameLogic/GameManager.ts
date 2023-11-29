@@ -2,7 +2,7 @@ import PusherManager from './PusherManager'
 import GameEventsManager from './GameEventsManager'
 import GameMatchmakingManager from './GameMatchmakingManager'
 import GameTurnsManager from './GameTurnsManager'
-import { GameAction } from './type/GameAction'
+import { GameAction, isResponseAction } from './type/GameAction'
 import { GameActionMessage } from './type/GameActionMessage'
 import GameActionsManager from './GameActionsManager'
 import GameStateManager from './GameStateManager'
@@ -28,7 +28,7 @@ export default class GameManager {
         this.gameEventsManager = GameEventsManager.getInstance()
         this.gameMatchmakingManager = new GameMatchmakingManager(this.pusherManager)
         this.gameActionsManager = new GameActionsManager()
-        this.gameTurnsManager = new GameTurnsManager(10000) // 1 seconds for testing
+        this.gameTurnsManager = new GameTurnsManager(30000) // 30 seconds for testing
         this.gameStateManager = new GameStateManager()
         this.cardsManager = new CardsManager()
         this.events = new GameEventsAdder()
@@ -60,8 +60,12 @@ export default class GameManager {
 
     public sendAction(action: GameActionMessage) {
         if (!this.gameStateManager.isMyTurn()) throw new Error("Not my turn")
+        if(action.action === GameAction.PLACE_CARD){
+            this.gameStateManager.setOppoentPlaysCard()
+        }
         this.gameTurnsManager.sendAction(action)
         this.gameActionsManager.processMyAction(action)
+        
     }
 
     public getPossibleActions(): Map<GameAction, boolean> {
@@ -95,6 +99,7 @@ export default class GameManager {
         this.gameEventsManager.triggerOnGameStart()
         this.gameEventsManager.triggerOnMyTurnStart()
         this.gameStateManager.startNewRound()
+        this.gameStateManager.setIPlayCard()
     }
 
     private onEnvidoPlayed(isAccepted: boolean) {
@@ -141,10 +146,12 @@ export default class GameManager {
             this.gameTurnsManager.giveCards(this.cardsManager.giveCards())
             this.gameEventsManager.triggerOnMyTurnStart()
             this.gameStateManager.startNewRound()
+            this.gameStateManager.setIPlayCard()
         } else {
             this.gameStateManager.setOpponentTurn()
             this.gameStateManager.setImNotHand()
             this.gameEventsManager.triggerOnMyTurnEnd()
+            this.gameStateManager.setOppoentPlaysCard()
         }
     }
 
@@ -162,10 +169,15 @@ export default class GameManager {
     }
 
     private onOpponentFinishTurn(gameActionMessage: GameActionMessage) {
+        this.gameActionsManager.setLastAction(gameActionMessage.action)
+        if (isResponseAction(gameActionMessage.action) && !this.gameStateManager.doIPlayCard()){
+            this.gameTurnsManager.sendAction(new GameActionMessage(GameAction.NONE, {}))
+            return;
+        }
         if (gameActionMessage.action === GameAction.PLACE_CARD) {
             this.cardsManager.playOpponentCard(gameActionMessage.payload.card)
+            this.gameStateManager.setIPlayCard()
         }
-        this.gameActionsManager.setLastAction(gameActionMessage.action)
         if (!this.gameStateManager.isRoundEnded()) {
             this.gameEventsManager.triggerOnMyTurnStart()
         } else {
@@ -206,12 +218,10 @@ export default class GameManager {
         })
         gameChannel.bind(EventName.SHOW_ENVIDO, (data: { value: number }) => {
             const opponentWon = this.gameStateManager.envidoPlayed(data.value, this.cardsManager.getEnvidoPoints())
-            console.log("SHOW_ENVIDO points:", this.gameActionsManager.getEnvidoAccum())
             this.gameStateManager.givePoints(!opponentWon, this.gameActionsManager.getEnvidoAccum())
             gameChannel.trigger(EventName.ENVIDO_ENDED, { opponentWon: opponentWon })
         })
         gameChannel.bind(EventName.ENVIDO_ENDED, (result: { opponentWon: boolean }) => {
-            console.log("ENVIDO_ENDED points:", this.gameActionsManager.getEnvidoAccum())
             this.gameStateManager.givePoints(result.opponentWon, this.gameActionsManager.getEnvidoAccum())
         })
 

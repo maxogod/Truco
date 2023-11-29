@@ -8,7 +8,9 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 
 import MainSideBar from "./components/MainSideBar";
+import GameLogicTest from "./components/GameLogicTest";
 function App() {
+  /*
   return (
     <BrowserRouter>
       <div className='w-full h-[100vh] flex bg-background text-text'>

@@ -57,6 +57,7 @@ export default class GameTurnsManager {
         this.gameEventsManager.triggerOnOpponentFinishTurn(gameActionMessage)
     }
 
+
     private onMyTurnEnd(){
         clearTimeout(this.currentTimer)
         this.currentTimer = 0

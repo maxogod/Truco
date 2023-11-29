@@ -6,6 +6,7 @@ export default class GameStateManager{
     private myPoints: number
     private opponentPoints: number
     private myTurn: boolean
+    private iPlayCard: boolean;
     private myTrucoPoints: number
     private opponentTrucoPoints: number
     private imHand: boolean
@@ -24,6 +25,7 @@ export default class GameStateManager{
         this.pardas = 0
         this.roundEnded = false
         this.firstTurnPoint = 0
+        this.iPlayCard = false
         this.gameEventsManager = GameEventsManager.getInstance()
     }
 
@@ -55,13 +57,28 @@ export default class GameStateManager{
         return this.roundEnded
     }
 
+    public setRoundEnded(){
+        this.roundEnded = true
+    }
+
     public setOpponentTurn(){
         this.myTurn = false
     }
 
+    public setIPlayCard(){
+        this.iPlayCard = true
+    }
+
+    public setOppoentPlaysCard(){
+        this.iPlayCard = false
+    }
+
+    public doIPlayCard(): boolean{
+        return this.iPlayCard
+    }
+
     public envidoPlayed(opponentEnvidoPoints: number, myEnvidoPoints: number,): boolean{
         // returns true if opponent wins
-        console.log(this.imHand)
         return opponentEnvidoPoints === myEnvidoPoints? !this.imHand : (opponentEnvidoPoints > myEnvidoPoints)
     }
 
@@ -80,9 +97,6 @@ export default class GameStateManager{
                 this.myTrucoPoints += 1
                 break;
         }
-        console.log("myTrucoPoints: " + this.myTrucoPoints)
-        console.log("opponentTrucoPoints: " + this.opponentTrucoPoints)
-        console.log("pardas: " + this.pardas)
         this.checkTrucoWinner()
     }
 
@@ -105,8 +119,6 @@ export default class GameStateManager{
             this.opponentTrucoPoints = 0
             this.pardas = 0
             this.firstTurnPoint = 0
-            console.log("ENDED ROUND")
-            console.log("IWon: " + IWon)
             this.gameEventsManager.triggerOnTrucoWinner(IWon)
         }
     }
@@ -114,9 +126,6 @@ export default class GameStateManager{
     public givePoints(toMe:boolean, points: number){
         if(toMe)this.myPoints += points
         else this.opponentPoints += points
-        console.log("GLOBAL POINTS")
-        console.log("myPoints: " + this.myPoints)
-        console.log("opponentPoints: " + this.opponentPoints)
     }
     
 }
