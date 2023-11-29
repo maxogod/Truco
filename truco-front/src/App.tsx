@@ -8,10 +8,9 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 
 import MainSideBar from "./components/MainSideBar";
-import NavBar from "./components/NavBar";
-
-
+import GameLogicTest from "./components/GameLogicTest";
 function App() {
+  /*
   return (
     <BrowserRouter>
       <div className='w-full h-[100vh] flex bg-background text-text'>
@@ -28,6 +27,13 @@ function App() {
           </Routes>
       </div>
     </BrowserRouter>
+  )
+  */
+  return (
+    <BrowserRouter>
+      <GameLogicTest />
+    </BrowserRouter>
+
   )
 }
 
