@@ -119,6 +119,4 @@ export default class GameStateManager{
         console.log("opponentPoints: " + this.opponentPoints)
     }
     
-
-    //TODO
 }

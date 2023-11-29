@@ -153,7 +153,12 @@ export default class GameManager {
     }
 
     private onTurnMissed() {
-        //TODO
+        const actions = this.gameActionsManager.getPossibleActions()
+        if(actions.get(GameAction.DENIED)){
+            this.sendAction(new GameActionMessage(GameAction.DENIED,{}))
+        }else{
+            this.sendAction(new GameActionMessage(GameAction.PLACE_CARD, { card: this.cardsManager.getFirstCard()}))
+        }
     }
 
     private onOpponentFinishTurn(gameActionMessage: GameActionMessage) {
@@ -179,7 +184,6 @@ export default class GameManager {
     }
 
     private setLocalListeners() {
-        // DON'T TRIGGER LOCAL EVENTS HERE
         this.gameEventsManager.addOnJoiningLobbyListener(this.onJoiningLobby.bind(this))
         this.gameEventsManager.addOnMatchFoundListener(this.onMatchFound.bind(this))
         this.gameEventsManager.addOnEnvidoPlayedListener(this.onEnvidoPlayed.bind(this))
@@ -196,7 +200,6 @@ export default class GameManager {
     }
 
     private setGameChannelListeners() {
-        // DON'T TRIGGER LOCAL EVENTS HERE
         const gameChannel = this.gameTurnsManager.getGameChannel() as Channel;
         gameChannel.bind(EventName.GIVE_CARDS, (newCards: Card[]) => {
             this.cardsManager.receiveCards(newCards)

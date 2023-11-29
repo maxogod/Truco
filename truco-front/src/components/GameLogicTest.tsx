@@ -39,6 +39,11 @@ function GameLogicTest() {
             setIsMyTurn(false)
             setActions([])
         })
+
+        gameManager.events.addOnMyPlayCardListener((card: Card) => {
+            const cardIndex = cards.findIndex((c) => c.number === card.number && c.suit === card.suit)
+            cards.splice(cardIndex, 1)
+        })
     },[])
     
     const toggleMatchmaking = () => {

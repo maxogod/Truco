@@ -44,6 +44,9 @@ export default class GameActionsManager {
                     this.gameEventsManager.triggerOnTrucoDenied(true)
                 }
             }
+            if(isEnvidoAction(this.calledAction)){
+                this.gameEventsManager.triggerOnMyEnvidoPlayed(action.action === GameAction.ACCEPTED)
+            }
             this.possibleActions.set(GameAction.PLACE_CARD, true)
         }else{
             this.setLastAction(action.action)

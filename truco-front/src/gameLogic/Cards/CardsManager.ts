@@ -49,6 +49,9 @@ export default class CardsManager {
             this.gameEventsManager.triggerOnTrucoPointCalculation(this.amIWinner())
         }
     }
+    public getFirstCard(): Card {
+        return this.myCards[0];
+    }
 
     public getEnvidoPoints(): number{
         let points = 0;
