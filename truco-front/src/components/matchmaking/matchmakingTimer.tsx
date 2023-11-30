@@ -19,28 +19,10 @@ const Timer = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>Timer</h1>
-      <p style={styles.timer}>Elapsed Time: {formatTime(seconds)}</p>
+    <div className='text-center'>
+      <p className='text-primary font-bold text-3xl' >{formatTime(seconds)}</p>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    textAlign: 'center',
-    marginTop: '50px',
-  },
-  heading: {
-    fontSize: '24px',
-    color: '#333',
-  },
-  timer: {
-    fontSize: '36px',
-    color: '#4285f4',
-    fontWeight: 'bold',
-    marginTop: '10px',
-  },
 };
 
 export default Timer;

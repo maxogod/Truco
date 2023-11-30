@@ -5,7 +5,7 @@ export default function Card({ cardProps, onClick }:
     <img
       src={`./src/assets/Cards/${cardProps.number}-${cardProps.suit.toLowerCase()}.png`}
       alt="Spanish card"
-      className="w-[88px] shadow-card rounded-lg"
+      className="w-[88px] shadow-card rounded-lg cursor-pointer"
       onClick={() => onClick && onClick(cardProps)}
     />
   )
