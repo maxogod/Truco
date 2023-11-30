@@ -28,6 +28,14 @@ export default class GameTurnsManager {
         this.turnDuration = turnDuration
     }
 
+    public restart() {
+        this.gameChannel = null
+        if(this.currentTimer){
+            clearTimeout(this.currentTimer)
+        }
+        this.currentTimer = 0
+    }
+
     private startTurnTimer(){
         this.currentTimer = setTimeout(this.onTurnMissed.bind(this), this.turnDuration)
     }

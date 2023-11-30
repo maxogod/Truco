@@ -37,4 +37,8 @@ export default class GameEventsAdder{
     public addOnMyPlayCardListener(handler: (card: Card) => void) {
         this.gameEventsManager.addOnMyPlayCardListener(handler)
     }
+
+    public addOnGameEndListener(handler: (IWon: boolean) => void) {
+        this.gameEventsManager.addOnGameEndListener(handler)
+    }
 }

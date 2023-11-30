@@ -16,6 +16,12 @@ export default class CardsManager {
         this.gameEventsManager = GameEventsManager.getInstance()
     }
 
+    public restart(): void {
+        this.myCards = []
+        this.opponentPlayedCards = []
+        this.myPlayedCards = []
+    }
+
     public giveCards(): Card[]{
         const hands = this.generateHands()
         this.myCards = hands[0]
@@ -61,17 +67,25 @@ export default class CardsManager {
 
     public getEnvidoPoints(): number{
         let points = 0;
+        let minCard = 20;
         for(let suit  in Suit){
             let suitPoints = 0
             let sameCards = 0
             for(let card of this.myCards){
                 if(card.suit === suit){
-                    suitPoints += card.number > 10 ? 0 : card.number
+                    let cardPoints = card.number >= 10 ? 0 : card.number
+                    suitPoints += cardPoints
+                    if(cardPoints < minCard){
+                        minCard = cardPoints
+                    }
                     sameCards++
                 }
             }
             if(sameCards >= 2){
                 suitPoints += 20
+                if(sameCards === 3){
+                    suitPoints -= minCard
+                }
             }
             points = Math.max(points, suitPoints)
         }

@@ -29,6 +29,19 @@ export default class GameStateManager{
         this.gameEventsManager = GameEventsManager.getInstance()
     }
 
+    public restart(){
+        this.myPoints = 0
+        this.opponentPoints = 0
+        this.myTurn = false
+        this.myTrucoPoints = 0
+        this.opponentTrucoPoints = 0
+        this.imHand = false
+        this.pardas = 0
+        this.roundEnded = false
+        this.firstTurnPoint = 0
+        this.iPlayCard = false
+    }
+
     public isMyTurn(): boolean{
         return this.myTurn
     }
@@ -126,6 +139,10 @@ export default class GameStateManager{
     public givePoints(toMe:boolean, points: number){
         if(toMe)this.myPoints += points
         else this.opponentPoints += points
+        console.log("POINTS: ME " + this.myPoints + " - Opponent" + this.opponentPoints)
+        if(this.myPoints >= 15 || this.opponentPoints >= 15){
+            this.gameEventsManager.triggerOnGameEnd(this.myPoints > this.opponentPoints)
+        }
     }
     
 }

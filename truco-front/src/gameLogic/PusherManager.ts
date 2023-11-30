@@ -40,10 +40,16 @@ export default class PusherManager {
 
     disconnectChannel(channelName: string) {
         if (this.channels.has(channelName)) {
-            this.channels.get(channelName) as Channel;
             this.pusher?.unsubscribe(channelName);
             this.channels.delete(channelName);
         }
+    }
+
+    disconnectAll(){
+        this.channels.forEach((channel:Channel,channelName:string) => {
+            this.disconnectChannel(channelName)
+        })
+    
     }
 
     getChannel(channelName: string): Channel | null {

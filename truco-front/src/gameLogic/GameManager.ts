@@ -32,7 +32,6 @@ export default class GameManager {
         this.gameStateManager = new GameStateManager()
         this.cardsManager = new CardsManager()
         this.events = new GameEventsAdder()
-
         this.setLocalListeners()
     }
 
@@ -195,6 +194,10 @@ export default class GameManager {
         this.gameStateManager.setMyTurn()
     }
 
+    private gameEnd() {
+        this.regenerateInstance()
+    }
+
     private setLocalListeners() {
         this.gameEventsManager.addOnJoiningLobbyListener(this.onJoiningLobby.bind(this))
         this.gameEventsManager.addOnMatchFoundListener(this.onMatchFound.bind(this))
@@ -210,6 +213,7 @@ export default class GameManager {
         this.gameEventsManager.addOnGameStartListener(this.onGameStart.bind(this))
         this.gameEventsManager.addOnMyTurnStartListener(this.onMyTurnStart.bind(this))
         this.gameEventsManager.addOnFinishFirstTurnListener(this.finishFirstTurn.bind(this))
+        this.gameEventsManager.addOnGameEndListener(this.gameEnd.bind(this))
     }
 
     private setGameChannelListeners() {
@@ -234,4 +238,15 @@ export default class GameManager {
         }
         return GameManager.instance
     }
+
+    private regenerateInstance() {
+        this.pusherManager.disconnectAll()
+        this.gameMatchmakingManager.restart()
+        this.gameActionsManager.restart()
+        this.gameTurnsManager.restart() // 30 seconds for testing
+        this.gameStateManager.restart()
+        this.cardsManager.restart()
+    }
+    
+    
 }

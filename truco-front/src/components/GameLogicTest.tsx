@@ -44,6 +44,16 @@ function GameLogicTest() {
             const cardIndex = cards.findIndex((c) => c.number === card.number && c.suit === card.suit)
             cards.splice(cardIndex, 1)
         })
+
+        gameManager.events.addOnGameEndListener((IWon: boolean) => {
+            console.log("game end")
+            console.log(IWon)
+            setIsMyTurn(false)
+            setActions([])
+            setOpponentName("")
+            setCards([])
+            setIsSearching(false)
+        })
     },[])
     
     const toggleMatchmaking = () => {

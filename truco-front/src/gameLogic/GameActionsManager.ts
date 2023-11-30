@@ -32,6 +32,18 @@ export default class GameActionsManager {
         this.iCalledLast = false
     }
 
+    public restart() {
+        this.calledAction = GameAction.NONE
+        this.lastAction = GameAction.NONE
+        this.trucoAccumulated = 1
+        this.envidoAccumulated = 1
+        this.response = GameAction.NONE
+        this.isFirstTurn = true
+        this.possibleActions = new Map<GameAction, boolean>()
+        this.resetPossibleActions()
+        this.iCalledLast = false
+    }
+
     public getPossibleActions(): Map<GameAction, boolean> {
         return this.possibleActions
     }
