@@ -3,7 +3,9 @@ import TrucoLogo from './TrucoLogo';
 import PlayNowButton from './PlayNowButton';
 import FriendsList from './FriendsList';
 import HowToPlayButton from './HowToPlayButton';
+
 import LeaderBoardButton from '../components/LeaderBoardButton.tsx';
+
 
 const MainSideBar: React.FC = () => {
   return (
@@ -12,7 +14,9 @@ const MainSideBar: React.FC = () => {
       <PlayNowButton/>
       <FriendsList/>
       <HowToPlayButton/>
+
       <LeaderBoardButton/>
+
     </div>
   );
 };
