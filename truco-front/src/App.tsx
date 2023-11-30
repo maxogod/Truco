@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Routes} from "react-router-dom";
 import Main from "./pages/Main";
 import InGame from "./pages/InGame";
 import Rules from "./pages/Rules";
+import CardValuesImg from "./pages/CardValuesImg";
 import MainSideBar from "./components/MainSideBar";
 import profile from './assets/User_cicrle_duotone.png';
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/" element={<Main/>}/>
             <Route path="/play" element={<InGame/>}/>
             <Route path="/rules" element={<Rules/>}/>
+            <Route path="/cardValues" element={<CardValuesImg/>}/>
           </Routes>
       </div>
     </BrowserRouter>
