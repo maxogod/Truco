@@ -1,43 +1,47 @@
-/*
-import PusherUsageExample from "./components/PusherUsageExample"
-import { useEffect, useState } from "react";
-import connectChannel from "./utils/connectChannel";
-import { getChannelName } from "./utils/pusherNames";
-import Channel from "pusher-js/types/src/core/channels/channel";
-*/
-import { BrowserRouter, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes, Link} from "react-router-dom";
 import Main from "./pages/Main";
 import InGame from "./pages/InGame";
-import Rules from "./pages/Rules";
-import CardValuesImg from "./pages/CardValuesImg";
-import MainSideBar from "./components/MainSideBar";
-import profile from './assets/User_cicrle_duotone.png';
 
+import Profile from "./pages/Profile";
+import NavBar from "./components/NavBar";
+import LeaderBoard from "./pages/LeaderBoard";
+import Rules from "./pages/Rules";
+import LogIn from "./pages/LogIn";
+import SignUp from "./pages/SignUp";
+
+
+import MainSideBar from "./components/MainSideBar";
+//import GameLogicTest from "./components/GameLogicTest";
 function App() {
-  /*
-  const [channel, setChannel] = useState<Channel | null>(null);
-    useEffect(() => {
-      setChannel(connectChannel(getChannelName("test-channel")));
-    }, []);
-  */
-  {/*<PusherUsageExample channel={channel}/>*/}
+  
   return (
     <BrowserRouter>
       <div className='w-full h-[100vh] flex bg-background text-text'>
-        <img src={profile} alt="" className='absolute w-[86px] h-[86px] top-7 right-6 cursor-pointer z-20'/>
+        <NavBar/>
         <MainSideBar/>
-
           <Routes>
             <Route path="/" element={<Main/>}/>
             <Route path="/play" element={<InGame/>}/>
-            <Route path="/rules" element={<Rules/>}/>
-            <Route path="/cardValues" element={<CardValuesImg/>}/>
+            <Route path="/profile" element={<Profile/>}/>
+            <Route path="/leader-board" element={<LeaderBoard/>}/>
+            <Route path="/roules" element={<Rules/>}/>
+            <Route path="/login" element={<LogIn/>}/>
+            <Route path="/signup" element={<SignUp/>}/>
+
           </Routes>
       </div>
     </BrowserRouter>
   )
-}
+  }
+ /*
+  return (
+    <BrowserRouter>
+      <GameLogicTest />
+    </BrowserRouter>
 
+  )
+}
+*/
 
 
 export default App

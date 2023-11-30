@@ -21,9 +21,10 @@ class PusherController {
     public authenticate(req: Request, res: Response) {
         const socketId = req.body.socket_id;
         const channel = req.body.channel_name;
+        const user = JSON.parse(req.body.user);
         // This authenticates every user. Don't do this in production!
-        const authResponse = this.pusher.authorizeChannel(socketId, channel);
-        res.send(authResponse);
+        const authResponse = this.pusher.authorizeChannel(socketId, channel,user);
+        res.json(authResponse);
     }
 }
 
