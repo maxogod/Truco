@@ -4,6 +4,7 @@ import path from "path";
 import dotenv from "dotenv";
 import cors from "cors";
 import pusherRouter from "./routers/pusherRouter";
+import requestLogger from "./middlewares/requestLogger";
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,8 @@ if (process.env.DEBUG === "true") { // for development
 }
 
 app.use(express.static(path.join(__dirname, 'public'))); // for serving static files
+
+app.use(requestLogger); // for logging requests and status codes
 
 app.use("/api/pusher", pusherRouter);
 
