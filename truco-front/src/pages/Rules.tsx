@@ -25,7 +25,7 @@ The player who first reaches 30 points(or 15 points depending the variant of the
             </p>
             <hr className="h-px my-1 bg-gray-200 border-0 white:bg-gray-700"></hr>
             <h3 className='font-medium text-2xl my-2'>TRUCO</h3>
-            <p className=" mx-8 flex relative justify-evenly"> The players can make a bet called "**Truco**" any time in the game. If **Truco** is called and accepted, the players lose the chance to call **Envido**, but the other player can call envido over the truco call invalidating it (although it can be called again after envido). If there is no bet one point goes to the winner of the round. The players can raise the bet only one time in this order:
+            <p className=" mx-8 flex relative justify-evenly"> The players can make a bet called Truco any time in the game. If Truco is called and accepted, the players lose the chance to call Envido, but the other player can call envido over the truco call invalidating it (although it can be called again after envido). If there is no bet one point goes to the winner of the round. The players can raise the bet only one time in this order:
             </p>
             
             <ul className="list-disc list-inside mx-8 relative justify-evenly">
@@ -44,7 +44,7 @@ The player who first reaches 30 points(or 15 points depending the variant of the
             <hr className="h-px my-1 bg-gray-200 border-0 white:bg-gray-700"></hr>
             <h3 className='font-medium text-2xl my-2'>ENVIDO</h3>
 
-            <p className="mx-8 flex relative justify-evenly"> At the beginning of the round, a player in his turn can call for **envido** 
+            <p className="mx-8 flex relative justify-evenly"> At the beginning of the round, a player in his turn can call for envido 
             then an option will apear for the other player to respond to this bet in any of these ways:
             </p>
             <ul className="list-disc list-inside mx-8 relative justify-evenly">
@@ -54,7 +54,7 @@ The player who first reaches 30 points(or 15 points depending the variant of the
                 <li> <b>No quiero</b>: refuses to take the last bet. </li>
             </ul>
             <p className=" mx-8 flex relative justify-evenly"> 
-            A player can make any of the envido bets first, for example a player could start with real envido. If any of this bets is rejected wihout a raise the winner obtains 1 point. Players can't call **real envido** or **falta envido** more than one time.
+            A player can make any of the envido bets first, for example a player could start with real envido. If any of this bets is rejected wihout a raise the winner obtains 1 point. Players can't call real envido or falta envido more than one time.
             If no one calls for envido, there is no score for it.   
             The cards are counted as follow:
             </p>
