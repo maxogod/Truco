@@ -11,9 +11,9 @@ const Rules: React.FC = () => {
                  with a spanish deck (40 cards) wihout 8s, 9s or jokers. There are three ways of scoring points:           
             </p>
             <ul className="list-disc list-inside mx-8 relative justify-evenly">
-                <li>Truco: the players compare three cards of the same suits.</li>
-                <li>Envido: the players compare two cards of the same suits.</li>
-                <li>Flor: the cards are compared individually.</li>
+                <li> <b>Truco</b>: the players compare three cards of the same suits.</li>
+                <li> <b>Envido</b>: the players compare two cards of the same suits.</li>
+                <li> <b>Flor</b>: the cards are compared individually.</li>
             </ul>
 
             <p className=" mx-8 flex relative justify-evenly">After the Flor and Envido, 
@@ -29,17 +29,17 @@ The player who first reaches 30 points(or 15 points depending the variant of the
             </p>
             
             <ul className="list-disc list-inside mx-8 relative justify-evenly">
-                <li>Truco:  2 points.</li>
-                <li>Retruco: 3 points.</li>
-                <li>Vale 4: 4 points.</li>
+                <li> <b>Truco</b>:  2 points.</li>
+                <li> <b>Retruco</b>: 3 points.</li>
+                <li> <b>Vale 4</b>: 4 points.</li>
             </ul>
 
             <p className=" mx-8 flex relative justify-evenly"> Players can accept, reject or raise the bet:
             </p>
             <ul className="list-disc list-inside mx-8 relative justify-evenly">
-                <li>Accept:  the points in dispute go to the winner of the round.</li>
-                <li>Reject: the player loses the round and the points go to the other player.</li>
-                <li>Raise: the player can raise the bet.</li>
+                <li> <b>Accept</b>:  the points in dispute go to the winner of the round.</li>
+                <li> <b>Reject</b>: the player loses the round and the points go to the other player.</li>
+                <li> <b>Raise</b>: the player can raise the bet.</li>
             </ul>
             <hr className="h-px my-1 bg-gray-200 border-0 white:bg-gray-700"></hr>
             <h3 className='font-medium text-2xl my-2'>ENVIDO</h3>
@@ -48,10 +48,10 @@ The player who first reaches 30 points(or 15 points depending the variant of the
             then an option will apear for the other player to respond to this bet in any of these ways:
             </p>
             <ul className="list-disc list-inside mx-8 relative justify-evenly">
-                <li> Quiero: accepts to take the bet.</li>
-                <li> Envido: raise the bet by 2 points.</li>
-                <li> Real envido: raise the bet by 3 points.</li>
-                <li> No quiero: refuses to take the last bet. </li>
+                <li> <b>Quiero</b>: accepts to take the bet.</li>
+                <li> <b>Envido</b>: raise the bet by 2 points.</li>
+                <li> <b>Real envido</b>: raise the bet by 3 points.</li>
+                <li> <b>No quiero</b>: refuses to take the last bet. </li>
             </ul>
             <p className=" mx-8 flex relative justify-evenly"> 
             A player can make any of the envido bets first, for example a player could start with real envido. If any of this bets is rejected wihout a raise the winner obtains 1 point. Players can't call **real envido** or **falta envido** more than one time.
@@ -59,8 +59,8 @@ The player who first reaches 30 points(or 15 points depending the variant of the
             The cards are counted as follow:
             </p>
             <ul className="list-disc list-inside mx-8 relative justify-evenly">
-                <li> same suit: the sum of the two cards + 20 (10,11 and 12 add no value).</li>
-                <li> all different suits: the value of the highest card in the hand.</li>
+                <li> <b>same suit</b>: the sum of the two cards + 20 (10,11 and 12 add no value).</li>
+                <li> <b>all different suits</b>: the value of the highest card in the hand.</li>
             </ul>
 
             <p className=" mx-8 flex relative justify-evenly"> 
