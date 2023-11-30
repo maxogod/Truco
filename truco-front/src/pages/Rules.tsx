@@ -11,7 +11,7 @@ const Rules: React.FC = () => {
         <h1 className='font-bold text-3xl my-10 text-center'>Truco Rules</h1>
         <h2 className='font-medium text-2xl my-2'>HOW TO PLAY</h2>   
         <p>Truco is a card game played between two players (or in pairs)
-                 with a spanish deck (40 cards) wihout 8s, 9s or jokers. There are three ways of scoring points:           
+                 with a spanish deck (40 cards) wihout 8s, 9s or jokers. There are two ways of scoring points:           
 </p>
 <ul className="list-disc list-inside mx-8 relative justify-evenly">
                 <li> <b>Truco</b>: the players compare three cards of the same suits.</li>
@@ -49,6 +49,7 @@ The player who first reaches 30 points (or 15 points depending the variant of th
                 <li> <b>Quiero</b>: accepts to take the bet.</li>
                 <li> <b>Envido</b>: raise the bet by 2 points.</li>
                 <li> <b>Real envido</b>: raise the bet by 3 points.</li>
+                <li> <b>Falta envido</b>: if accepted the one who wins, wins the game.</li>
                 <li> <b>No quiero</b>: refuses to take the last bet. </li>
             </ul>
             <p> 
