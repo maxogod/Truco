@@ -23,6 +23,7 @@ const Rules: React.FC = () => {
 The player who first reaches 30 points(or 15 points depending the variant of the game) in total wins the match.
 
             </p>
+            <hr className="h-px my-1 bg-gray-200 border-0 white:bg-gray-700"></hr>
             <h3 className='font-medium text-2xl my-2'>TRUCO</h3>
             <p className=" mx-8 flex relative justify-evenly"> The players can make a bet called "**Truco**" any time in the game. If **Truco** is called and accepted, the players lose the chance to call **Envido**, but the other player can call envido over the truco call invalidating it (although it can be called again after envido). If there is no bet one point goes to the winner of the round. The players can raise the bet only one time in this order:
             </p>
@@ -40,6 +41,7 @@ The player who first reaches 30 points(or 15 points depending the variant of the
                 <li>Reject: the player loses the round and the points go to the other player.</li>
                 <li>Raise: the player can raise the bet.</li>
             </ul>
+            <hr className="h-px my-1 bg-gray-200 border-0 white:bg-gray-700"></hr>
             <h3 className='font-medium text-2xl my-2'>ENVIDO</h3>
 
             <p className="mx-8 flex relative justify-evenly"> At the beginning of the round, a player in his turn can call for **envido** 
