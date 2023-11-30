@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 
 const Score: React.FC = () => {
   const [teamAScore, setTeamAScore] = useState(0);
-    const [teamBScore, setTeamBScore] = useState(0);
+  const [teamBScore, setTeamBScore] = useState(0);
 
-    const handleScoreChange = (team, amount) => {
-      if (team === 'A') {
-        (teamAScore + amount >= 0) && setTeamAScore((prevScore) => prevScore + amount);
-      } else if (team === 'B') {
-        (teamAScore + amount >= 0) && setTeamBScore((prevScore) => prevScore + amount);
-      }
-    };
+  const handleScoreChange = (team, amount) => {
+    if (team === 'A') {
+      (teamAScore + amount >= 0) && setTeamAScore((prevScore) => prevScore + amount);
+    } else if (team === 'B') {
+      (teamAScore + amount >= 0) && setTeamBScore((prevScore) => prevScore + amount);
+    }
+  };
 
   return (
     <div className='w-[120px] h-[190px] rounded-xl bg-background text-white shadow-card flex justify-evenly rotate-6 absolute right-10'>

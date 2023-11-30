@@ -1,5 +1,5 @@
 import React from 'react';
-import send from '../assets/Send_hor_fill.png';
+import send from '../../assets/Send_hor_fill.png';
 
 const Chat: React.FC = () => {
   return (
@@ -9,9 +9,9 @@ const Chat: React.FC = () => {
           type="text"
           className='w-full h-[50px] border-2 border-primary bg-secondary rounded-3xl pl-4 pr-12'>
         </input>
-        <img src={send} alt="" className='absolute w-[30px] h-[30px] top-1/2 right-4 transform -translate-y-1/2 cursor-pointer'/>
+        <img src={send} alt="" className='absolute w-[30px] h-[30px] top-1/2 right-4 transform -translate-y-1/2 cursor-pointer' />
       </div>
-    </div>  
+    </div>
   );
 };
 

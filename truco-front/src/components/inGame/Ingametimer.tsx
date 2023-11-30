@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
 const Ingametimer = () => {
-  const [seconds, setSeconds] = useState(10);
+  const [seconds, setSeconds] = useState(60);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
 
       if (seconds > 0) {
-       setSeconds(seconds - 1)
+        setSeconds(seconds - 1)
       }
     }, 1000);
 

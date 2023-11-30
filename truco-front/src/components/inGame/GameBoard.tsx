@@ -1,4 +1,4 @@
-import GameCards from "./GameCards";
+import GameCards from "./cards/GameCards";
 import Score from "./Score";
 import TrucoActions from "./TrucoActions";
 
@@ -10,6 +10,6 @@ const GameBoard = () => {
             <Score />
         </div>
     );
-    }
+}
 
 export default GameBoard;
