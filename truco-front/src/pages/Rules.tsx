@@ -7,7 +7,7 @@ import cardsOrder from '../assets/cardscut.png';
 const Rules: React.FC = () => {
   return (
     <div className='w-full flex justify-evenly px-8 '>
-      <div className='w-1/2 flex-1 overflow-y-scroll'>
+      <div className='w-1/2 flex-1 overflow-y-scroll pb-10'>
         <h1 className='font-bold text-3xl my-10 text-center'>Truco Rules</h1>
         <h2 className='font-medium text-2xl my-2'>HOW TO PLAY</h2>   
         <p>Truco is a card game played between two players (or in pairs)
@@ -64,7 +64,6 @@ The player who first reaches 30 points (or 15 points depending the variant of th
             <p> the highest envido is worth 33 (7-6 of the same suit) and the lowest 0 (11-13 different suits; 10, 11 and 12 add no value).
 The players compare the two cards they have chosen and whoever has the highest score wins the points of envido. If there is a tie the winner is the hand-player.
             </p>
-            
 
 
       </div>
