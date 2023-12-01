@@ -1,21 +1,22 @@
-import { useRef, useState, useEffect } from 'react';
-import GameManager from '../../gameLogic/GameManager';
+import { useRef, useState, useContext } from 'react';
 import Timer from './matchmakingTimer';
-import { GameAction } from '../../gameLogic/type/GameAction';
-import { Card } from '../../gameLogic/Cards/Card';
 import { usePusherListeners } from '../../hooks/usePusherListeners';
+import { GameContext } from '../../context/gameContext';
 
 const PlayNowButton = () => {
+
+  const {
+    gameManager,
+    opponentName,
+    setOpponentName,
+    setCards,
+    setActions,
+    setIsMyTurn
+  } = useContext(GameContext)
 
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const isSearchingRef = useRef<boolean>(false);
 
-  const [opponentName, setOpponentName] = useState<string>("");
-  const [isMyTurn, setIsMyTurn] = useState<boolean>(false);
-  const [actions, setActions] = useState<GameAction[]>([])
-  const [cards, setCards] = useState<Card[]>([])
-
-  const gameManager = GameManager.getInstance()
 
   usePusherListeners(gameManager, setOpponentName, setCards, setActions, setIsMyTurn)
 

@@ -10,23 +10,26 @@ import NavBar from "./shared/NavBar";
 import MainSideBar from "./shared/MainSideBar";
 
 import GameLogicTest from "./components/examples/GameLogicTest";
+import { GameContextProvider } from "./context/gameContext";
 
 function App() {
   return (
     <BrowserRouter>
-      <div className='w-full h-[100vh] flex bg-background text-text'>
-        <NavBar />
-        <MainSideBar />
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/play" element={<InGame />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/leader-board" element={<LeaderBoard />} />
-          <Route path="/roules" element={<Rules />} />
-          <Route path="/login" element={<LogIn />} />
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </div>
+      <GameContextProvider>
+        <div className='w-full h-[100vh] flex bg-background text-text'>
+          <NavBar />
+          <MainSideBar />
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/play" element={<InGame />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/leader-board" element={<LeaderBoard />} />
+            <Route path="/roules" element={<Rules />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route path="/signup" element={<SignUp />} />
+          </Routes>
+        </div>
+      </GameContextProvider>
     </BrowserRouter>
   )
 
