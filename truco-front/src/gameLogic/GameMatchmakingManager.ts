@@ -1,4 +1,3 @@
-import generateRandomName from "../utils/generateRandomName";
 import GameEventsManager from "./GameEventsManager";
 import PusherManager from "./PusherManager";
 import { ChannelName, makeChannel } from "./type/ChannelName";

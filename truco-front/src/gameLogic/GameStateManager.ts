@@ -1,6 +1,4 @@
-import { Card } from "./Cards/Card"
 import GameEventsManager from "./GameEventsManager"
-import { GameAction, getEnvidoPoints, getTrucoPoints } from "./type/GameAction"
 
 export default class GameStateManager{
     private myPoints: number

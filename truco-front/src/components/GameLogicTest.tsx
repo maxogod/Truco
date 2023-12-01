@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import GameManager from '../gameLogic/GameManager';
 import { Card } from '../gameLogic/Cards/Card';
 import { GameActionMessage } from '../gameLogic/type/GameActionMessage';
