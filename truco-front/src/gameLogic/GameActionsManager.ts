@@ -35,10 +35,6 @@ export default class GameActionsManager {
         this.gameEventsManager = GameEventsManager.getInstance()
     }
 
-    public getLasActionMessage(): GameActionMessage | null {
-        return this.lastActionMessage
-    }
-
     public getPossibleActions(): Map<GameAction, boolean> {
         return this.possibleActions
     }
