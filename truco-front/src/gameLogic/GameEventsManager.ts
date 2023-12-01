@@ -4,6 +4,7 @@ import { GameActionMessage } from "./type/GameActionMessage";
 export default class GameEventsManager {
 
     public static instance: GameEventsManager
+    public static STOP_PROPAGATION_ERROR = new Error("Stop propagation")
 
     onMatchFoundListeners: ((opponentName: string) => void)[] = []
 
@@ -11,7 +12,7 @@ export default class GameEventsManager {
 
     onGameStartListeners: (() => void)[] = []
 
-    onOpponentFinishTurnListeners: ((gameActionMessage: GameActionMessage) => void)[] = []
+    onOpponentActionListeners: ((gameActionMessage: GameActionMessage) => void)[] = []
 
     onMyTurnEndListeners: (() => void)[] = []
 
@@ -19,17 +20,13 @@ export default class GameEventsManager {
 
     onGiveCardsListeners: (() => void)[] = []
 
-    onOpponentPlayCardListeners: ((card: Card) => void)[] = []
-
-    onMyPlayCardListeners: ((card: Card) => void)[] = []
+    onCardPlayedListeners: ((iCalled: boolean, card: Card) => void)[] = []
 
     onTrucoPointCalculationListeners: ((amIWinner: number) => void)[] = []
 
-    onEnvidoPlayedListeners: ((isAccepted: boolean) => void)[] = []
+    onEnvidoPlayedListeners: ((isAccepted: boolean, iCalled: boolean) => void)[] = []
 
-    onMyEnvidoPlayedListeners: ((isAccepted: boolean) => void)[] = []
-
-    onTrucoDeniedListeners: ((iDeny: boolean) => void)[] = []
+    onTrucoResponseListeners: ((isAccepted: boolean, iCalled: boolean) => void)[] = []
 
     onTrucoWinnerListeners: ((IWon: boolean) => void)[] = []
 
@@ -37,9 +34,15 @@ export default class GameEventsManager {
 
     onMyTurnStartListeners: (() => void)[] = []
 
-    onFinishFirstTurnListeners: (() => void)[] = []
+    onFinishEnvidoPhaseListeners: (() => void)[] = []
 
-    onGameEndListeners: ((IWon:boolean) => void)[] = []
+    onGameEndListeners: ((IWon: boolean) => void)[] = []
+
+    onIrAlMazoListeners: ((iCalled: boolean, isEnvidoPhase:boolean) => void)[] = []
+
+    onNewRoundListeners: (() => void)[] = []
+
+    onPointsUpdateListeners: ((myPoints:number, opponentPoints: number) => void)[] = []
 
 
 
@@ -55,8 +58,8 @@ export default class GameEventsManager {
         this.onGameStartListeners.push(handler)
     }
 
-    addOnOpponentFinishTurnListener(handler: (gameActionMessage: GameActionMessage) => void) {
-        this.onOpponentFinishTurnListeners.push(handler)
+    addOnOpponentActionListener(handler: (gameActionMessage: GameActionMessage) => void) {
+        this.onOpponentActionListeners.push(handler)
     }
 
     addOnMyTurnEndListener(handler: () => void) {
@@ -71,20 +74,16 @@ export default class GameEventsManager {
         this.onGiveCardsListeners.push(handler)
     }
 
-    addOnEnvidoPlayedListener(handler: (isAccepted: boolean) => void) {
+    addOnEnvidoPlayedListener(handler: (isAccepted: boolean, iCalled: boolean) => void) {
         this.onEnvidoPlayedListeners.push(handler)
     }
 
-    addOnTrucoDeniedListener(handler: (IDeny:boolean) => void) {
-        this.onTrucoDeniedListeners.push(handler)
+    addOnTrucoResponseListener(handler: (isAccepted: boolean, iCalled: boolean) => void) {
+        this.onTrucoResponseListeners.push(handler)
     }
 
-    addOnOpponentPlayCardListener(handler: (card: Card) => void) {
-        this.onOpponentPlayCardListeners.push(handler)
-    }
-
-    addOnMyPlayCardListener(handler: (card: Card) => void) {
-        this.onMyPlayCardListeners.push(handler)
+    addOnCardPlayedListener(handler: (iCalled: boolean, card: Card) => void) {
+        this.onCardPlayedListeners.push(handler)
     }
 
     addOnTrucoPointCalculationListener(handler: (amIWinner: number) => void) {
@@ -95,10 +94,6 @@ export default class GameEventsManager {
         this.onTrucoWinnerListeners.push(handler)
     }
 
-    addOnMyEnvidoPlayedListener(handler: (isAccepted: boolean) => void) {
-        this.onMyEnvidoPlayedListeners.push(handler)
-    }
-
     addOnGetCardsListener(handler: (cards: Card[]) => void) {
         this.onGetCardsListeners.push(handler)
     }
@@ -107,84 +102,231 @@ export default class GameEventsManager {
         this.onMyTurnStartListeners.push(handler)
     }
 
-    addOnFinishFirstTurnListener(handler: () => void) {
-        this.onFinishFirstTurnListeners.push(handler)
+    addOnFinishEnvidoPhaseListener(handler: () => void) {
+        this.onFinishEnvidoPhaseListeners.push(handler)
     }
 
-    addOnGameEndListener(handler: (IWon:boolean) => void) {
+    addOnGameEndListener(handler: (IWon: boolean) => void) {
         this.onGameEndListeners.push(handler)
     }
 
+    addOnIrAlMazoListener(handler: (iCalled: boolean, isEnvidoPhase:boolean) => void) {
+        this.onIrAlMazoListeners.push(handler)
+    }
+
+    addOnNewRoundListener(handler: () => void) {
+        this.onNewRoundListeners.push(handler)
+    }
+
+    addOnPointsUpdateListener(handler: (myPoints:number, opponentPoints:number) => void) {
+        this.onPointsUpdateListeners.push(handler)
+    }
+
     triggerOnMatchFound(opponentName: string) {
-        this.onMatchFoundListeners.forEach(listener => listener(opponentName))
+        try {
+            this.onMatchFoundListeners.forEach(listener => listener(opponentName))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
     triggerOnJoiningLobby(opponentName: string) {
-        this.onJoiningLobbyListeners.forEach(listener => listener(opponentName))
+        try {
+            this.onJoiningLobbyListeners.forEach(listener => listener(opponentName))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
     triggerOnGameStart() {
-        this.onGameStartListeners.forEach(listener => listener())
+        try {
+            this.onGameStartListeners.forEach(listener => listener())
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
-    triggerOnOpponentFinishTurn(gameActionMessage: GameActionMessage) {
-        this.onOpponentFinishTurnListeners.forEach(listener => listener(gameActionMessage))
+    triggerOnOpponentAction(gameActionMessage: GameActionMessage) {
+        try {
+            this.onOpponentActionListeners.forEach(listener => listener(gameActionMessage))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
     triggerOnMyTurnEnd() {
-        this.onMyTurnEndListeners.forEach(listener => listener())
+        try {
+            this.onMyTurnEndListeners.forEach(listener => listener())
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
     triggerOnTurnMissed() {
-        this.onTurnMissedListeners.forEach(listener => listener())
+        try {
+            this.onTurnMissedListeners.forEach(listener => listener())
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
     triggerOnGiveCards() {
-        this.onGiveCardsListeners.forEach(listener => listener())
+        try {
+            this.onGiveCardsListeners.forEach(listener => listener())
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
-    triggerOnEnvidoPlayed(isAccepted: boolean) {
-        this.onEnvidoPlayedListeners.forEach(listener => listener(isAccepted))
+    triggerOnEnvidoPlayed(isAccepted: boolean, iCalled: boolean) {
+        try {
+            this.onEnvidoPlayedListeners.forEach(listener => listener(isAccepted, iCalled))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
-    triggerOnMyEnvidoPlayed(isAccepted: boolean) {
-        this.onMyEnvidoPlayedListeners.forEach(listener => listener(isAccepted))
+    triggerOnTrucoResponse(isAccepted: boolean, iCalled: boolean) {
+        try {
+            this.onTrucoResponseListeners.forEach(listener => listener(isAccepted, iCalled))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
-    triggerOnTrucoDenied(iDeny: boolean) {
-        this.onTrucoDeniedListeners.forEach(listener => listener(iDeny))
-    }
-
-    triggerOnOpponentPlayCard(card: Card) {
-        this.onOpponentPlayCardListeners.forEach(listener => listener(card))
-    }
-
-    triggerOnMyPlayCard(card: Card) {
-        this.onMyPlayCardListeners.forEach(listener => listener(card))
+    triggerOnCardPlayed(iCalled: boolean, card: Card) {
+        try {
+            this.onCardPlayedListeners.forEach(listener => listener(iCalled, card))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
     triggerOnTrucoPointCalculation(amIWinner: number) {
-        this.onTrucoPointCalculationListeners.forEach(listener => listener(amIWinner))
+        try {
+            this.onTrucoPointCalculationListeners.forEach(listener => listener(amIWinner))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
     triggerOnTrucoWinner(IWon: boolean) {
-        this.onTrucoWinnerListeners.forEach(listener => listener(IWon))
+        try {
+            this.onTrucoWinnerListeners.forEach(listener => listener(IWon))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
     triggerOnGetCards(cards: Card[]) {
-        this.onGetCardsListeners.forEach(listener => listener(cards))
+        try {
+            this.onGetCardsListeners.forEach(listener => listener(cards))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
     triggerOnMyTurnStart() {
-        this.onMyTurnStartListeners.forEach(listener => listener())
+        try {
+            this.onMyTurnStartListeners.forEach(listener => listener())
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
-    triggerOnFinishFirstTurn() {
-        this.onFinishFirstTurnListeners.forEach(listener => listener())
+    triggerOnFinishEnvidoPhase() {
+        try {
+            this.onFinishEnvidoPhaseListeners.forEach(listener => listener())
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
     }
 
-    triggerOnGameEnd(IWon:boolean) {
-        this.onGameEndListeners.forEach(listener => listener(IWon))
+    triggerOnGameEnd(IWon: boolean) {
+        try {
+            this.onGameEndListeners.forEach(listener => listener(IWon))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
+    }
+
+    triggerOnIrAlMazo(iCalled: boolean, isEnvidoPhase:boolean) {
+        try {
+            this.onIrAlMazoListeners.forEach(listener => listener(iCalled,isEnvidoPhase))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
+    }
+
+    triggerOnNewRound() {
+        try {
+            this.onNewRoundListeners.forEach(listener => listener())
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+            throw e
+        }
+    }
+    triggerOnPointsUpdate(myPoints:number, opponentPoints:number) {
+        try {
+            this.onPointsUpdateListeners.forEach(listener => listener(myPoints,opponentPoints))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+        }
     }
 
     static getInstance(): GameEventsManager {

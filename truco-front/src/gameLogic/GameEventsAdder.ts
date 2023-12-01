@@ -18,8 +18,8 @@ export default class GameEventsAdder{
         this.gameEventsManager.addOnGameStartListener(handler)
     }
 
-    public addOnOpponentFinishTurnListener(handler: (gameActionMessage: GameActionMessage) => void) {
-        this.gameEventsManager.addOnOpponentFinishTurnListener(handler)
+    public addOnOpponentActionListener(handler: (gameActionMessage: GameActionMessage) => void) {
+        this.gameEventsManager.addOnOpponentActionListener(handler)
     }
 
     public addOnMyTurnEndListener(handler: () => void) {
@@ -34,11 +34,15 @@ export default class GameEventsAdder{
         this.gameEventsManager.addOnMyTurnStartListener(handler)
     }
 
-    public addOnMyPlayCardListener(handler: (card: Card) => void) {
-        this.gameEventsManager.addOnMyPlayCardListener(handler)
+    public addOnCardPlayedListener(handler: (iCalled: boolean, card: Card) => void) {
+        this.gameEventsManager.addOnCardPlayedListener(handler)
     }
 
     public addOnGameEndListener(handler: (IWon: boolean) => void) {
         this.gameEventsManager.addOnGameEndListener(handler)
+    }
+
+    public addOnPointsUpdateListener(handler: (myPoints: number, opponentPoints: number) => void) {
+        this.gameEventsManager.addOnPointsUpdateListener(handler)
     }
 }

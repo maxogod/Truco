@@ -41,12 +41,11 @@ export default class CardsManager {
     public playOpponentCard(card: Card): void {
         this.opponentPlayedCards.push(card)
         const calcualtePointWinner = this.myPlayedCards.length === this.opponentPlayedCards.length
-        this.gameEventsManager.triggerOnOpponentPlayCard(card)
         if(calcualtePointWinner){
             this.gameEventsManager.triggerOnTrucoPointCalculation(this.amIWinner())
         }
         if(this.myPlayedCards.length === 1 && this.opponentPlayedCards.length === 1){
-            this.gameEventsManager.triggerOnFinishFirstTurn()
+            this.gameEventsManager.triggerOnFinishEnvidoPhase()
         }
     }
 
@@ -58,7 +57,7 @@ export default class CardsManager {
             this.gameEventsManager.triggerOnTrucoPointCalculation(this.amIWinner())
         }
         if(this.myPlayedCards.length === 1 && this.opponentPlayedCards.length === 1){
-            this.gameEventsManager.triggerOnFinishFirstTurn()
+            this.gameEventsManager.triggerOnFinishEnvidoPhase()
         }
     }
     public getFirstCard(): Card {
@@ -97,7 +96,7 @@ export default class CardsManager {
         const myCard = this.getMyLastCard()
         const opponentCard = this.getOpponentLastCard()
 
-        return myCard.power === opponentCard.power ? 0 : (myCard.power > opponentCard.power ? 1 : -1)
+        return myCard.power === opponentCard.power ? 0 : (myCard.power < opponentCard.power ? 1 : -1)
     }
 
     private getMyLastCard(): Card {

@@ -42,7 +42,7 @@ export default class GameTurnsManager {
 
     public sendAction(action: GameActionMessage){
         this.gameChannel?.trigger(EventName.SEND_ACTION, action)
-        this.onMyTurnEnd()
+        this.gameEventsManager.triggerOnMyTurnEnd();
     }
 
     public giveCards(cards: Card[]){
@@ -57,19 +57,18 @@ export default class GameTurnsManager {
     public setUpGameChannel(gameChannel: Channel | null){
         if(!gameChannel) throw new Error("Could not set up game channel")
         this.gameChannel = gameChannel
-        this.gameChannel?.bind(EventName.SEND_ACTION, this.onOpponentFinishTurn.bind(this))
+        this.gameChannel?.bind(EventName.SEND_ACTION, this.onOpponentAction.bind(this))
     }
 
-    private onOpponentFinishTurn(gameActionMessage: GameActionMessage){
+    private onOpponentAction(gameActionMessage: GameActionMessage){
         this.startTurnTimer()
-        this.gameEventsManager.triggerOnOpponentFinishTurn(gameActionMessage)
+        this.gameEventsManager.triggerOnOpponentAction(gameActionMessage)
     }
 
 
-    private onMyTurnEnd(){
+    public onMyTurnEnd(){
         clearTimeout(this.currentTimer)
         this.currentTimer = 0
-        this.gameEventsManager.triggerOnMyTurnEnd();
     }
 
     private onTurnMissed(){

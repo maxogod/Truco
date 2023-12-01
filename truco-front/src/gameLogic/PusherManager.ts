@@ -11,7 +11,7 @@ export default class PusherManager {
 
     public initPusher(userName: string) {
         if (this.pusher) return;
-        Pusher.logToConsole = true; // TODO remove in production
+        //Pusher.logToConsole = true; // TODO remove in production
         this.pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
             cluster: 'sa1',
             // @ts-ignore

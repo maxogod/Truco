@@ -137,9 +137,10 @@ export default class GameStateManager{
     }
 
     public givePoints(toMe:boolean, points: number){
+        points = points || 1
         if(toMe)this.myPoints += points
         else this.opponentPoints += points
-        console.log("POINTS: ME " + this.myPoints + " - Opponent" + this.opponentPoints)
+        this.gameEventsManager.triggerOnPointsUpdate(this.myPoints, this.opponentPoints)
         if(this.myPoints >= 15 || this.opponentPoints >= 15){
             this.gameEventsManager.triggerOnGameEnd(this.myPoints > this.opponentPoints)
         }
