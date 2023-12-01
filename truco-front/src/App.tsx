@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Main from "./pages/Main";
 import InGame from "./pages/InGame";
-
 import Profile from "./pages/Profile";
 import LeaderBoard from "./pages/LeaderBoard";
 import Rules from "./pages/Rules";
@@ -10,7 +9,6 @@ import SignUp from "./pages/SignUp";
 import NavBar from "./shared/NavBar";
 import MainSideBar from "./shared/MainSideBar";
 
-import GameLogicTest from "./components/examples/GameLogicTest";
 import { GameContextProvider } from "./context/gameContext";
 
 function App() {
