@@ -1,6 +1,4 @@
-import { Card } from "./Cards/Card"
 import GameEventsManager from "./GameEventsManager"
-import { GameAction, getEnvidoPoints, getTrucoPoints } from "./type/GameAction"
 
 export default class GameStateManager{
     private myPoints: number
@@ -27,6 +25,19 @@ export default class GameStateManager{
         this.firstTurnPoint = 0
         this.iPlayCard = false
         this.gameEventsManager = GameEventsManager.getInstance()
+    }
+
+    public restart(){
+        this.myPoints = 0
+        this.opponentPoints = 0
+        this.myTurn = false
+        this.myTrucoPoints = 0
+        this.opponentTrucoPoints = 0
+        this.imHand = false
+        this.pardas = 0
+        this.roundEnded = false
+        this.firstTurnPoint = 0
+        this.iPlayCard = false
     }
 
     public isMyTurn(): boolean{
@@ -124,8 +135,13 @@ export default class GameStateManager{
     }
 
     public givePoints(toMe:boolean, points: number){
+        points = points || 1
         if(toMe)this.myPoints += points
         else this.opponentPoints += points
+        this.gameEventsManager.triggerOnPointsUpdate(this.myPoints, this.opponentPoints)
+        if(this.myPoints >= 15 || this.opponentPoints >= 15){
+            this.gameEventsManager.triggerOnGameEnd(this.myPoints > this.opponentPoints)
+        }
     }
     
 }

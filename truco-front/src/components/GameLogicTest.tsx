@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import GameManager from '../gameLogic/GameManager';
 import { Card } from '../gameLogic/Cards/Card';
 import { GameActionMessage } from '../gameLogic/type/GameActionMessage';
@@ -40,9 +40,29 @@ function GameLogicTest() {
             setActions([])
         })
 
-        gameManager.events.addOnMyPlayCardListener((card: Card) => {
+        gameManager.events.addOnCardPlayedListener((iCalled:boolean, card: Card) => {
+            if(!iCalled){
+                console.log("opponent played card: " + card.number + " " + card.suit)
+                return;
+            }
+            console.log("i played card: " + card.number + " " + card.suit)
             const cardIndex = cards.findIndex((c) => c.number === card.number && c.suit === card.suit)
             cards.splice(cardIndex, 1)
+        })
+
+        gameManager.events.addOnGameEndListener((IWon: boolean) => {
+            console.log("game end")
+            console.log(IWon)
+            setIsMyTurn(false)
+            setActions([])
+            setOpponentName("")
+            setCards([])
+            setIsSearching(false)
+        })
+        gameManager.events.addOnPointsUpdateListener((myPoints: number, opponentPoints: number) => {
+            console.log("points update")
+            console.log(myPoints)
+            console.log(opponentPoints)
         })
     },[])
     

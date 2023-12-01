@@ -1,4 +1,3 @@
-import generateRandomName from "../utils/generateRandomName";
 import GameEventsManager from "./GameEventsManager";
 import PusherManager from "./PusherManager";
 import { ChannelName, makeChannel } from "./type/ChannelName";
@@ -24,6 +23,10 @@ export default class GameMatchmakingManager {
         this.pusherManager = pusherManger
         this.gameEventsManager = GameEventsManager.getInstance()
         this.userName = ""
+    }
+
+    public restart() {
+        this.matchChannel = null
     }
 
     public setUserName(userName: string) {
