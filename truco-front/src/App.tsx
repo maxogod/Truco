@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import Main from "./pages/Main";
 import InGame from "./pages/InGame";
+
 import Profile from "./pages/Profile";
 import LeaderBoard from "./pages/LeaderBoard";
 import Rules from "./pages/Rules";

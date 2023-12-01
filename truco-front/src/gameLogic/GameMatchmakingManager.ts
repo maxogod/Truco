@@ -25,6 +25,10 @@ export default class GameMatchmakingManager {
         this.userName = ""
     }
 
+    public restart() {
+        this.matchChannel = null
+    }
+
     public setUserName(userName: string) {
         this.userName = userName
     }

@@ -11,7 +11,7 @@ export default class PusherManager {
 
     public initPusher(userName: string) {
         if (this.pusher) return;
-        Pusher.logToConsole = true; // TODO remove in production
+        //Pusher.logToConsole = true; // TODO remove in production
         this.pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
             cluster: 'sa1',
             // @ts-ignore
@@ -40,10 +40,16 @@ export default class PusherManager {
 
     disconnectChannel(channelName: string) {
         if (this.channels.has(channelName)) {
-            this.channels.get(channelName) as Channel;
             this.pusher?.unsubscribe(channelName);
             this.channels.delete(channelName);
         }
+    }
+
+    disconnectAll(){
+        this.channels.forEach((channel:Channel,channelName:string) => {
+            this.disconnectChannel(channelName)
+        })
+    
     }
 
     getChannel(channelName: string): Channel | null {

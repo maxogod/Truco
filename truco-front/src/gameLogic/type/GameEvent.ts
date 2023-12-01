@@ -1,0 +1,20 @@
+export enum GameEvent{
+    MatchFound = "MatchFound",
+    JoiningLobby = "JoiningLobby",
+    GameStart = "GameStart",
+    OpponentFinishTurn = "OpponentFinishTurn",
+    MyTurnEnd = "MyTurnEnd",
+    TurnMissed = "TurnMissed",
+    GiveCards = "GiveCards",
+    OpponentPlayCard = "OpponentPlayCard",
+    MyPlayCard = "MyPlayCard",
+    TrucoPointCalculation = "TrucoPointCalculation",
+    EnvidoPlayed = "EnvidoPlayed",
+    MyEnvidoPlayed = "MyEnvidoPlayed",
+    TrucoDenied = "TrucoDenied",
+    TrucoWinner = "TrucoWinner",
+    GetCards = "GetCards",
+    MyTurnStart = "MyTurnStart",
+    FinishFirstTurn = "FinishFirstTurn",
+    GameEnd = "GameEnd"
+}
