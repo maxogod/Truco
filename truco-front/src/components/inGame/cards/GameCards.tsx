@@ -1,31 +1,37 @@
-import { useState } from 'react';
-import Card from './Card';
+import { useContext } from 'react';
+import CardComponent from './Card';
+import { GameContext } from '../../../context/gameContext';
+import { GameActionMessage } from '../../../gameLogic/type/GameActionMessage';
+import { GameAction } from '../../../gameLogic/type/GameAction';
+import { Card, Suit } from '../../../gameLogic/Cards/Card';
 
-const GameCards = ({ myCards, opponentCards }:
-  { myCards: CardType[], opponentCards: CardType[] }) => {
+const GameCards = () => {
 
-  const [cardsOnBoard, setCardsOnBoard] = useState<CardType[]>([])
+  const { gameManager, cards, setCards, cardsOnBoard, setCardsOnBoard } = useContext(GameContext)
 
-  const playCard = (card: CardType) => {
-    setCardsOnBoard([...cardsOnBoard, card])
+  const playCard = (card: Card) => {
+    const cardIndex = cards.findIndex(c => c.number === card.number && c.suit === card.suit)
+    gameManager.sendAction(new GameActionMessage(GameAction.PLACE_CARD, { card: cards[cardIndex] }))
+    setCards((prev) => prev.filter(c => c.number !== card.number && c.suit !== card.suit))
+    setCardsOnBoard((prev) => [...prev, card])
   }
 
   return (
     <div className='w-[60%] h-full relative flex justify-center items-center'>
 
       <div className='w-full h-fit flex justify-center absolute bottom-10'>
-        {myCards.map((card, index) => (
-          <Card
+        {cards.map((card, index) => (
+          <CardComponent
             cardProps={card}
             key={"myCards" + index}
             onClick={playCard} />
         ))}
       </div>
 
-      <div className='w-full h-fit flex justify-center absolute top-10'>
-        {opponentCards.map((card, index) => (
-          <Card
-            cardProps={card}
+      <div id='opponent-cards' className='w-full h-fit flex justify-center absolute top-10'>
+        {Array.from(Array(3 - (cardsOnBoard.length - (3 - cards.length))).keys()).map((_, index) => (
+          <CardComponent
+            cardProps={{ number: 1, suit: Suit.Espada, power: 0 }}
             key={"oponentCards" + index} />
         ))}
       </div>
@@ -34,7 +40,7 @@ const GameCards = ({ myCards, opponentCards }:
         <div className='w-full h-fit flex gap-7 justify-start'>
           {cardsOnBoard.map((card, index) => (
             index % 2 === 0 &&
-            <Card
+            <CardComponent
               cardProps={card}
               key={"cardsOnBoard" + index} />
           ))}
@@ -45,7 +51,7 @@ const GameCards = ({ myCards, opponentCards }:
         <div className='w-full h-fit flex gap-7 justify-start'>
           {cardsOnBoard.map((card, index) => (
             index % 2 !== 0 &&
-            <Card
+            <CardComponent
               cardProps={card}
               key={"cardsOnBoard" + index} />
           ))}

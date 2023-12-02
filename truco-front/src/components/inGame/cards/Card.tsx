@@ -1,6 +1,7 @@
+import { Card } from "../../../gameLogic/Cards/Card";
 
-export default function Card({ cardProps, onClick }:
-  { cardProps: CardType, onClick?: (card: CardType) => void }) {
+export default function CardComponent({ cardProps, onClick }:
+  { cardProps: Card, onClick?: (card: Card) => void }) {
   return (
     <img
       src={`./src/assets/Cards/${cardProps.number}-${cardProps.suit.toLowerCase()}.png`}

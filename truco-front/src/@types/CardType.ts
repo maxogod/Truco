@@ -4,3 +4,5 @@ interface CardType {
     suit: string
     power: number
 }
+
+export default CardType

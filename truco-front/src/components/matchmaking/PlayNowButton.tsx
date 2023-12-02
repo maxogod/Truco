@@ -8,17 +8,13 @@ const PlayNowButton = () => {
   const {
     gameManager,
     opponentName,
-    setOpponentName,
-    setCards,
-    setActions,
-    setIsMyTurn
   } = useContext(GameContext)
 
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const isSearchingRef = useRef<boolean>(false);
 
 
-  usePusherListeners(gameManager, setOpponentName, setCards, setActions, setIsMyTurn)
+  usePusherListeners()
 
   const toggleMatchmaking = () => {
     if (isSearchingRef.current) {

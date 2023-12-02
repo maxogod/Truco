@@ -1,16 +1,20 @@
-import { useEffect } from "react"
-import GameManager from "../gameLogic/GameManager"
+import { useContext, useEffect } from "react"
 import { Card } from "../gameLogic/Cards/Card"
-import { GameAction } from "../gameLogic/type/GameAction"
 import { useNavigate } from "react-router-dom"
+import { GameContext } from "../context/gameContext"
 
 export const usePusherListeners = (
-    gameManager: GameManager,
-    setOpponentName: (name: string) => void,
-    setCards: Function,
-    setActions: (actions: GameAction[]) => void,
-    setIsMyTurn: (isMyTurn: boolean) => void,
 ) => {
+
+    const {
+        gameManager,
+        setOpponentName,
+        setCards,
+        setActions,
+        setTimerActive,
+        setIsMyTurn,
+        setCardsOnBoard,
+    } = useContext(GameContext)
 
     const navigate = useNavigate()
 
@@ -24,6 +28,7 @@ export const usePusherListeners = (
         })
 
         gameManager.events.addOnGetCardsListener((cards: Card[]) => {
+            setCardsOnBoard([])
             setCards(cards)
         })
 
@@ -38,21 +43,24 @@ export const usePusherListeners = (
             }
             setActions(newActions)
             setIsMyTurn(true)
+            setTimerActive(true)
         })
 
         gameManager.events.addOnMyTurnEndListener(() => {
             console.log("my turn end")
             setIsMyTurn(false)
+            setTimerActive(false)
             setActions([])
         })
 
         gameManager.events.addOnCardPlayedListener((iCalled: boolean, card: Card) => {
             if (!iCalled) {
                 console.log("opponent played card: " + card.number + " " + card.suit)
+                setCardsOnBoard((cards: Card[]) => [...cards, card])
                 return;
             }
             console.log("i played card: " + card.number + " " + card.suit)
-            setCards((cards: Card[]) => cards.filter((c) => c.number !== card.number || c.suit !== card.suit))
+            setCards((cards: Card[]) => cards.filter((c) => c.number !== card.number && c.suit !== card.suit))
         })
 
         gameManager.events.addOnGameEndListener((IWon: boolean) => {

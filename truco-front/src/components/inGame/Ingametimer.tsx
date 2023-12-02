@@ -1,19 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { GameContext } from '../../context/gameContext';
 
 const Ingametimer = () => {
+
+  const { timerActive } = useContext(GameContext);
+
   const [seconds, setSeconds] = useState(60);
 
   useEffect(() => {
+
+    if (!timerActive) {
+      setSeconds(60);
+    }
+
     const intervalId = setInterval(() => {
 
-      if (seconds > 0) {
+      if (seconds > 0 && timerActive) {
         setSeconds(seconds - 1)
       }
     }, 1000);
 
     // Cleanup function to clear the interval when the component is unmounted
     return () => clearInterval(intervalId);
-  }, [seconds]); // Dependency array ensures the effect runs everytime seconds changes
+  }, [seconds, timerActive]); // Dependency array ensures the effect runs everytime seconds changes
 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
