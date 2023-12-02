@@ -31,29 +31,12 @@ const Ingametimer = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.heading}>Timer</h1>
-      <p style={styles.timer}>Elapsed Time: {formatTime(seconds)}</p>
+    <div className='text-center mt-10'>
+      <p
+        style={seconds < 10 ? { color: '#f54e65' } : {}}
+        className='text-primary font-bold text-3xl'>{formatTime(seconds)}</p>
     </div>
   );
-};
-
-const styles = {
-  container: {
-    textAlign: 'center',
-    marginTop: '50px',
-    color: '#333',
-  },
-  heading: {
-    fontSize: '24px',
-    color: '#333',
-  },
-  timer: {
-    fontSize: '36px',
-    color: '#4285f4',
-    fontWeight: 'bold',
-    marginTop: '10px',
-  },
 };
 
 export default Ingametimer;
