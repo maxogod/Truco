@@ -39,7 +39,7 @@ const PlayNowButton = () => {
         className='w-[80%] h-[50px] bg-primary rounded-lg flex justify-center items-center'>
         <h2 className='font-medium text-2xl'>{isSearching ? "Cancel" : "Play Now"}</h2>
       </button>
-      {isSearching && <Timer />}
+      {isSearching && !opponentName && <Timer />}
     </>
   );
 };

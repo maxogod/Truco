@@ -14,6 +14,8 @@ export const usePusherListeners = (
         setTimerActive,
         setIsMyTurn,
         setCardsOnBoard,
+        setMyPoints,
+        setOpponentPoints,
     } = useContext(GameContext)
 
     const navigate = useNavigate()
@@ -78,6 +80,8 @@ export const usePusherListeners = (
             console.log("points update")
             console.log(myPoints)
             console.log(opponentPoints)
+            setMyPoints(myPoints)
+            setOpponentPoints(opponentPoints)
         })
     }, [])
 }

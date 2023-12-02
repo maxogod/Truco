@@ -17,6 +17,10 @@ interface GameContextType {
     setCardsOnBoard: React.Dispatch<React.SetStateAction<Card[]>>
     timerActive: boolean
     setTimerActive: React.Dispatch<React.SetStateAction<boolean>>
+    myPoints: number
+    setMyPoints: React.Dispatch<React.SetStateAction<number>>
+    opponentPoints: number
+    setOpponentPoints: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const GameContext = createContext<GameContextType>({
@@ -33,6 +37,10 @@ export const GameContext = createContext<GameContextType>({
     setCards: () => { },
     cardsOnBoard: [],
     setCardsOnBoard: () => { },
+    myPoints: 0,
+    setMyPoints: () => { },
+    opponentPoints: 0,
+    setOpponentPoints: () => { },
 })
 
 export const GameContextProvider = ({ children }: { children: ReactNode }) => {
@@ -47,6 +55,8 @@ export const GameContextProvider = ({ children }: { children: ReactNode }) => {
 
     const [cards, setCards] = useState<Card[]>([])
     const [cardsOnBoard, setCardsOnBoard] = useState<Card[]>([])
+    const [myPoints, setMyPoints] = useState<number>(0)
+    const [opponentPoints, setOpponentPoints] = useState<number>(0)
 
     return (
         <GameContext.Provider value={
@@ -64,6 +74,10 @@ export const GameContextProvider = ({ children }: { children: ReactNode }) => {
                 setCards,
                 cardsOnBoard,
                 setCardsOnBoard,
+                myPoints,
+                setMyPoints,
+                opponentPoints,
+                setOpponentPoints
             }
         }>
             {children}
