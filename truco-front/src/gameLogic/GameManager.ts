@@ -145,6 +145,8 @@ export default class GameManager {
         if (amIWinner===-1 && this.gameStateManager.isMyTurn()) {
             this.turnFix = true
             this.forceTurnEnd()
+        }else{
+            this.gameStateManager.setIPlayCard()
         }
     }
 
@@ -165,6 +167,7 @@ export default class GameManager {
     }
 
     private forceTurnEnd() {
+        this.gameStateManager.setOppoentPlaysCard()
         this.sendAction(new GameActionMessage(GameAction.NONE, {}))
     }
 
