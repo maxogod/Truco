@@ -22,7 +22,7 @@ export default class GameManager {
     private gameStateManager: GameStateManager;
     private cardsManager: CardsManager;
     public events: GameEventsAdder;
-    private turnFix: boolean 
+    private turnFix: boolean
 
     private constructor() {
         this.pusherManager = new PusherManager()
@@ -70,9 +70,9 @@ export default class GameManager {
         this.gameActionsManager.handleAction(gameActionMessage)
         this.gameStateManager.setMyTurn()
         this.gameActionsManager.lateTrigger()
-        if(!this.turnFix){
+        if (!this.turnFix) {
             this.gameEventsManager.triggerOnMyTurnStart()
-        }else{
+        } else {
             this.turnFix = false
         }
     }
@@ -125,7 +125,7 @@ export default class GameManager {
         }
     }
 
-    private handleTurnFix(iCalled: boolean, isNewRound:boolean = false) {
+    private handleTurnFix(iCalled: boolean, isNewRound: boolean = false) {
         if (!(iCalled || this.gameStateManager.doIPlayCard()) || isNewRound) {
             this.turnFix = true
             this.forceTurnEnd()
@@ -135,13 +135,19 @@ export default class GameManager {
     private onMyTurnEnd() {
         this.gameStateManager.setOpponentTurn()
         this.gameTurnsManager.onMyTurnEnd()
-        if(this.turnFix){
+        if (this.turnFix) {
             throw GameEventsManager.STOP_PROPAGATION_ERROR
         }
     }
 
     private onTrucoPointCalculation(amIWinner: number) {
         this.gameStateManager.trucoPointCalculation(amIWinner)
+        if (amIWinner===-1 && this.gameStateManager.isMyTurn()) {
+            this.turnFix = true
+            this.forceTurnEnd()
+        }else{
+            this.gameStateManager.setIPlayCard()
+        }
     }
 
     private onTrucoWinner(IWon: boolean) {
@@ -161,6 +167,7 @@ export default class GameManager {
     }
 
     private forceTurnEnd() {
+        this.gameStateManager.setOppoentPlaysCard()
         this.sendAction(new GameActionMessage(GameAction.NONE, {}))
     }
 
@@ -211,8 +218,8 @@ export default class GameManager {
         this.regenerateInstance()
     }
 
-    private onIrAlMazo(iCalled:boolean, isEnvidoPhase:boolean){
-        if(isEnvidoPhase){
+    private onIrAlMazo(iCalled: boolean, isEnvidoPhase: boolean) {
+        if (isEnvidoPhase) {
             this.gameStateManager.givePoints(!iCalled, this.gameActionsManager.getEnvidoAccum())
         }
         this.gameStateManager.givePoints(!iCalled, this.gameActionsManager.getTrucoAccum())
