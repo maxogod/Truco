@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import CardComponent from './Card';
 import { GameContext } from '../../../context/gameContext';
 import { GameActionMessage } from '../../../gameLogic/type/GameActionMessage';

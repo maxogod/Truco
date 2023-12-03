@@ -1,4 +1,4 @@
-import { useRef, useState, useContext } from 'react';
+import { useRef, useState, useContext, useEffect } from 'react';
 import Timer from './matchmakingTimer';
 import { usePusherListeners } from '../../hooks/usePusherListeners';
 import { GameContext } from '../../context/gameContext';
@@ -11,10 +11,18 @@ const PlayNowButton = () => {
   } = useContext(GameContext)
 
   const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [gameEnded, setGameEnded] = useState<boolean>(false);
   const isSearchingRef = useRef<boolean>(false);
 
 
-  usePusherListeners()
+  usePusherListeners(setGameEnded)
+
+  useEffect(() => {
+    if (gameEnded) {
+      setIsSearching(false)
+      isSearchingRef.current = false
+    }
+  }, [gameEnded])
 
   const toggleMatchmaking = () => {
     if (isSearchingRef.current) {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { GameContext } from "../context/gameContext"
 
 export const usePusherListeners = (
+    setGameEnded: (gameEnded: boolean) => void,
 ) => {
 
     const {
@@ -86,6 +87,7 @@ export const usePusherListeners = (
         gameManager.events.addOnGameEndListener((IWon: boolean) => {
             console.log("game end")
             console.log(IWon)
+            setGameEnded(true)
             setIsMyTurn(false)
             setActions([])
             setOpponentName("")
