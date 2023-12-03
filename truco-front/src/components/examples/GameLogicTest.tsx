@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import GameManager from '../gameLogic/GameManager';
-import { Card } from '../gameLogic/Cards/Card';
-import { GameActionMessage } from '../gameLogic/type/GameActionMessage';
-import { GameAction } from '../gameLogic/type/GameAction';
+import GameManager from '../../gameLogic/GameManager';
+import { Card } from '../../gameLogic/Cards/Card';
+import { GameActionMessage } from '../../gameLogic/type/GameActionMessage';
+import { GameAction } from '../../gameLogic/type/GameAction';
 
 function GameLogicTest() {
-    const [isSearching, setIsSearching] = useState<boolean>(false); 
+    const [isSearching, setIsSearching] = useState<boolean>(false);
     const [opponentName, setOpponentName] = useState<string>("");
     const [isMyTurn, setIsMyTurn] = useState<boolean>(false);
     const [actions, setActions] = useState<GameAction[]>([])
@@ -26,8 +26,8 @@ function GameLogicTest() {
             console.log("my turn start")
             const possibleActions = gameManager.getPossibleActions()
             const newActions = []
-            for(let action of possibleActions){
-                if(action[1]){
+            for (let action of possibleActions) {
+                if (action[1]) {
                     newActions.push(action[0])
                 }
             }
@@ -40,8 +40,8 @@ function GameLogicTest() {
             setActions([])
         })
 
-        gameManager.events.addOnCardPlayedListener((iCalled:boolean, card: Card) => {
-            if(!iCalled){
+        gameManager.events.addOnCardPlayedListener((iCalled: boolean, card: Card) => {
+            if (!iCalled) {
                 console.log("opponent played card: " + card.number + " " + card.suit)
                 return;
             }
@@ -64,24 +64,24 @@ function GameLogicTest() {
             console.log(myPoints)
             console.log(opponentPoints)
         })
-    },[])
-    
+    }, [])
+
     const toggleMatchmaking = () => {
         setIsSearching(!isSearching)
-        if(isSearching){
+        if (isSearching) {
             gameManager.leaveMatchmaking()
-        }else{
+        } else {
             gameManager.joinMatchmaking()
         }
     }
 
-    const playAction = (actionName:GameAction) => {
+    const playAction = (actionName: GameAction) => {
         let payload = {}
-        if(actionName === GameAction.PLACE_CARD){
-            payload = {card: cards[0]}
+        if (actionName === GameAction.PLACE_CARD) {
+            payload = { card: cards[0] }
             setCards(cards.slice(1))
         }
-        gameManager.sendAction(new GameActionMessage(actionName,payload))
+        gameManager.sendAction(new GameActionMessage(actionName, payload))
     }
     const buttonStyle = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
 
@@ -89,9 +89,9 @@ function GameLogicTest() {
         <div>
             <button className={buttonStyle} onClick={toggleMatchmaking}>"{isSearching ? "Stop" : "Play"}"</button>
             {opponentName && <div>Match found! Opponent: {opponentName}</div>}
-            {isMyTurn?actions.map((action, index) => {
+            {isMyTurn ? actions.map((action, index) => {
                 return <button className={buttonStyle} key={index} onClick={() => playAction(action)}>{action}</button>
-            }):""}
+            }) : ""}
         </div>
     )
 }

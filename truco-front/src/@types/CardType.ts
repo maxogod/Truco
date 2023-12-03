@@ -1,6 +1,8 @@
 
-export default interface CardType {
-    suit: string,
-    value: number
-  }
-  
+interface CardType {
+    number: number
+    suit: string
+    power: number
+}
+
+export default CardType

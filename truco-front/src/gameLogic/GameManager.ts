@@ -29,7 +29,7 @@ export default class GameManager {
         this.gameEventsManager = GameEventsManager.getInstance()
         this.gameMatchmakingManager = new GameMatchmakingManager(this.pusherManager)
         this.gameActionsManager = new GameActionsManager()
-        this.gameTurnsManager = new GameTurnsManager(30000) // 30 seconds for testing
+        this.gameTurnsManager = new GameTurnsManager(60000) // 60 seconds for testing
         this.gameStateManager = new GameStateManager()
         this.cardsManager = new CardsManager()
         this.events = new GameEventsAdder()
@@ -277,7 +277,7 @@ export default class GameManager {
         this.pusherManager.disconnectAll()
         this.gameMatchmakingManager.restart()
         this.gameActionsManager.restart()
-        this.gameTurnsManager.restart() // 30 seconds for testing
+        this.gameTurnsManager.restart() // 60 seconds for testing
         this.gameStateManager.restart()
         this.cardsManager.restart()
     }

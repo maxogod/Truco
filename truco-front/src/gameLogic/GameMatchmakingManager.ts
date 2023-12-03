@@ -37,18 +37,18 @@ export default class GameMatchmakingManager {
         return this.userName
     }
 
-    private onConnectedToMatchmaking(members: Members){
-            let otherMember: any = null;
+    private onConnectedToMatchmaking(members: Members) {
+        let otherMember: any = null;
 
-            if (members.count <= 1) return
-            members.each((member: any) => {
-                if (member.id === members.me.id || otherMember) return
-                otherMember = member
-            })
-            if (otherMember) {
-                this.onMatchFound({opponentName: otherMember.info.name,join:true})
-            }
+        if (members.count <= 1) return
+        members.each((member: any) => {
+            if (member.id === members.me.id || otherMember) return
+            otherMember = member
+        })
+        if (otherMember) {
+            this.onMatchFound({ opponentName: otherMember.info.name, join: true })
         }
+    }
 
     public joinMatchmaking() {
         this.joinSelfLobby()
@@ -59,20 +59,20 @@ export default class GameMatchmakingManager {
         this.pusherManager.disconnectChannel(ChannelName.Matchmaking)
     }
 
-    private onMatchFound(data:any) {
+    private onMatchFound(data: any) {
         const opponentName = data.opponentName
         this.pusherManager.disconnectChannel(ChannelName.Matchmaking)
-        if(data.join){
+        if (data.join) {
             this.onJoiningLobby(opponentName)
-        }else{
+        } else {
             this.matchChannel = this.pusherManager.connectChannel(makeChannel(this.userName))
             this.gameEventsManager.triggerOnMatchFound(opponentName)
         }
     }
 
-    private onJoiningLobby(opponentName: string){
-        this.matchChannel = this.pusherManager.connectChannel(makeChannel(opponentName), (_, opponentChannel) =>{
-            opponentChannel.trigger(EventName.MATCH_FOUND, {join:false,opponentName:this.userName})
+    private onJoiningLobby(opponentName: string) {
+        this.matchChannel = this.pusherManager.connectChannel(makeChannel(opponentName), (_, opponentChannel) => {
+            opponentChannel.trigger(EventName.MATCH_FOUND, { join: false, opponentName: this.userName })
         })
         this.pusherManager.disconnectChannel(makeChannel(this.userName))
         this.gameEventsManager.triggerOnJoiningLobby(opponentName)
