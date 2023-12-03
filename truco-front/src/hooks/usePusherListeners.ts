@@ -10,6 +10,7 @@ export const usePusherListeners = (
         gameManager,
         setOpponentName,
         setCards,
+        setOpponentCardsNumber,
         setActions,
         setTimerActive,
         setIsMyTurn,
@@ -30,8 +31,11 @@ export const usePusherListeners = (
         })
 
         gameManager.events.addOnGetCardsListener((cards: Card[]) => {
-            setCardsOnBoard([])
-            setCards(cards)
+            setTimeout(() => {
+                setCardsOnBoard((prev) => prev.map(() => null))
+                setCards(cards)
+                setOpponentCardsNumber(3)
+            }, 1000)
         })
 
         gameManager.events.addOnMyTurnStartListener(() => {
@@ -56,13 +60,27 @@ export const usePusherListeners = (
         })
 
         gameManager.events.addOnCardPlayedListener((iCalled: boolean, card: Card) => {
+            console.log("card played")
+            let newCardAdded = false
+            setCardsOnBoard((prev) => prev.map((c) => {
+                if (!c && !newCardAdded) {
+                    newCardAdded = true
+                    return card
+                }
+                return c
+            }))
             if (!iCalled) {
                 console.log("opponent played card: " + card.number + " " + card.suit)
-                setCardsOnBoard((cards: Card[]) => [...cards, card])
+                setOpponentCardsNumber((prev) => prev - 1)
                 return;
             }
+
+            setCards((prev) => prev.map((c) => {
+                if (!c) return null
+                if (c.number === card.number && c.suit === card.suit) return null
+                return c
+            }))
             console.log("i played card: " + card.number + " " + card.suit)
-            setCards((cards: Card[]) => cards.filter((c) => c.number !== card.number && c.suit !== card.suit))
         })
 
         gameManager.events.addOnGameEndListener((IWon: boolean) => {
@@ -71,7 +89,9 @@ export const usePusherListeners = (
             setIsMyTurn(false)
             setActions([])
             setOpponentName("")
-            setCards([])
+            setCards((prev) => prev.map(() => null))
+            setOpponentCardsNumber(0)
+            setCardsOnBoard((prev) => prev.map(() => null))
             setTimeout(() => {
                 navigate("/") // TODO - replace with a modal saying who won
             }, 2000)

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import CardComponent from './Card';
 import { GameContext } from '../../../context/gameContext';
 import { GameActionMessage } from '../../../gameLogic/type/GameActionMessage';
@@ -7,13 +7,10 @@ import { Card, Suit } from '../../../gameLogic/Cards/Card';
 
 const GameCards = () => {
 
-  const { gameManager, cards, setCards, cardsOnBoard, setCardsOnBoard } = useContext(GameContext)
+  const { gameManager, cards, opponentCardsNumber, cardsOnBoard } = useContext(GameContext)
 
   const playCard = (card: Card) => {
-    const cardIndex = cards.findIndex(c => c.number === card.number && c.suit === card.suit)
-    gameManager.sendAction(new GameActionMessage(GameAction.PLACE_CARD, { card: cards[cardIndex] }))
-    setCards((prev) => prev.filter(c => c.number !== card.number && c.suit !== card.suit))
-    setCardsOnBoard((prev) => [...prev, card])
+    gameManager.sendAction(new GameActionMessage(GameAction.PLACE_CARD, { card }))
   }
 
   return (
@@ -29,7 +26,7 @@ const GameCards = () => {
       </div>
 
       <div id='opponent-cards' className='w-full h-fit flex justify-center absolute top-10'>
-        {Array.from(Array(3 - (cardsOnBoard.length - (3 - cards.length))).keys()).map((_, index) => (
+        {Array.from(Array(opponentCardsNumber).keys()).map((_, index) => (
           <CardComponent
             cardProps={{ number: 1, suit: Suit.Espada, power: 0 }}
             key={"oponentCards" + index} />

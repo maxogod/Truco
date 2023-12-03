@@ -11,10 +11,12 @@ interface GameContextType {
     setIsMyTurn: React.Dispatch<React.SetStateAction<boolean>>
     actions: GameAction[]
     setActions: React.Dispatch<React.SetStateAction<GameAction[]>>
-    cards: Card[]
-    setCards: React.Dispatch<React.SetStateAction<Card[]>>
-    cardsOnBoard: Card[]
-    setCardsOnBoard: React.Dispatch<React.SetStateAction<Card[]>>
+    cards: (Card | null)[]
+    setCards: React.Dispatch<React.SetStateAction<(Card | null)[]>>
+    opponentCardsNumber: number
+    setOpponentCardsNumber: React.Dispatch<React.SetStateAction<number>>
+    cardsOnBoard: (Card | null)[]
+    setCardsOnBoard: React.Dispatch<React.SetStateAction<(Card | null)[]>>
     timerActive: boolean
     setTimerActive: React.Dispatch<React.SetStateAction<boolean>>
     myPoints: number
@@ -33,9 +35,11 @@ export const GameContext = createContext<GameContextType>({
     setActions: () => { },
     timerActive: false,
     setTimerActive: () => { },
-    cards: [],
+    cards: [null, null, null],
     setCards: () => { },
-    cardsOnBoard: [],
+    opponentCardsNumber: 0,
+    setOpponentCardsNumber: () => { },
+    cardsOnBoard: [null, null, null, null, null, null],
     setCardsOnBoard: () => { },
     myPoints: 0,
     setMyPoints: () => { },
@@ -53,8 +57,9 @@ export const GameContextProvider = ({ children }: { children: ReactNode }) => {
     const [actions, setActions] = useState<GameAction[]>([])
     const [timerActive, setTimerActive] = useState(false);
 
-    const [cards, setCards] = useState<Card[]>([])
-    const [cardsOnBoard, setCardsOnBoard] = useState<Card[]>([])
+    const [cards, setCards] = useState<(Card | null)[]>([null, null, null])
+    const [opponentCardsNumber, setOpponentCardsNumber] = useState<number>(0)
+    const [cardsOnBoard, setCardsOnBoard] = useState<(Card | null)[]>([null, null, null, null, null, null])
     const [myPoints, setMyPoints] = useState<number>(0)
     const [opponentPoints, setOpponentPoints] = useState<number>(0)
 
@@ -72,6 +77,8 @@ export const GameContextProvider = ({ children }: { children: ReactNode }) => {
                 setTimerActive,
                 cards,
                 setCards,
+                opponentCardsNumber,
+                setOpponentCardsNumber,
                 cardsOnBoard,
                 setCardsOnBoard,
                 myPoints,
