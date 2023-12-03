@@ -142,7 +142,6 @@ export default class GameManager {
 
     private onTrucoPointCalculation(amIWinner: number) {
         this.gameStateManager.trucoPointCalculation(amIWinner)
-        console.log("am i winner: " + amIWinner)
         if (amIWinner===-1 && this.gameStateManager.isMyTurn()) {
             this.turnFix = true
             this.forceTurnEnd()
