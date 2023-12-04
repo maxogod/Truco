@@ -12,13 +12,12 @@ const Chat: React.FC = () => {
       setMessages([...messages, data.message]);
     });
   }, [])
-
+ 
   const sendMessage = () => {
     channel.trigger('message', { message });
     setMessages([...messages, message]);
     setMessage("");
   };
-
 
   return (
     <div className='w-[280px] h-[715px] border-2 border-primary bg-secondary rounded-3xl relative top-[136px] p-4 overflow-auto'>
