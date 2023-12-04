@@ -28,7 +28,7 @@ const GameCards = () => {
       <div id='opponent-cards' className='w-full h-fit flex justify-center absolute top-10'>
         {Array.from(Array(opponentCardsNumber).keys()).map((_, index) => (
           <CardComponent
-            cardProps={{ number: 1, suit: Suit.Espada, power: 0 }}
+            cardProps={{ number: 0, suit: Suit.Espada, power: 0 }}
             key={"oponentCards" + index} />
         ))}
       </div>
