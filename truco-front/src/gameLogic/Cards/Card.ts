@@ -2,7 +2,8 @@ export enum Suit {
     Espada = "Espada",
     Basto = "Basto",
     Oro = "Oro",
-    Copa = "Copa"
+    Copa = "Copa",
+    Back = "Back"
 }
 
 export class Card {

@@ -16,7 +16,7 @@ const GameCards = () => {
   return (
     <div className='w-[60%] h-full relative flex justify-center items-center'>
 
-      <div className='w-full h-fit flex justify-center absolute bottom-10'>
+      <div className='w-full h-fit flex justify-center absolute bottom-10 gap-1'>
         {cards.map((card, index) => (
           <CardComponent
             cardProps={card}
@@ -25,10 +25,10 @@ const GameCards = () => {
         ))}
       </div>
 
-      <div id='opponent-cards' className='w-full h-fit flex justify-center absolute top-10'>
+      <div id='opponent-cards' className='w-full h-fit flex justify-center absolute top-10 gap-1'>
         {Array.from(Array(opponentCardsNumber).keys()).map((_, index) => (
           <CardComponent
-            cardProps={{ number: 1, suit: Suit.Espada, power: 0 }}
+            cardProps={{ number: 0, suit: Suit.Back, power: 0 }}
             key={"oponentCards" + index} />
         ))}
       </div>
