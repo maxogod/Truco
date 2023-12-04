@@ -1,28 +1,34 @@
-import React, { useState } from 'react';
-import send from '../assets/Send_hor_fill.png';
-import { useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import send from '../../assets/Send_hor_fill.png';
+import { GameContext } from '../../context/gameContext';
 
 const Chat: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [message, setMessage] = useState<string>('');
 
-  let channel;
+  const { gameManager } = useContext(GameContext);
+  const { opponentName } = useContext(GameContext);
+
+  const channel: Channel | null = gameManager.getGameChannel();
+
   useEffect(() => {
-    channel.bind('message', (data) => {
-      setMessages([...messages, data.message]);
+    channel.bind('client-message', ({ message }) => {
+      const opponentMessage = opponentName + ': ' + message;
+      setMessages((prevMessages) => [...prevMessages, opponentMessage]);
     });
   }, [])
  
   const sendMessage = () => {
-    channel.trigger('message', { message });
-    setMessages([...messages, message]);
+    channel.trigger('client-message', { message });
+    const myMessage = 'you: ' + message;
+    setMessages((prevMessages) => [...prevMessages, myMessage]);
     setMessage("");
   };
 
   return (
-    <div className='w-[280px] h-[715px] border-2 border-primary bg-secondary rounded-3xl relative top-[136px] p-4 overflow-auto'>
+    <div className='w-[280px] h-[715px] border-2 border-primary bg-secondary rounded-3xl relative top-[136px] p-4 overflow-auto text-sm'>
       {messages.map((message, index) => (
-        <p key={index} className='text-left text-gray-300'>
+        <p key={index} className='text-left text-gray-300 mb-2'>
           {message}
         </p>
       ))}
