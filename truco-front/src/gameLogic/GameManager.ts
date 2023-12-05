@@ -37,6 +37,10 @@ export default class GameManager {
         this.setLocalListeners()
     }
 
+    public getGameChannel(): Channel | null {
+        return this.gameTurnsManager.getGameChannel()
+    }
+
     public initPusher(username: string) {
         this.pusherManager.initPusher(username)
         if (this.gameMatchmakingManager.getUserName()) return
