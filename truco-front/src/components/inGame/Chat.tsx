@@ -1,25 +1,24 @@
 import React, { useState, useEffect, useContext } from 'react';
 import send from '../../assets/Send_hor_fill.png';
 import { GameContext } from '../../context/gameContext';
+import { Channel } from 'pusher-js';
 
 const Chat: React.FC = () => {
-  const [messages, setMessages] = useState<string[]>([]);
   const [message, setMessage] = useState<string>('');
-
-  const { gameManager } = useContext(GameContext);
-  const { opponentName } = useContext(GameContext);
-
+  const [messages, setMessages] = useState<string[]>([]);
+  const { gameManager, opponentName } = useContext(GameContext);
   const channel: Channel | null = gameManager.getGameChannel();
 
   useEffect(() => {
-    channel.bind('client-message', ({ message }) => {
+    channel?.bind('client-message', (message:String) => {
       const opponentMessage = opponentName + ': ' + message;
       setMessages((prevMessages) => [...prevMessages, opponentMessage]);
     });
+
   }, [])
- 
+
   const sendMessage = () => {
-    channel.trigger('client-message', { message });
+    channel?.trigger('client-message', message);
     const myMessage = 'you: ' + message;
     setMessages((prevMessages) => [...prevMessages, myMessage]);
     setMessage("");
