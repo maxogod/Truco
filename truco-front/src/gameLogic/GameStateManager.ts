@@ -84,6 +84,10 @@ export default class GameStateManager{
         this.iPlayCard = false
     }
 
+    public isNewRound(): boolean{
+        return this.myTrucoPoints === 0 && this.opponentTrucoPoints === 0 && this.pardas === 0
+    }
+
     public doIPlayCard(): boolean{
         return this.iPlayCard
     }
@@ -111,21 +115,19 @@ export default class GameStateManager{
         this.checkTrucoWinner()
     }
 
-    private checkTrucoWinner(){
-        let roundEnded = false
+    private checkTrucoWinner() {
         let IWon = false
-        if(this.pardas > 0 && (this.myTrucoPoints !== 0 || this.opponentTrucoPoints !== 0)){
-            roundEnded = true
+        if (this.pardas > 0 && (this.myTrucoPoints !== 0 || this.opponentTrucoPoints !== 0)) {
+            this.setRoundEnded()
             IWon = (this.myTrucoPoints + this.firstTurnPoint) > this.opponentTrucoPoints
-        }else if(this.myTrucoPoints === 2){
-            roundEnded = true
+        } else if (this.myTrucoPoints === 2) {
+            this.setRoundEnded()
             IWon = true
-        }else if(this.opponentTrucoPoints === 2){
-            roundEnded = true
+        } else if (this.opponentTrucoPoints === 2) {
+            this.setRoundEnded()
             IWon = false
         }
-        this.roundEnded = roundEnded
-        if(roundEnded){
+        if (this.isRoundEnded()) {
             this.myTrucoPoints = 0
             this.opponentTrucoPoints = 0
             this.pardas = 0
