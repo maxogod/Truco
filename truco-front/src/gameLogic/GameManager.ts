@@ -184,18 +184,13 @@ export default class GameManager {
     }
 
     private startRoundImHand() {
-        this.gameStateManager.setMyTurn()
-        this.gameStateManager.setImHand()
-        this.gameStateManager.setIPlayCard()
-        this.gameStateManager.startNewRound()
+        this.gameStateManager.onRoundStartImHand()
+        
         this.gameEventsManager.triggerOnMyTurnStart()
     }
 
     private startRoundOpponentIsHand() {
-        this.gameStateManager.setOpponentTurn()
-        this.gameStateManager.setImNotHand()
-        this.gameStateManager.setOppoentPlaysCard()
-        this.gameStateManager.startNewRound()
+        this.gameStateManager.onRoundStartOpponentIsHand()
     }
 
     private onCardPlayed(iCalled: boolean, card: Card) {

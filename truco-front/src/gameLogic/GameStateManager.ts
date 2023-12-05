@@ -14,29 +14,29 @@ export default class GameStateManager{
     private gameEventsManager: GameEventsManager
 
     constructor(){
+        this.myTurn = false
+        this.imHand = false
+        this.roundEnded = false
+        this.iPlayCard = false
         this.myPoints = 0
         this.opponentPoints = 0
-        this.myTurn = false
         this.myTrucoPoints = 0
         this.opponentTrucoPoints = 0
-        this.imHand = false
         this.pardas = 0
-        this.roundEnded = false
         this.firstTurnPoint = 0
-        this.iPlayCard = false
         this.gameEventsManager = GameEventsManager.getInstance()
     }
 
     public restart(){
         this.myPoints = 0
         this.opponentPoints = 0
-        this.myTurn = false
         this.myTrucoPoints = 0
         this.opponentTrucoPoints = 0
-        this.imHand = false
         this.pardas = 0
-        this.roundEnded = false
         this.firstTurnPoint = 0
+        this.myTurn = false
+        this.imHand = false
+        this.roundEnded = false
         this.iPlayCard = false
     }
 
@@ -92,6 +92,29 @@ export default class GameStateManager{
         return this.iPlayCard
     }
 
+    public onRoundStartImHand(){
+        this.setMyTurn()
+        this.setImHand()
+        this.setIPlayCard()
+        this.startNewRound()
+        this.resetRoundPoints()
+    }
+
+    public onRoundStartOpponentIsHand(){
+        this.setOpponentTurn()
+        this.setImNotHand()
+        this.setOppoentPlaysCard()
+        this.startNewRound()
+        this.resetRoundPoints()
+    }
+
+    private resetRoundPoints(){
+        this.myTrucoPoints = 0
+        this.opponentTrucoPoints = 0
+        this.pardas = 0
+        this.firstTurnPoint = 0
+    }
+
     public envidoPlayed(opponentEnvidoPoints: number, myEnvidoPoints: number,): boolean{
         // returns true if opponent wins
         return opponentEnvidoPoints === myEnvidoPoints? !this.imHand : (opponentEnvidoPoints > myEnvidoPoints)
@@ -128,10 +151,7 @@ export default class GameStateManager{
             IWon = false
         }
         if (this.isRoundEnded()) {
-            this.myTrucoPoints = 0
-            this.opponentTrucoPoints = 0
-            this.pardas = 0
-            this.firstTurnPoint = 0
+            this.resetRoundPoints()
             this.gameEventsManager.triggerOnTrucoWinner(IWon)
         }
     }
