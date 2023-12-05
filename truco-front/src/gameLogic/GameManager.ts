@@ -65,6 +65,7 @@ export default class GameManager {
 
     public sendAction(action: GameActionMessage) {
         if (!this.gameStateManager.isMyTurn()) throw new Error("Not my turn")
+        if (action.action !== GameAction.NONE && !this.gameActionsManager.getPossibleActions().get(action.action)) throw new Error("Invalid action")
         this.gameTurnsManager.sendAction(action)
         this.gameActionsManager.handleAction(action, true)
         this.gameActionsManager.lateTrigger()
@@ -146,10 +147,13 @@ export default class GameManager {
 
     private onTrucoPointCalculation(amIWinner: number) {
         this.gameStateManager.trucoPointCalculation(amIWinner)
-        if (amIWinner===-1 && this.gameStateManager.isMyTurn()) {
+        if(this.gameStateManager.isNewRound()){
+            return
+        }
+        if (amIWinner === -1 && this.gameStateManager.isMyTurn()) {
             this.turnFix = true
             this.forceTurnEnd()
-        }else{
+        } else {
             this.gameStateManager.setIPlayCard()
         }
     }
@@ -180,18 +184,13 @@ export default class GameManager {
     }
 
     private startRoundImHand() {
-        this.gameStateManager.setMyTurn()
-        this.gameStateManager.setImHand()
-        this.gameStateManager.setIPlayCard()
-        this.gameStateManager.startNewRound()
+        this.gameStateManager.onRoundStartImHand()
+        
         this.gameEventsManager.triggerOnMyTurnStart()
     }
 
     private startRoundOpponentIsHand() {
-        this.gameStateManager.setOpponentTurn()
-        this.gameStateManager.setImNotHand()
-        this.gameStateManager.setOppoentPlaysCard()
-        this.gameStateManager.startNewRound()
+        this.gameStateManager.onRoundStartOpponentIsHand()
     }
 
     private onCardPlayed(iCalled: boolean, card: Card) {

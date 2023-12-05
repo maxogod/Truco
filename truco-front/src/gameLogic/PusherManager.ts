@@ -23,6 +23,10 @@ export default class PusherManager {
                         user_id: userName,
                         user_info: { name: userName },
                     })
+                },
+                headers: {
+                    'Access-Control-Allow-Origin': '*',
+                    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS', // TODO remove in production
                 }
             }
         });

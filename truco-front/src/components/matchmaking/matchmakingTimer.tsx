@@ -12,7 +12,7 @@ const Timer = () => {
     return () => clearInterval(intervalId);
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
-  const formatTime = (timeInSeconds) => {
+  const formatTime = (timeInSeconds:number) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const remainingSeconds = timeInSeconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;

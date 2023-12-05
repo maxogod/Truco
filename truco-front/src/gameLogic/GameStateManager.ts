@@ -14,29 +14,29 @@ export default class GameStateManager{
     private gameEventsManager: GameEventsManager
 
     constructor(){
+        this.myTurn = false
+        this.imHand = false
+        this.roundEnded = false
+        this.iPlayCard = false
         this.myPoints = 0
         this.opponentPoints = 0
-        this.myTurn = false
         this.myTrucoPoints = 0
         this.opponentTrucoPoints = 0
-        this.imHand = false
         this.pardas = 0
-        this.roundEnded = false
         this.firstTurnPoint = 0
-        this.iPlayCard = false
         this.gameEventsManager = GameEventsManager.getInstance()
     }
 
     public restart(){
         this.myPoints = 0
         this.opponentPoints = 0
-        this.myTurn = false
         this.myTrucoPoints = 0
         this.opponentTrucoPoints = 0
-        this.imHand = false
         this.pardas = 0
-        this.roundEnded = false
         this.firstTurnPoint = 0
+        this.myTurn = false
+        this.imHand = false
+        this.roundEnded = false
         this.iPlayCard = false
     }
 
@@ -84,8 +84,35 @@ export default class GameStateManager{
         this.iPlayCard = false
     }
 
+    public isNewRound(): boolean{
+        return this.myTrucoPoints === 0 && this.opponentTrucoPoints === 0 && this.pardas === 0
+    }
+
     public doIPlayCard(): boolean{
         return this.iPlayCard
+    }
+
+    public onRoundStartImHand(){
+        this.setMyTurn()
+        this.setImHand()
+        this.setIPlayCard()
+        this.startNewRound()
+        this.resetRoundPoints()
+    }
+
+    public onRoundStartOpponentIsHand(){
+        this.setOpponentTurn()
+        this.setImNotHand()
+        this.setOppoentPlaysCard()
+        this.startNewRound()
+        this.resetRoundPoints()
+    }
+
+    private resetRoundPoints(){
+        this.myTrucoPoints = 0
+        this.opponentTrucoPoints = 0
+        this.pardas = 0
+        this.firstTurnPoint = 0
     }
 
     public envidoPlayed(opponentEnvidoPoints: number, myEnvidoPoints: number,): boolean{
@@ -111,33 +138,35 @@ export default class GameStateManager{
         this.checkTrucoWinner()
     }
 
-    private checkTrucoWinner(){
-        let roundEnded = false
+    private checkTrucoWinner() {
         let IWon = false
-        if(this.pardas > 0 && (this.myTrucoPoints !== 0 || this.opponentTrucoPoints !== 0)){
-            roundEnded = true
+        if (this.pardas > 0 && (this.myTrucoPoints !== 0 || this.opponentTrucoPoints !== 0)) {
+            this.setRoundEnded()
             IWon = (this.myTrucoPoints + this.firstTurnPoint) > this.opponentTrucoPoints
-        }else if(this.myTrucoPoints === 2){
-            roundEnded = true
+        } else if (this.myTrucoPoints === 2) {
+            this.setRoundEnded()
             IWon = true
-        }else if(this.opponentTrucoPoints === 2){
-            roundEnded = true
+        } else if (this.opponentTrucoPoints === 2) {
+            this.setRoundEnded()
             IWon = false
         }
-        this.roundEnded = roundEnded
-        if(roundEnded){
-            this.myTrucoPoints = 0
-            this.opponentTrucoPoints = 0
-            this.pardas = 0
-            this.firstTurnPoint = 0
+        if (this.isRoundEnded()) {
+            this.resetRoundPoints()
             this.gameEventsManager.triggerOnTrucoWinner(IWon)
         }
+    }
+
+    private limitPoints(){
+        this.myPoints = Math.min(this.myPoints, 15)
+        this.opponentPoints = Math.min(this.opponentPoints, 15)
     }
 
     public givePoints(toMe:boolean, points: number){
         points = points || 1
         if(toMe)this.myPoints += points
         else this.opponentPoints += points
+
+        this.limitPoints()
         this.gameEventsManager.triggerOnPointsUpdate(this.myPoints, this.opponentPoints)
         if(this.myPoints >= 15 || this.opponentPoints >= 15){
             this.gameEventsManager.triggerOnGameEnd(this.myPoints > this.opponentPoints)
