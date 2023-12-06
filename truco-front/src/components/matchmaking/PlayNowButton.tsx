@@ -3,6 +3,8 @@ import Timer from './matchmakingTimer';
 import { usePusherListeners } from '../../hooks/usePusherListeners';
 import { GameContext } from '../../context/gameContext';
 
+
+
 const PlayNowButton = () => {
 
   const {
@@ -29,7 +31,7 @@ const PlayNowButton = () => {
     if (gameEnded) {
       setIsSearching(false)
       isSearchingRef.current = false
-      setButtonText("Play again?");
+      setButtonText("Game over");
     }
     
   }, [isSearching, opponentName, gameEnded]);
@@ -41,7 +43,6 @@ const PlayNowButton = () => {
       setGameEnded(true);
       setIsSearching(false)
       isSearchingRef.current = false
-      gameManager.gameEnd();
       
     }
     if (isSearchingRef.current) {
