@@ -39,10 +39,10 @@ const PlayNowButton = () => {
   const toggleMatchmaking = () => {
     if(isSearching && !(opponentName == "")){
       setGameEnded(true);
-
       setIsSearching(false)
       isSearchingRef.current = false
-      gameManager.leaveMatchmaking()
+      gameManager.gameEnd();
+      
     }
     if (isSearchingRef.current) {
       setIsSearching(false)
