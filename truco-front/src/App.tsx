@@ -23,7 +23,7 @@ function App() {
             <Route path="/play" element={<InGame />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/leader-board" element={<LeaderBoard />} />
-            <Route path="/roules" element={<Rules />} />
+            <Route path="/rules" element={<Rules />} />
             <Route path="/login" element={<LogIn />} />
             <Route path="/signup" element={<SignUp />} />
           </Routes>

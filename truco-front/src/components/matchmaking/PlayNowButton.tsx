@@ -20,6 +20,7 @@ const PlayNowButton = () => {
   useEffect(() => {
     if (gameEnded) {
       setIsSearching(false)
+      setGameEnded(false)
       isSearchingRef.current = false
     }
   }, [gameEnded])

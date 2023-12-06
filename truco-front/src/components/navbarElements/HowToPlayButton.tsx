@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const HowToPlayButton: React.FC = () => {
   return (
 
-    <Link to="/roules" 
+    <Link to="/rules"
       className='w-[80%] h-[40px] bg-primary rounded-lg flex justify-center items-center' >
       <h2 className='text-lg'>How to play</h2>
 
