@@ -92,7 +92,7 @@ const PlayNowButton = () => {
         <button
           onClick={handleSurrenderButton}
           style={opponentName !== "" ? { backgroundColor: "#cc3333" } : {} }
-          className='w-[80%] h-[50px] bg-secondary rounded-lg flex justify-center items-center mt-4'
+          className='w-[80%] h-[50px] bg-secondary rounded-lg flex justify-center items-center mb-4 mt-4'
         >
           <h2 className='font-medium text-2xl'>{surrenderButtonText}</h2>
         </button>
