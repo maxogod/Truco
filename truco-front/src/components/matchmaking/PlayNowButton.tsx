@@ -34,7 +34,16 @@ const PlayNowButton = () => {
     
   }, [isSearching, opponentName, gameEnded]);
 
+
+
   const toggleMatchmaking = () => {
+    if(isSearching && !(opponentName == "")){
+      setGameEnded(true);
+
+      setIsSearching(false)
+      isSearchingRef.current = false
+      gameManager.leaveMatchmaking()
+    }
     if (isSearchingRef.current) {
       setIsSearching(false)
       isSearchingRef.current = false
@@ -53,13 +62,15 @@ const PlayNowButton = () => {
 
   return (
     <>
-      <button onClick={toggleMatchmaking} disabled={opponentName !== ""} style={opponentName !== "" ? { backgroundColor: "gray" } : {}}
+      <button onClick={toggleMatchmaking}  style={opponentName !== "" ? { backgroundColor: "gray" } : {}}
         className='w-[80%] h-[50px] bg-primary rounded-lg flex justify-center items-center'>
         <h2 className='font-medium text-2xl'>{buttonText}</h2>
       </button>
       {isSearching && !opponentName && <Timer />}
+
     </>
   );
 };
+
 
 export default PlayNowButton;
