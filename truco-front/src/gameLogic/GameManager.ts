@@ -217,7 +217,7 @@ export default class GameManager {
         this.gameTurnsManager.giveCards(opponentCards)
     }
 
-    public gameEnd() {
+    private gameEnd() {
         this.regenerateInstance()
     }
 
