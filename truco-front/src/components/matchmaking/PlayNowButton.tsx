@@ -2,12 +2,13 @@ import { useRef, useState, useContext, useEffect } from 'react';
 import Timer from './matchmakingTimer';
 import { usePusherListeners } from '../../hooks/usePusherListeners';
 import { GameContext } from '../../context/gameContext';
+import GameActionsManager from '../../gameLogic/GameActionsManager';
 
 
 
 const PlayNowButton = () => {
 
-  const {
+  const {    
     gameManager,
     opponentName,
   } = useContext(GameContext)
@@ -26,16 +27,17 @@ const PlayNowButton = () => {
     }
     if(isSearching && !(opponentName == "")){
       setButtonText("Surrender");
+      
     }
     
     if (gameEnded) {
       setIsSearching(false)
       isSearchingRef.current = false
       setButtonText("Game over");
+      gameManager.gameEnd();
     }
     
   }, [isSearching, opponentName, gameEnded]);
-
 
 
   const toggleMatchmaking = () => {
