@@ -27,7 +27,7 @@ const PlayNowButton = () => {
   useEffect(() => {
     if (!isSearching && (opponentName == "")) {
       setShowSurrenderButton(false); 
-      setButtonText("Play");
+      
       
     }
     if (isSearching && opponentName == "") {
@@ -36,6 +36,8 @@ const PlayNowButton = () => {
 
     if (!(opponentName == "")){
       setSurrenderButtonText("Surrender");
+      setButtonText("Play");
+      setIsSearching(false);
     }
     
     if (gameEnded) {
@@ -81,7 +83,7 @@ const PlayNowButton = () => {
 
   return (
     <>
-      <button onClick={toggleMatchmaking}  style={opponentName !== "" ? { backgroundColor: "gray" } : {}}
+      <button onClick={toggleMatchmaking}  style={isSearching ? { backgroundColor: "gray" } : {}}
         className='w-[80%] h-[50px] bg-primary rounded-lg flex justify-center items-center'>
         <h2 className='font-medium text-2xl'>{buttonText}</h2>
       </button>
