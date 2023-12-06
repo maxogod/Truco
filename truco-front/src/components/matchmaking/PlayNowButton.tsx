@@ -36,7 +36,6 @@ const PlayNowButton = () => {
 
     if (!(opponentName == "")){
       setSurrenderButtonText("Surrender");
-      setButtonText("Play");
       setIsSearching(false);
     }
     
@@ -83,7 +82,7 @@ const PlayNowButton = () => {
 
   return (
     <>
-      <button onClick={toggleMatchmaking}  style={isSearching ? { backgroundColor: "gray" } : {}}
+      <button onClick={toggleMatchmaking}  style={!(opponentName == "") || isSearching ? { backgroundColor: "gray" } : {}}
         className='w-[80%] h-[50px] bg-primary rounded-lg flex justify-center items-center'>
         <h2 className='font-medium text-2xl'>{buttonText}</h2>
       </button>
@@ -92,7 +91,7 @@ const PlayNowButton = () => {
        {showSurrenderButton}  
         <button
           onClick={handleSurrenderButton}
-          style={opponentName !== "" ? { backgroundColor: "gray" } : {} }
+          style={opponentName !== "" ? { backgroundColor: "#cc3333" } : {} }
           className='w-[80%] h-[50px] bg-secondary rounded-lg flex justify-center items-center mt-4'
         >
           <h2 className='font-medium text-2xl'>{surrenderButtonText}</h2>
