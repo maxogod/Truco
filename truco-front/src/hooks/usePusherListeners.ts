@@ -91,6 +91,8 @@ export const usePusherListeners = (
             setIsMyTurn(false)
             setActions([])
             setOpponentName("")
+            setMyPoints(0)
+            setOpponentPoints(0)
             setCards((prev) => prev.map(() => null))
             setOpponentCardsNumber(0)
             setCardsOnBoard((prev) => prev.map(() => null))
