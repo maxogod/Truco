@@ -13,16 +13,26 @@ const PlayNowButton = () => {
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [gameEnded, setGameEnded] = useState<boolean>(false);
   const isSearchingRef = useRef<boolean>(false);
+  const [buttonText, setButtonText] = useState<string>("Play Now");
 
 
   usePusherListeners(setGameEnded)
 
   useEffect(() => {
+    if (isSearching && opponentName == "") {
+      setButtonText("Cancel");
+    }
+    if(isSearching && !(opponentName == "")){
+      setButtonText("Surrender");
+    }
+    
     if (gameEnded) {
       setIsSearching(false)
       isSearchingRef.current = false
+      setButtonText("Play again?");
     }
-  }, [gameEnded])
+    
+  }, [isSearching, opponentName, gameEnded]);
 
   const toggleMatchmaking = () => {
     if (isSearchingRef.current) {
@@ -45,7 +55,7 @@ const PlayNowButton = () => {
     <>
       <button onClick={toggleMatchmaking} disabled={opponentName !== ""} style={opponentName !== "" ? { backgroundColor: "gray" } : {}}
         className='w-[80%] h-[50px] bg-primary rounded-lg flex justify-center items-center'>
-        <h2 className='font-medium text-2xl'>{isSearching ? "Cancel" : "Play Now"}</h2>
+        <h2 className='font-medium text-2xl'>{buttonText}</h2>
       </button>
       {isSearching && !opponentName && <Timer />}
     </>
