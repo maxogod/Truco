@@ -1,20 +1,13 @@
-import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
-import Main from "./pages/Main";
-import InGame from "./pages/InGame";
-import Profile from "./pages/Profile";
-import LeaderBoard from "./pages/LeaderBoard";
-import Rules from "./pages/Rules";
-import LogIn from "./pages/LogIn";
-import SignUp from "./pages/SignUp";
-import NavBar from "./shared/NavBar";
-import MainSideBar from "./shared/MainSideBar";
-
 import { GameContextProvider } from "./context/gameContext";
+import { UserContextProvider } from "./context/userContext";
+import Router from "./Router";
 
 function App() {
+
   return (
-    <BrowserRouter>
+    <UserContextProvider>
       <GameContextProvider>
+        <Router />
         <div className='w-full h-[100vh] flex bg-background text-text'>
           <NavBar />
           <MainSideBar />
@@ -29,14 +22,8 @@ function App() {
           </Routes>
         </div>
       </GameContextProvider>
-    </BrowserRouter>
+    </UserContextProvider>
   )
-
-  // return (
-  //   <BrowserRouter>
-  //     <GameLogicTest />
-  //   </BrowserRouter>
-  // )
 }
 
 

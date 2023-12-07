@@ -34,6 +34,8 @@ Play truco on truco.com, the best card game to play 1v1
 
 ### [Game Rules](./docs/RULES.md)
 
+### [Api Documentation](./docs/API.md)
+
 ## How to run locally
 
 **(BETTER FOR DEVELOPMENT)** Run two servers in two different terminals one for the [backend](./truco-back/README.md) and another one for the [frontend](./truco-front/README.md). *(click the links to see how)*
