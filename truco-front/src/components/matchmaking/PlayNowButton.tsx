@@ -24,6 +24,7 @@ const PlayNowButton = () => {
   const [showSurrenderButton, setShowSurrenderButton] = useState<boolean>(false);
   const MATCHMAKING_TIME_OUT = 4000;
   const WINNER_POINTS = 15;
+  const OPPONENT = false;
 
 
   usePusherListeners(setGameEnded)
@@ -69,7 +70,7 @@ const PlayNowButton = () => {
     setGameEnded(true);
     setIsSearching(false)
     isSearchingRef.current = false
-    gameStateManager.givePoints(false, WINNER_POINTS);
+    gameStateManager.givePoints(OPPONENT, WINNER_POINTS);
     setSurrenderButtonText("");
  
 
