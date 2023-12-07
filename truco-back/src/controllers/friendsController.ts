@@ -1,5 +1,7 @@
 import { Request, Response } from 'express';
 import { acceptFriendRequestService, sendFriendRequestService } from '../services/friendsService';
+import { getUser } from '../services/authService';
+import User from '../models/User';
 
 const sendFriendRequestController = async (req: Request, res: Response) => {
 
@@ -27,7 +29,12 @@ const acceptFriendRequestController = async (req: Request, res: Response) => {
 
     if (!added) return res.status(400).send("Could not add friend");
 
-    return res.status(200).send("Friend added");
+    const user = await getUser(req.session.user.username);
+
+    await User.populate(user, "friends");
+    await User.populate(user, "friendRequests");
+
+    return res.status(200).send(user);
 }
 
 export {

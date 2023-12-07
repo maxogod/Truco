@@ -8,7 +8,7 @@ const Ratings: React.FC = () => {
 
   return (
     <div>
-      <p className='my-14'>You (435) vs {`${opponentName}`} (478)</p>
+      <p className='my-14'>You vs {`${opponentName}`}</p>
     </div>
   );
 };

@@ -8,15 +8,17 @@ import LeaderBoard from "./pages/LeaderBoard"
 import Rules from "./pages/Rules"
 import LogIn from "./pages/LogIn"
 import SignUp from "./pages/SignUp"
+
 import { UserContext } from "./context/userContext"
 import { useContext } from "react"
 import { CgSpinner } from "react-icons/cg"
 import mate from './assets/mate.png'
+import FriendRequestPopUp from "./components/friendRequestPopUp"
 
 
 const Router = () => {
 
-    const { loadingSession } = useContext(UserContext)
+    const { loadingSession, sendFriendRequest } = useContext(UserContext)
 
     return (
         <BrowserRouter>
@@ -25,6 +27,7 @@ const Router = () => {
                 <div className='w-full h-[100vh] flex bg-background text-text'>
                     <NavBar />
                     <MainSideBar />
+                    {sendFriendRequest && <FriendRequestPopUp />}
                     <Routes>
                         <Route path="/" element={<Main />} />
                         <Route path="/play" element={<InGame />} />

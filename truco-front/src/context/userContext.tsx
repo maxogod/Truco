@@ -13,6 +13,8 @@ interface UserContextType {
     setLoadingRegister: React.Dispatch<React.SetStateAction<boolean>>
     loadingLogOut: boolean
     setLoadingLogOut: React.Dispatch<React.SetStateAction<boolean>>
+    sendFriendRequest: boolean
+    setSendFriendRequest: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -26,6 +28,8 @@ export const UserContext = createContext<UserContextType>({
     setLoadingRegister: () => { },
     loadingLogOut: false,
     setLoadingLogOut: () => { },
+    sendFriendRequest: false,
+    setSendFriendRequest: () => { },
 })
 
 export const UserContextProvider = ({ children }: { children: ReactNode }) => {
@@ -35,6 +39,8 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     const [loadingLogin, setLoadingLogin] = useState<boolean>(false);
     const [loadingRegister, setLoadingRegister] = useState<boolean>(false);
     const [loadingLogOut, setLoadingLogOut] = useState<boolean>(false);
+
+    const [sendFriendRequest, setSendFriendRequest] = useState<boolean>(false);
 
     useEffect(() => {
         if (user) return
@@ -65,7 +71,9 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
                 loadingRegister,
                 setLoadingRegister,
                 loadingLogOut,
-                setLoadingLogOut
+                setLoadingLogOut,
+                sendFriendRequest,
+                setSendFriendRequest,
             }
         }>
             {children}

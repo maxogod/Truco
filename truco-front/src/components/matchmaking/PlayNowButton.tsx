@@ -2,6 +2,7 @@ import { useRef, useState, useContext, useEffect } from 'react';
 import Timer from './matchmakingTimer';
 import { usePusherListeners } from '../../hooks/usePusherListeners';
 import { GameContext } from '../../context/gameContext';
+import { UserContext } from '../../context/userContext';
 
 const PlayNowButton = () => {
 
@@ -10,10 +11,11 @@ const PlayNowButton = () => {
     opponentName,
   } = useContext(GameContext)
 
+  const { user } = useContext(UserContext)
+
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [gameEnded, setGameEnded] = useState<boolean>(false);
   const isSearchingRef = useRef<boolean>(false);
-
 
   usePusherListeners(setGameEnded)
 
@@ -43,7 +45,10 @@ const PlayNowButton = () => {
 
   return (
     <>
-      <button onClick={toggleMatchmaking} disabled={opponentName !== ""} style={opponentName !== "" ? { backgroundColor: "gray" } : {}}
+      <button
+        onClick={toggleMatchmaking}
+        disabled={opponentName !== "" || !user}
+        style={opponentName !== "" || !user ? { backgroundColor: "gray" } : {}}
         className='w-[80%] h-[50px] bg-primary rounded-lg flex justify-center items-center'>
         <h2 className='font-medium text-2xl'>{isSearching ? "Cancel" : "Play Now"}</h2>
       </button>
