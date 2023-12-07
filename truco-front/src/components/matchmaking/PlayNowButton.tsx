@@ -71,8 +71,6 @@ const PlayNowButton = () => {
     isSearchingRef.current = false
     gameStateManager.givePoints(OPPONENT, WINNER_POINTS);
     setSurrenderButtonText("");
- 
-
   };
 
 
@@ -83,7 +81,6 @@ const PlayNowButton = () => {
         <h2 className='font-medium text-2xl'>{buttonText}</h2>
       </button>
       {isSearching && !opponentName && <Timer />}
-       {/* Botón adicional */}
        {showSurrenderButton}  
         <button
           onClick={handleSurrenderButton}
