@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { logoutController, } from "../controllers/authController";
-import { sendFriendRequestController } from "../controllers/friendsController";
+import { acceptFriendRequestController, sendFriendRequestController } from "../controllers/friendsController";
 
 const router = Router();
 
 router.get("/friendRequest/:targetUsername", sendFriendRequestController);
+
+router.get("/acceptFriendRequest/:targetUsername", acceptFriendRequestController);
 
 export default router;
