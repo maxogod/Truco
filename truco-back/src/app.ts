@@ -20,8 +20,13 @@ app.use(express.urlencoded({ extended: true })); // for parsing URL-encoded requ
 
 if (process.env.DEBUG === "true") { // for development
     app.use(
-        cors()
-    );
+        cors(
+            {
+                origin: "http://localhost:3001", // Without this, the frontend can't access the backend
+                credentials: true, // Origin can't be "*" when using credentials
+            }
+        )
+    )
     console.log("CORS enabled");
 }
 
