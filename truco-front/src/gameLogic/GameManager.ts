@@ -64,6 +64,13 @@ export default class GameManager {
     }
 
     public sendAction(action: GameActionMessage) {
+
+        if (action.action === GameAction.SURRENDER) {
+            this.gameTurnsManager.sendAction(action)
+            this.gameStateManager.givePoints(false, 15)
+            return
+        }
+
         if (!this.gameStateManager.isMyTurn()) throw new Error("Not my turn")
         if (action.action !== GameAction.NONE && !this.gameActionsManager.getPossibleActions().get(action.action)) throw new Error("Invalid action")
         this.gameTurnsManager.sendAction(action)
@@ -72,6 +79,12 @@ export default class GameManager {
     }
 
     private onOpponentAction(gameActionMessage: GameActionMessage) {
+
+        if (gameActionMessage.action === GameAction.SURRENDER) {
+            this.gameStateManager.givePoints(true, 15)
+            return
+        }
+
         this.gameActionsManager.handleAction(gameActionMessage)
         this.gameStateManager.setMyTurn()
         this.gameActionsManager.lateTrigger()
@@ -147,7 +160,7 @@ export default class GameManager {
 
     private onTrucoPointCalculation(amIWinner: number) {
         this.gameStateManager.trucoPointCalculation(amIWinner)
-        if(this.gameStateManager.isNewRound()){
+        if (this.gameStateManager.isNewRound()) {
             return
         }
         if (amIWinner === -1 && this.gameStateManager.isMyTurn()) {
@@ -185,7 +198,7 @@ export default class GameManager {
 
     private startRoundImHand() {
         this.gameStateManager.onRoundStartImHand()
-        
+
         this.gameEventsManager.triggerOnMyTurnStart()
     }
 
@@ -228,6 +241,12 @@ export default class GameManager {
         this.gameStateManager.givePoints(!iCalled, this.gameActionsManager.getTrucoAccum())
         this.gameEventsManager.triggerOnNewRound()
     }
+
+    onSurrender(iCalled: boolean) {
+        this.gameStateManager.givePoints(!iCalled, 5)
+        this.gameEventsManager.triggerOnNewRound()
+    }
+
 
     private setLocalListeners() {
         this.gameEventsManager.addOnJoiningLobbyListener(this.onJoiningLobby.bind(this))

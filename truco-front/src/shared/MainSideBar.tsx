@@ -4,12 +4,14 @@ import PlayNowButton from '../components/matchmaking/PlayNowButton.tsx';
 import FriendsList from '../components/navbarElements/FriendsList.tsx';
 import HowToPlayButton from '../components/navbarElements/HowToPlayButton.tsx';
 import LeaderBoardButton from '../components/navbarElements/LeaderBoardButton.tsx';
+import Surrender from '../components/inGame/Surrender.tsx';
 
 const MainSideBar: React.FC = () => {
   return (
     <div className='w-[300px] relative h-screen flex flex-col items-center justify-evenly bg-secondary'>
       <TrucoLogo />
       <PlayNowButton />
+      <Surrender />
       <FriendsList />
       <HowToPlayButton />
       <LeaderBoardButton />
