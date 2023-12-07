@@ -37,13 +37,12 @@ const PlayNowButton = () => {
 
     if (!(opponentName == "")){
       setSurrenderButtonText("Surrender");
-      setIsSearching(false);
+      
     }
     
     if (gameEnded) {
-      setIsSearching(false)
-      isSearchingRef.current = false
       setButtonText("Play now");
+      setGameEnded(false);
      
       
     }
@@ -52,19 +51,7 @@ const PlayNowButton = () => {
 
 
   const toggleMatchmaking = () => {
-    if(isSearching && !(opponentName == "")){
-      setGameEnded(true);
-      setIsSearching(false)
-      isSearchingRef.current = false
-      
-    }
-    if (isSearchingRef.current) {
-      setIsSearching(false)
-      isSearchingRef.current = false
-      gameManager.leaveMatchmaking()
-      return
-    }
-
+    
     setIsSearching(true)
     isSearchingRef.current = true
 
@@ -80,13 +67,14 @@ const PlayNowButton = () => {
     isSearchingRef.current = false
     gameStateManager.givePoints(false, 15);
     setSurrenderButtonText("");
+ 
 
   };
 
 
   return (
     <>
-      <button onClick={toggleMatchmaking}  style={!(opponentName == "") || isSearching ? { backgroundColor: "gray" } : {}}
+      <button onClick={toggleMatchmaking}  style={ isSearching  ? { backgroundColor: "gray" } : {}}
         className='w-[80%] h-[50px] bg-primary rounded-lg flex justify-center items-center'>
         <h2 className='font-medium text-2xl'>{buttonText}</h2>
       </button>
