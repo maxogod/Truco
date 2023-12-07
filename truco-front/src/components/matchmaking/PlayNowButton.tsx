@@ -7,7 +7,9 @@ import GameStateManager from '../../gameLogic/GameStateManager';
 
 
 
+
 const PlayNowButton = () => {
+  
 
   const {    
     gameManager,
@@ -20,6 +22,8 @@ const PlayNowButton = () => {
   const [buttonText, setButtonText] = useState<string>("Play Now");
   const [surrenderButtonText, setSurrenderButtonText] = useState<string>("");
   const [showSurrenderButton, setShowSurrenderButton] = useState<boolean>(false);
+  const MATCHMAKING_TIME_OUT = 4000;
+  const WINNER_POINTS = 15;
 
 
   usePusherListeners(setGameEnded)
@@ -42,7 +46,7 @@ const PlayNowButton = () => {
     
     if (gameEnded) {
       setButtonText("Play now");
-      setGameEnded(false);
+       setGameEnded(false);
      
       
     }
@@ -58,14 +62,14 @@ const PlayNowButton = () => {
     setTimeout(() => {
       if (!isSearchingRef.current) return
       gameManager.joinMatchmaking()
-    }, 4000)
+    }, MATCHMAKING_TIME_OUT)
   }
 
   const handleSurrenderButton = () => {
     setGameEnded(true);
     setIsSearching(false)
     isSearchingRef.current = false
-    gameStateManager.givePoints(false, 15);
+    gameStateManager.givePoints(false, WINNER_POINTS);
     setSurrenderButtonText("");
  
 
