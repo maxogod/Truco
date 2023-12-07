@@ -3,7 +3,7 @@ import Timer from './matchmakingTimer';
 import { usePusherListeners } from '../../hooks/usePusherListeners';
 import { GameContext } from '../../context/gameContext';
 import React from 'react';
-//import GameActionsManager from '../../gameLogic/GameActionsManager';
+import GameStateManager from '../../gameLogic/GameStateManager';
 
 
 
@@ -23,6 +23,7 @@ const PlayNowButton = () => {
 
 
   usePusherListeners(setGameEnded)
+  const gameStateManager = new GameStateManager();
 
   useEffect(() => {
     if (!isSearching && (opponentName == "")) {
@@ -43,6 +44,7 @@ const PlayNowButton = () => {
       setIsSearching(false)
       isSearchingRef.current = false
       setButtonText("Game over");
+     
       
     }
     
@@ -76,6 +78,7 @@ const PlayNowButton = () => {
     setGameEnded(true);
     setIsSearching(false)
     isSearchingRef.current = false
+    gameStateManager.givePoints(false, 15);
 
   };
 
