@@ -43,7 +43,7 @@ const PlayNowButton = () => {
     if (gameEnded) {
       setIsSearching(false)
       isSearchingRef.current = false
-      setButtonText("Game over");
+      setButtonText("Play now");
      
       
     }
@@ -79,6 +79,7 @@ const PlayNowButton = () => {
     setIsSearching(false)
     isSearchingRef.current = false
     gameStateManager.givePoints(false, 15);
+    setSurrenderButtonText("");
 
   };
 
