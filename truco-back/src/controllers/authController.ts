@@ -21,8 +21,6 @@ const registerController = async (req: Request, res: Response) => {
         secure: true,
     });
 
-    // await User.populate(newUser, "friends"); TODO is it necessary?
-
     res.status(201).send(newUser);
 }
 
@@ -44,7 +42,8 @@ const loginController = async (req: Request, res: Response) => {
         secure: true,
     });
 
-    // await User.populate(user, "friends");
+    await User.populate(user, "friends");
+    await User.populate(user, "friendRequests");
 
     res.status(200).send(user);
 }
@@ -64,6 +63,9 @@ const sessionController = async (req: Request, res: Response) => {
     if (!req.session.user) return res.status(401).send("Not logged in");
 
     const user = await getUser(req.session.user.username);
+
+    await User.populate(user, "friends");
+    await User.populate(user, "friendRequests");
 
     return res.status(200).send(user);
 }

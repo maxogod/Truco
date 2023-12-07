@@ -6,9 +6,10 @@ import path from "path";
 import dotenv from "dotenv";
 import cors from "cors";
 import requestLogger from "./middlewares/requestLogger";
+import { populateSession } from "./middlewares/sessions";
 import pusherRouter from "./routers/pusherRouter";
 import authRouter from "./routers/authRouter";
-import { populateSession } from "./middlewares/sessions";
+import friendsRouter from "./routers/friendsRouter";
 
 dotenv.config();
 const app = express();
@@ -52,6 +53,8 @@ app.use(requestLogger); // for logging requests and status codes
 app.use("/api/pusher", pusherRouter);
 
 app.use("/api/auth", authRouter);
+
+app.use("/api/friends", friendsRouter);
 
 app.use("/", (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));

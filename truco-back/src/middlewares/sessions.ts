@@ -14,8 +14,8 @@ const populateSession = async (
     const session = await mongoose.connection.db
         .collection("sessions")
         .findOne({ _id: qid });
+
     if (!session) {
-        destroySession(req.cookies.qid);
         res.clearCookie("qid");
         return next();
     };
