@@ -40,7 +40,15 @@ const PlayNowButton = () => {
 
 
   const toggleMatchmaking = () => {
-    
+    if (isSearchingRef.current) {
+      setIsSearching(false)
+      isSearchingRef.current = false
+      gameManager.leaveMatchmaking()
+      setGameEnded(false);
+      setButtonText("Play now");
+      return
+    }
+
     setIsSearching(true)
     isSearchingRef.current = true
 
