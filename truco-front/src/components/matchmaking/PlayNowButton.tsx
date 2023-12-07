@@ -31,19 +31,18 @@ const PlayNowButton = () => {
   const gameStateManager = new GameStateManager();
 
   useEffect(() => {
-    if (!isSearching && (opponentName == "")) {
-      setShowSurrenderButton(false); 
-      
-      
+    if (opponentName == ""){
+      if (isSearching){
+        setButtonText("Cancel");
+      }
+      else{
+        setShowSurrenderButton(false); 
+      }
     }
-    if (isSearching && opponentName == "") {
-      setButtonText("Cancel");
-    }
-
-    if (!(opponentName == "")){
+    else{
       setSurrenderButtonText("Surrender");
-      
     }
+    
     
     if (gameEnded) {
       setButtonText("Play now");
