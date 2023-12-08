@@ -68,7 +68,7 @@ const Profile: React.FC = () => {
           </div>
           <div className='text-center'>
             <h2 className='font-semibold text-3xl mb-2'>Losses</h2>
-            <p className='text-3xl'>{user?.rating}</p>
+            <p className='text-3xl'>{user?.losses}</p>
           </div>
         </div>
       </div>
