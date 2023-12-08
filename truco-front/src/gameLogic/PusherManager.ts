@@ -58,6 +58,7 @@ export default class PusherManager {
         this.pusher.user.watchlist.bind('online', this.gameEventsManager.triggerOnUpdateOnlineFriends.bind(this.gameEventsManager))
         this.pusher.user.watchlist.bind('offline', this.gameEventsManager.triggerOnUpdateOnlineFriends.bind(this.gameEventsManager));
         this.pusher.user.bind('friend-request', this.gameEventsManager.triggerOnFriendRequest.bind(this.gameEventsManager));
+        this.pusher.user.bind('friend-request-accepted', this.gameEventsManager.triggerOnFriendRequestAccepted.bind(this.gameEventsManager));
         this.pusher.user.bind('game-challenge',this.gameEventsManager.triggerOnGameChallenge.bind(this.gameEventsManager));
     }
 

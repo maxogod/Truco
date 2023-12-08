@@ -56,7 +56,12 @@ export default class GameEventsAdder{
         this.gameEventsManager.addOnFriendRequestListener(handler)
     }
 
+    public addOnFriendRequestAcceptedListener(handler: (friendUsername: string) => void) {
+        this.gameEventsManager.addOnFriendRequestAcceptedListener(handler)
+    }
+
     public addOnGameChallengeListener(handler: (challenger: string) => void) {
         this.gameEventsManager.addOnGameChallengeListener(handler)
     }
+
 }

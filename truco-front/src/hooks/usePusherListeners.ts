@@ -9,7 +9,7 @@ export const usePusherListeners = (
     setGameEnded: (gameEnded: boolean) => void,
 ) => {
 
-    const { user, setOnlineFriends,setFriendRequests } = useContext(UserContext)
+    const { user, setOnlineFriends,setFriendRequests,setFriends } = useContext(UserContext)
 
     const {
         gameManager,
@@ -133,6 +133,15 @@ export const usePusherListeners = (
 
         gameManager.events.addOnGameChallengeListener((challenger: string) => {
             gameManager.acceptChallenge(challenger) // TODO replace with logic
+        })
+
+        gameManager.events.addOnFriendRequestAcceptedListener((username: string) => {
+            if(!user) return
+            setFriends((prev) => {
+                const newFriends = [...prev, username]
+                gameManager.initPusher(user.username, newFriends)
+                return newFriends
+            })
         })
     }, [])
 }

@@ -44,6 +44,10 @@ class PusherController {
     public sendFriendRequest(targetUsername: string, friendUser: any) {
         this.pusher.sendToUser(targetUsername, "friend-request", friendUser);
     }
+
+    public acceptFriendRequest(acceptedUsername: string, username: string) {
+        this.pusher.sendToUser(acceptedUsername, "friend-request-accepted", username);
+    }
 }
 
 export default new PusherController();

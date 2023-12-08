@@ -3,14 +3,11 @@ import Add from '../../assets/Add_round_fill.png'
 import { UserContext } from '../../context/userContext';
 import { useContext } from 'react';
 import { acceptFriendRequest } from '../../services/acceptFriendRequest';
-import { GameContext } from '../../context/gameContext';
 import { challengeFriend } from '../../services/challengeFriend';
 
 const FriendsList: React.FC = () => {
 
-  const { user, setUser, setSendFriendRequest, onlineFriends, friendRequests } = useContext(UserContext)
-
-  const {gameManager} = useContext(GameContext)
+  const { user, setUser, setSendFriendRequest, onlineFriends, friendRequests, setFriendRequests,friends } = useContext(UserContext)
 
   const [loading, setLoading] = React.useState<boolean>(false)
 
@@ -25,6 +22,7 @@ const FriendsList: React.FC = () => {
       if (res.data) {
         setLoading(false)
         setUser(res.data)
+        setFriendRequests(friendRequests.filter(request => request.username !== username))
       }
     } catch (error) {
       setLoading(false)
@@ -51,14 +49,14 @@ const FriendsList: React.FC = () => {
       </h3>
       <div className='w-full h-80 mt-10 flex flex-col gap-3'>
         {!user && <p className=''>You must be logged in to see your friends</p>}
-        {user && user.friends?.length === 0 && <p className=''>You don't have any friends yet</p>}
-        {user && user.friends?.length > 0 && user.friends.map((friend, i) => (
+        {user && friends.length === 0 && <p className=''>You don't have any friends yet</p>}
+        {user && friends.length > 0 && friends.map((friend, i) => (
           <div>
-            <span key={'friend' + i} style={{width:"fit-content"}}>{friend.username}{
-              onlineFriends.includes(friend.username) &&
+            <span key={'friend' + i} style={{width:"fit-content"}}>{friend}{
+              onlineFriends.includes(friend) &&
               <span className='ml-1 text-green-500'>●</span>
             }</span>
-            {onlineFriends.includes(friend.username) && <button onClick={()=> sendChallenge(friend.username)} className='ml-1 bg-white text-black'>Challenge</button>}
+            {onlineFriends.includes(friend) && <button onClick={()=> sendChallenge(friend)} className='ml-1 bg-white text-black'>Challenge</button>}
           </div>
         ))}
         {

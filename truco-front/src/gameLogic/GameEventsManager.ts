@@ -50,6 +50,8 @@ export default class GameEventsManager {
 
     onFriendRequestListeners: ((friendUser: User) => void)[] = []
 
+    onFriendRequestAcceptedListeners: ((friendUsername: string) => void)[] = []
+
     onGameChallengeListeners: ((opponentName: string) => void)[] = []
 
 
@@ -135,6 +137,10 @@ export default class GameEventsManager {
 
     addOnFriendRequestListener(handler: (friendUser: User) => void) {
         this.onFriendRequestListeners.push(handler)
+    }
+
+    addOnFriendRequestAcceptedListener(handler: (friendUsername: string) => void) {
+        this.onFriendRequestAcceptedListeners.push(handler)
     }
 
     addOnGameChallengeListener(handler: (opponentName: string) => void) {
@@ -361,6 +367,18 @@ export default class GameEventsManager {
     triggerOnFriendRequest(friendUser: User) {
         try {
             this.onFriendRequestListeners.forEach(listener => listener(friendUser))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+        }
+    }
+
+    triggerOnFriendRequestAccepted(friendUsername: string) {
+        console.log("friend request accepted")
+        console.log(friendUsername)
+        try {
+            this.onFriendRequestAcceptedListeners.forEach(listener => listener(friendUsername))
         } catch (e) {
             if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
                 return
