@@ -32,13 +32,13 @@ const Profile: React.FC = () => {
     <>
       {!loadingLogOut && <button
         onClick={handleLogOut}
-        className='w-[170px] h-[60px] rounded-full bg-primary absolute top-10 right-40 z-20'>
+        className='w-[170px] h-[60px] rounded-full bg-primary absolute top-10 right-[50%] translate-x-1/2 z-20 md:right-36'>
         Log Out
       </button>}
 
       {loadingLogOut &&
         <button
-          className='w-[170px] h-[60px] flex justify-center items-center rounded-full bg-primary absolute top-10 right-40 z-20'>
+          className='w-[170px] h-[60px] flex justify-center items-center rounded-full bg-primary absolute top-10 right-[50%] translate-x-1/2 z-20 md:right-36'>
           <CgSpinner className='animate-spin w-[40px] h-[40px]' />
         </button>}
 

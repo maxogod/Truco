@@ -67,7 +67,7 @@ const SignUp: React.FC = () => {
 
   return (
     <div className='w-full flex flex-col items-center'>
-      <h1 className='text-3xl md:text-4xl font-bold mt-2 md:mt-14 text-center'>Play Truco Online on the <span className='text-primary'>#1</span> Site!</h1>
+      <h1 className='text-2xl md:text-4xl font-bold mt-2 md:mt-14 pl-10 md:pl-0 text-center'>Play Truco Online on the <span className='text-primary'>#1</span> Site!</h1>
       <form
         onSubmit={handleSubmit}
         className='w-[90%] max-w-[480px] h-[80%] max-h-[660px] flex flex-col justify-evenly items-center rounded-xl m-auto bg-secondary'>
