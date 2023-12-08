@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom"
 import { GameContext } from "../context/gameContext"
 import { UserContext } from "../context/userContext"
 import WatchListEvent from "../gameLogic/type/WatchListEvent"
+import User from "../@types/UserType"
 export const usePusherListeners = (
     setGameEnded: (gameEnded: boolean) => void,
 ) => {
 
-    const { user,setOnlineFriends } = useContext(UserContext)
+    const { user, setOnlineFriends,setFriendRequests,setFriends,friends } = useContext(UserContext)
 
     const {
         gameManager,
@@ -28,9 +29,12 @@ export const usePusherListeners = (
 
 
     useEffect(() => {
-        if (!user) return
+        if (!user) {
+            gameManager.disconnect();
+            return
+        }
         const username = user.username
-        gameManager.initPusher(username, user.friends.map((friend) => friend.username))
+        gameManager.initPusher(username, friends)
     }, [user])
 
     useEffect(() => {
@@ -124,6 +128,23 @@ export const usePusherListeners = (
             else if(watchlistEvent.name === "online"){
                 setOnlineFriends((prev) => [...prev, ...watchlistEvent.user_ids])
             }
+        })
+
+        gameManager.events.addOnFriendRequestListener((friendUser: User) => {
+            setFriendRequests((prev) => [...prev, friendUser])
+        })
+
+        gameManager.events.addOnGameChallengeListener((challenger: string) => {
+            gameManager.acceptChallenge(challenger) // TODO replace with logic
+        })
+
+        gameManager.events.addOnFriendRequestAcceptedListener((username: string) => {
+            if(!user) return
+            setFriends((prev) => {
+                const newFriends = [...prev, username]
+                gameManager.initPusher(user.username, newFriends)
+                return newFriends
+            })
         })
     }, [])
 }

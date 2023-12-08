@@ -1,12 +1,13 @@
 import Pusher from "pusher";
 import { Request, Response } from "express";
 import dotenv from "dotenv";
+import User from "../models/User";
+import { log } from "console";
 dotenv.config();
 
 class PusherController {
     private pusher: Pusher;
-
-
+    
     constructor() {
 
         this.pusher = new Pusher({
@@ -33,6 +34,19 @@ class PusherController {
         // This authenticates every user. Don't do this in production!
         const authResponse = this.pusher.authenticateUser(socketId, user);
         res.send(authResponse);
+    }
+
+    public challengeFriend(req: Request, res: Response) {
+        this.pusher.sendToUser(req.body.opponentName, "game-challenge", req.body.challengerName);
+        res.sendStatus(200);
+    }
+
+    public sendFriendRequest(targetUsername: string, friendUser: any) {
+        this.pusher.sendToUser(targetUsername, "friend-request", friendUser);
+    }
+
+    public acceptFriendRequest(acceptedUsername: string, username: string) {
+        this.pusher.sendToUser(acceptedUsername, "friend-request-accepted", username);
     }
 }
 

@@ -15,7 +15,7 @@ export default class PusherManager {
     public initPusher(userName: string, friends: string[]) {
         //Pusher.logToConsole = true; // TODO remove in production
         if (this.pusher) {
-            this.pusher.disconnect()
+            this.disconnectPusher();
         }
         this.pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY, {
             cluster: 'sa1',
@@ -57,7 +57,10 @@ export default class PusherManager {
         this.pusher.signin();
         this.pusher.user.watchlist.bind('online', this.gameEventsManager.triggerOnUpdateOnlineFriends.bind(this.gameEventsManager))
         this.pusher.user.watchlist.bind('offline', this.gameEventsManager.triggerOnUpdateOnlineFriends.bind(this.gameEventsManager));
-
+        console.log(userName)
+        this.pusher.user.bind('friend-request', this.gameEventsManager.triggerOnFriendRequest.bind(this.gameEventsManager));
+        this.pusher.user.bind('friend-request-accepted', this.gameEventsManager.triggerOnFriendRequestAccepted.bind(this.gameEventsManager));
+        this.pusher.user.bind('game-challenge',this.gameEventsManager.triggerOnGameChallenge.bind(this.gameEventsManager));
     }
 
     connectChannel(channelName: string, onSubscriptionSucceeded: (members: Members, channel: Channel) => void = () => { }): Channel {
@@ -82,6 +85,12 @@ export default class PusherManager {
             this.disconnectChannel(channelName)
         })
 
+    }
+
+    disconnectPusher() {
+        this.pusher?.disconnect();
+        this.channels = new Map<string, Channel>();
+        this.pusher = null;
     }
 
     getChannel(channelName: string): Channel | null {

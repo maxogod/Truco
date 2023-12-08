@@ -3,10 +3,14 @@ import Add from '../../assets/Add_round_fill.png'
 import { UserContext } from '../../context/userContext';
 import { useContext } from 'react';
 import { acceptFriendRequest } from '../../services/acceptFriendRequest';
+import { challengeFriend } from '../../services/challengeFriend';
+import { GameContext } from '../../context/gameContext';
 
 const FriendsList: React.FC = () => {
 
-  const { user, setUser, setSendFriendRequest, onlineFriends} = useContext(UserContext)
+  const { user, setUser, setSendFriendRequest, onlineFriends, friendRequests, setFriendRequests,friends,setFriends } = useContext(UserContext)
+
+  const {gameManager} = useContext(GameContext)
 
   const [loading, setLoading] = React.useState<boolean>(false)
 
@@ -21,10 +25,20 @@ const FriendsList: React.FC = () => {
       if (res.data) {
         setLoading(false)
         setUser(res.data)
+        setFriends((prev) => {
+          const newFriends = [...prev, username]
+          gameManager.initPusher(user?.username as string, newFriends)
+          return newFriends
+      })
+        setFriendRequests(friendRequests.filter(request => request.username !== username))
       }
     } catch (error) {
       setLoading(false)
     }
+  }
+
+  const sendChallenge = (username: string) => {
+    challengeFriend(username, user?.username || '')
   }
 
   return (
@@ -43,20 +57,23 @@ const FriendsList: React.FC = () => {
       </h3>
       <div className='w-full h-80 mt-10 flex flex-col gap-3'>
         {!user && <p className=''>You must be logged in to see your friends</p>}
-        {user && user.friends?.length === 0 && <p className=''>You don't have any friends yet</p>}
-        {user && user.friends?.length > 0 && user.friends.map((friend, i) => (
-          <p key={'friend' + i} className=''>{friend.username}{
-            onlineFriends.includes(friend.username) &&
-            <span className='ml-1 text-green-500'>●</span>
-          }</p>
+        {user && friends.length === 0 && <p className=''>You don't have any friends yet</p>}
+        {user && friends.length > 0 && friends.map((friend, i) => (
+          <div>
+            <span key={'friend' + i} style={{width:"fit-content"}}>{friend}{
+              onlineFriends.includes(friend) &&
+              <span className='ml-1 text-green-500'>●</span>
+            }</span>
+            {onlineFriends.includes(friend) && <button onClick={()=> sendChallenge(friend)} className='ml-1 bg-white text-black'>Challenge</button>}
+          </div>
         ))}
         {
-          user && user.friendRequests?.length > 0 &&
+          user && friendRequests?.length > 0 &&
           <>
             <h3 className='font-semibold text-2xl'>
               Requests
             </h3>
-            {user.friendRequests.map((request, i) => (
+            {friendRequests.map((request, i) => (
               <p key={'request' + i} className=''>
                 {request.username}
                 <button

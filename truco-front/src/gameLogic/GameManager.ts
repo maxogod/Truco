@@ -50,6 +50,11 @@ export default class GameManager {
         this.gameMatchmakingManager.joinMatchmaking()
     }
 
+    public acceptChallenge(opponentName: string) {
+        this.gameMatchmakingManager.acceptChallenge(opponentName)
+    }
+    
+
     public leaveMatchmaking() {
         this.gameMatchmakingManager.leaveMatchmaking()
     }
@@ -60,6 +65,10 @@ export default class GameManager {
 
     public getUserName(): string {
         return this.gameMatchmakingManager.getUserName()
+    }
+
+    public disconnect() {
+        this.pusherManager.disconnectPusher()
     }
 
     public sendAction(action: GameActionMessage) {
@@ -278,8 +287,8 @@ export default class GameManager {
         })
         gameChannel.bind(EventName.SHOW_ENVIDO, (data: { value: number }) => {
             const opponentWon = this.gameStateManager.envidoPlayed(data.value, this.cardsManager.getEnvidoPoints())
-            this.gameStateManager.givePoints(!opponentWon, this.gameActionsManager.getEnvidoAccum())
             gameChannel.trigger(EventName.ENVIDO_ENDED, { opponentWon: opponentWon })
+            this.gameStateManager.givePoints(!opponentWon, this.gameActionsManager.getEnvidoAccum())
         })
         gameChannel.bind(EventName.ENVIDO_ENDED, (result: { opponentWon: boolean }) => {
             this.gameStateManager.givePoints(result.opponentWon, this.gameActionsManager.getEnvidoAccum())
