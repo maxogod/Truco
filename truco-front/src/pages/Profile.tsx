@@ -5,10 +5,12 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { CgSpinner } from 'react-icons/cg';
 import { logout } from '../services/logout';
+import { GameContext } from '../context/gameContext';
 
 const Profile: React.FC = () => {
 
   const { user, setUser, loadingLogOut, setLoadingLogOut } = useContext(UserContext)
+  const {gameManager} = useContext(GameContext)
 
   const navigate = useNavigate()
 
@@ -19,6 +21,7 @@ const Profile: React.FC = () => {
       const res = await logout()
       if (res.status === 200) {
         setUser(null)
+        gameManager.disconnect()
         setLoadingLogOut(false)
         navigate('/')
       }

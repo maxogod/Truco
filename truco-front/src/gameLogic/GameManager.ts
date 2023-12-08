@@ -67,6 +67,10 @@ export default class GameManager {
         return this.gameMatchmakingManager.getUserName()
     }
 
+    public disconnect() {
+        this.pusherManager.disconnectPusher()
+    }
+
     public sendAction(action: GameActionMessage) {
 
         if (action.action === GameAction.SURRENDER) {

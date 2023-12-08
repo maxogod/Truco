@@ -86,6 +86,11 @@ export default class PusherManager {
 
     }
 
+    disconnectPusher() {
+        this.disconnectAll();
+        this.pusher?.disconnect();
+    }
+
     getChannel(channelName: string): Channel | null {
         if (this.channels.has(channelName)) {
             return this.channels.get(channelName) as Channel;
