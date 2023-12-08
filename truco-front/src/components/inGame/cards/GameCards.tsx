@@ -14,7 +14,7 @@ const GameCards = () => {
   }
 
   return (
-    <div className='w-[60%] h-full relative flex justify-center items-center'>
+    <div className='w-full md:w-[60%] h-full relative flex justify-center items-center'>
 
       <div className='w-full h-fit flex justify-center absolute bottom-10 gap-1'>
         {cards.map((card, index) => (

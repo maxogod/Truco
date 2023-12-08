@@ -3,7 +3,7 @@ import send from '../../assets/Send_hor_fill.png';
 import { GameContext } from '../../context/gameContext';
 import { Channel } from 'pusher-js';
 
-const Chat: React.FC = () => {
+const Chat: React.FC = ({ chatIsOpen, setIsOpen, toggleChat }) => {
   const [message, setMessage] = useState<string>('');
   const [messages, setMessages] = useState<string[]>([]);
   const { gameManager, opponentName } = useContext(GameContext);
@@ -24,13 +24,20 @@ const Chat: React.FC = () => {
     setMessage("");
   };
 
+  const seeChat = {
+    display: chatIsOpen ? 'inline-block' : 'none',
+  };
+
+
   return (
-    <div className='w-[280px] h-[715px] border-2 border-primary bg-secondary rounded-3xl relative top-[136px] p-4 overflow-auto text-sm'>
+    <div className='w-full h-full absolute md:w-[30%] md:max-w-[300px] md:my-8 md:h-[90%] border-2 border-primary bg-secondary rounded-3xl md:relative p-4 overflow-auto text-sm z-50'
+      style={seeChat}>
       {messages.map((message, index) => (
         <p key={index} className='text-left text-gray-300 mb-2'>
           {message}
         </p>
       ))}
+      <div className='absolute top-0 right-0 text-3xl m-4 cursor-pointer' onClick={toggleChat}>{">"}</div>
       <div className='absolute bottom-4 right-1/2 translate-x-1/2 w-[80%]'>
         <input
           type="text"
