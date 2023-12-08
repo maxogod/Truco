@@ -8,9 +8,9 @@ import { GameContext } from '../../context/gameContext';
 
 const FriendsList: React.FC = () => {
 
-  const { user, setUser, setSendFriendRequest, onlineFriends, friendRequests, setFriendRequests,friends,setFriends } = useContext(UserContext)
+  const { user, setUser, setSendFriendRequest, onlineFriends, friendRequests, setFriendRequests, friends, setFriends } = useContext(UserContext)
 
-  const {gameManager} = useContext(GameContext)
+  const { gameManager } = useContext(GameContext)
 
   const [loading, setLoading] = React.useState<boolean>(false)
 
@@ -29,7 +29,7 @@ const FriendsList: React.FC = () => {
           const newFriends = [...prev, username]
           gameManager.initPusher(user?.username as string, newFriends)
           return newFriends
-      })
+        })
         setFriendRequests(friendRequests.filter(request => request.username !== username))
       }
     } catch (error) {
@@ -59,12 +59,12 @@ const FriendsList: React.FC = () => {
         {!user && <p className=''>You must be logged in to see your friends</p>}
         {user && friends.length === 0 && <p className=''>You don't have any friends yet</p>}
         {user && friends.length > 0 && friends.map((friend, i) => (
-          <div>
-            <span key={'friend' + i} style={{width:"fit-content"}}>{friend}{
+          <div key={'friend' + i}>
+            <span style={{ width: "fit-content" }}>{friend}{
               onlineFriends.includes(friend) &&
               <span className='ml-1 text-green-500'>●</span>
             }</span>
-            {onlineFriends.includes(friend) && <button onClick={()=> sendChallenge(friend)} className='ml-1 bg-white text-black'>Challenge</button>}
+            {onlineFriends.includes(friend) && <button onClick={() => sendChallenge(friend)} className='ml-1 bg-white text-black'>Challenge</button>}
           </div>
         ))}
         {
