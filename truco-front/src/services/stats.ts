@@ -4,7 +4,8 @@ const addWin = async () => {
 
     const baseUrl = import.meta.env.VITE_SERVER_URL + "/api/stats/addWin";
 
-    const response = await axios.get(baseUrl,
+    const response = await axios.put(baseUrl,
+        {}, // empty body
         {
             withCredentials: true,
         }
@@ -17,7 +18,8 @@ const addLoss = async () => {
 
     const baseUrl = import.meta.env.VITE_SERVER_URL + "/api/stats/addLoss";
 
-    const response = await axios.get(baseUrl,
+    const response = await axios.put(baseUrl,
+        {}, // empty body
         {
             withCredentials: true,
         }
@@ -30,7 +32,7 @@ const updateRating = async (ratingDifferential: number) => {
 
     const baseUrl = import.meta.env.VITE_SERVER_URL + "/api/stats/updateRating";
 
-    const response = await axios.post(baseUrl,
+    const response = await axios.put(baseUrl,
         {
             ratingDifferential,
         },

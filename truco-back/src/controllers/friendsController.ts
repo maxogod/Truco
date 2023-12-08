@@ -30,11 +30,22 @@ const acceptFriendRequestController = async (req: Request, res: Response) => {
     if (!added) return res.status(400).send("Could not add friend");
 
     const user = await getUser(req.session.user.username);
+    if (!user) return res.status(500).send("Internal server error");
 
     await User.populate(user, "friends");
     await User.populate(user, "friendRequests");
 
-    return res.status(200).send(user);
+    return res.status(200).send({
+        _id: user._id,
+        username: user.username,
+        rating: user.rating,
+        wins: user.wins,
+        losses: user.losses,
+        friends: user.friends,
+        friendRequests: user.friendRequests,
+        created_at: user.createdAt,
+        updated_at: user.updatedAt,
+    });
 }
 
 export {

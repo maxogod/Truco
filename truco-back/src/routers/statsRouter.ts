@@ -3,10 +3,10 @@ import { addLossController, addWinController, updateRatingController } from '../
 
 const router = Router();
 
-router.get('/addWin', addWinController);
+router.put('/addWin', addWinController);
 
-router.get('/addLoss', addLossController);
+router.put('/addLoss', addLossController);
 
-router.post('/updateRating', updateRatingController);
+router.put('/updateRating', updateRatingController);
 
 export default router;

@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema(
         rating: {
             type: mongoose.Schema.Types.Number,
             required: true,
-            default: 0,
+            default: 400,
         },
         wins: {
             type: mongoose.Schema.Types.Number,

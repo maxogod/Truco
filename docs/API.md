@@ -29,12 +29,12 @@
 
 ### Stats
 
-* GET `/api/stats/addWin`
-* GET `/api/stats/addLoss`
-* POST `/api/stats/updateRating`
+* PUT `/api/stats/addWin`
+* PUT `/api/stats/addLoss`
+* PUT `/api/stats/updateRating`
 
 ```json
-- request body for post
+- request body for updateRating (the rest can be an empty body)
   {
     "ratingDifferential": 27 // it can be a possitive number to add rating or negative to substract
   }

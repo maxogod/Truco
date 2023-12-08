@@ -24,7 +24,12 @@ const updateRatingService = async (username: string, ratingDifferential: number)
     const user = await User.findOne({ username });
     if (!user) return false;
 
-    user.rating += ratingDifferential;
+    if (user.rating + ratingDifferential < 0) {
+        user.rating = 0;
+    } else {
+        user.rating += ratingDifferential;
+    }
+
 
     try {
         await user.save();
