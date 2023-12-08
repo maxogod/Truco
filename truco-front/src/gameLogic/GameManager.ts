@@ -41,9 +41,8 @@ export default class GameManager {
         return this.gameTurnsManager.getGameChannel()
     }
 
-    public initPusher(username: string) {
-        this.pusherManager.initPusher(username)
-        if (this.gameMatchmakingManager.getUserName()) return
+    public initPusher(username: string, friends: string[]) {
+        this.pusherManager.initPusher(username,friends)
         this.setUserName(username)
     }
 

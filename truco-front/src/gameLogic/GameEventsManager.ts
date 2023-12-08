@@ -1,5 +1,6 @@
 import { Card } from "./Cards/Card";
 import { GameActionMessage } from "./type/GameActionMessage";
+import WatchListEvent from "./type/WatchListEvent";
 
 export default class GameEventsManager {
 
@@ -44,6 +45,7 @@ export default class GameEventsManager {
 
     onPointsUpdateListeners: ((myPoints:number, opponentPoints: number) => void)[] = []
 
+    onUpdateOnlineFriendsListeners: ((watchlistEvent:  WatchListEvent) => void)[] = []
 
 
     addOnMatchFoundListener(handler: (opponentName: string) => void) {
@@ -120,6 +122,10 @@ export default class GameEventsManager {
 
     addOnPointsUpdateListener(handler: (myPoints:number, opponentPoints:number) => void) {
         this.onPointsUpdateListeners.push(handler)
+    }
+
+    addOnUpdateOnlineFriendsListener(handler: (watchlistEvent:  WatchListEvent) => void) {
+        this.onUpdateOnlineFriendsListeners.push(handler)
     }
 
     triggerOnMatchFound(opponentName: string) {
@@ -328,6 +334,18 @@ export default class GameEventsManager {
             }
         }
     }
+
+    triggerOnUpdateOnlineFriends(watchlistEvent:  WatchListEvent) {
+        try {
+            this.onUpdateOnlineFriendsListeners.forEach(listener => listener(watchlistEvent))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+        }
+    }
+
+
 
     static getInstance(): GameEventsManager {
         if (!GameEventsManager.instance) {
