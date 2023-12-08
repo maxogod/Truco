@@ -21,7 +21,6 @@ const Profile: React.FC = () => {
       const res = await logout()
       if (res.status === 200) {
         setUser(null)
-        gameManager.disconnect()
         setLoadingLogOut(false)
         navigate('/')
       }

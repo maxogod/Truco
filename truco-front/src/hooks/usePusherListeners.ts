@@ -29,7 +29,10 @@ export const usePusherListeners = (
 
 
     useEffect(() => {
-        if (!user) return
+        if (!user) {
+            gameManager.disconnect();
+            return
+        }
         const username = user.username
         gameManager.initPusher(username, friends)
     }, [user])
