@@ -17,7 +17,7 @@
     "username": "letters and numbers only",
     "password": "letters, numbers and special characters except spaces"
   }
-  ```
+```
 
 * GET `/api/auth/session` -> if 200 returns a User
 * GET `/api/auth/logout`
@@ -26,6 +26,19 @@
 
 * GET `/api/friends/friendRequest/:targetUsername`
 * GET `/api/friends/acceptFriendRequest/:targetUsername`
+
+### Stats
+
+* PUT `/api/stats/addWin`
+* PUT `/api/stats/addLoss`
+* PUT `/api/stats/updateRating`
+
+```json
+- request body for updateRating (the rest can be an empty body)
+  {
+    "ratingDifferential": 27 // it can be a possitive number to add rating or negative to substract
+  }
+```
 
 ## Models
 

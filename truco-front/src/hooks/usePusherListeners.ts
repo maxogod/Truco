@@ -3,13 +3,15 @@ import { Card } from "../gameLogic/Cards/Card"
 import { useNavigate } from "react-router-dom"
 import { GameContext } from "../context/gameContext"
 import { UserContext } from "../context/userContext"
+import { addLoss, addWin } from "../services/stats"
 import WatchListEvent from "../gameLogic/type/WatchListEvent"
 import User from "../@types/UserType"
+
 export const usePusherListeners = (
     setGameEnded: (gameEnded: boolean) => void,
 ) => {
 
-    const { user, setOnlineFriends,setFriendRequests,setFriends,friends } = useContext(UserContext)
+    const { user, setUser, setOnlineFriends, setFriendRequests, setFriends, friends } = useContext(UserContext)
 
     const {
         gameManager,
@@ -109,7 +111,27 @@ export const usePusherListeners = (
             setCards((prev) => prev.map(() => null))
             setOpponentCardsNumber(0)
             setCardsOnBoard((prev) => prev.map(() => null))
-            setTimeout(() => {
+            setTimeout(async () => {
+                if (IWon) {
+                    await addWin()
+                    setUser((prev) => {
+                        if (!prev) return prev
+                        return {
+                            ...prev,
+                            wins: prev.wins + 1,
+                        }
+                    })
+                } else {
+                    await addLoss()
+                    setUser((prev) => {
+                        if (!prev) return prev
+                        return {
+                            ...prev,
+                            losses: prev.losses + 1,
+                        }
+                    })
+                }
+                // TODO - add rating update
                 navigate("/") // TODO - replace with a modal saying who won
             }, 2000)
         })

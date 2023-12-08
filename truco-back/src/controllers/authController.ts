@@ -21,7 +21,18 @@ const registerController = async (req: Request, res: Response) => {
         secure: true,
     });
 
-    res.status(201).send(newUser);
+    // send evything except password
+    res.status(201).send({
+        _id: newUser._id,
+        username: newUser.username,
+        rating: newUser.rating,
+        wins: newUser.wins,
+        losses: newUser.losses,
+        friends: newUser.friends,
+        friendRequests: newUser.friendRequests,
+        created_at: newUser.createdAt,
+        updated_at: newUser.updatedAt,
+    });
 }
 
 const loginController = async (req: Request, res: Response) => {
@@ -45,7 +56,17 @@ const loginController = async (req: Request, res: Response) => {
     await User.populate(user, "friends");
     await User.populate(user, "friendRequests");
 
-    res.status(200).send(user);
+    res.status(200).send({
+        _id: user._id,
+        username: user.username,
+        rating: user.rating,
+        wins: user.wins,
+        losses: user.losses,
+        friends: user.friends,
+        friendRequests: user.friendRequests,
+        created_at: user.createdAt,
+        updated_at: user.updatedAt,
+    });
 }
 
 const logoutController = async (req: Request, res: Response) => {
@@ -63,11 +84,22 @@ const sessionController = async (req: Request, res: Response) => {
     if (!req.session.user) return res.status(401).send("Not logged in");
 
     const user = await getUser(req.session.user.username);
+    if (!user) return res.status(500).send("Internal Server Error");
 
     await User.populate(user, "friends");
     await User.populate(user, "friendRequests");
 
-    return res.status(200).send(user);
+    return res.status(200).send({
+        _id: user._id,
+        username: user.username,
+        rating: user.rating,
+        wins: user.wins,
+        losses: user.losses,
+        friends: user.friends,
+        friendRequests: user.friendRequests,
+        created_at: user.createdAt,
+        updated_at: user.updatedAt,
+    });
 }
 
 export {
