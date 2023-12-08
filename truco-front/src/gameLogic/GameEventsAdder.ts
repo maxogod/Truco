@@ -1,6 +1,8 @@
+import User from "../@types/UserType"
 import { Card } from "./Cards/Card"
 import GameEventsManager from "./GameEventsManager"
 import { GameActionMessage } from "./type/GameActionMessage"
+import WatchListEvent from "./type/WatchListEvent"
 
 export default class GameEventsAdder{
     gameEventsManager: GameEventsManager
@@ -45,4 +47,21 @@ export default class GameEventsAdder{
     public addOnPointsUpdateListener(handler: (myPoints: number, opponentPoints: number) => void) {
         this.gameEventsManager.addOnPointsUpdateListener(handler)
     }
+
+    public addOnUpdateOnlineFriendsListener(handler: (watchlistEvent: WatchListEvent) => void) {
+        this.gameEventsManager.addOnUpdateOnlineFriendsListener(handler)
+    }
+
+    public addOnFriendRequestListener(handler: (friendUser: User) => void) {
+        this.gameEventsManager.addOnFriendRequestListener(handler)
+    }
+
+    public addOnFriendRequestAcceptedListener(handler: (friendUsername: string) => void) {
+        this.gameEventsManager.addOnFriendRequestAcceptedListener(handler)
+    }
+
+    public addOnGameChallengeListener(handler: (challenger: string) => void) {
+        this.gameEventsManager.addOnGameChallengeListener(handler)
+    }
+
 }

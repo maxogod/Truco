@@ -3,13 +3,14 @@ import { useContext, useState } from 'react';
 import { UserContext } from '../context/userContext';
 import { CgSpinner } from "react-icons/cg";
 import { login } from '../services/login';
+import User from '../@types/UserType';
 
 const LogIn = () => {
 
   const userRegex = /^[a-zA-Z0-9]+$/; // only letters and numbers
   const passwordRegex = /^[a-zA-Z0-9!@#$%^&*()-_+=<>?]{8,}$/; // at least 8 characters, only letters, numbers and !@#$%^&*()-_+=<>?
 
-  const { setUser, loadingLogin, setLoadingLogin } = useContext(UserContext)
+  const { setUser, loadingLogin, setLoadingLogin,setFriends,setFriendRequests } = useContext(UserContext)
 
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -45,6 +46,8 @@ const LogIn = () => {
       const res = await login(username, password)
       if (res.data) {
         setUser(res.data)
+        setFriendRequests(res.data.friendRequests)
+        setFriends(res.data.friends.map((friend: User) => friend.username))
         setLoadingLogin(false)
         setError('')
         navigate('/')
@@ -57,10 +60,10 @@ const LogIn = () => {
 
   return (
     <div className='w-full flex flex-col items-center'>
-      <h1 className='text-4xl font-bold mt-14 text-center'>Play Truco Online on the #1 Site!</h1>
+      <h1 className=' font-bold mt-4 text-2xl md:mt-14 md:text-4xl text-center pl-10 md:pl-0'>Play Truco Online on the <span className='text-primary'>#1</span> Site!</h1>
       <form
         onSubmit={handleSubmit}
-        className='w-[480px] h-[660px] flex flex-col justify-evenly items-center rounded-xl m-auto bg-secondary'>
+        className='w-[90%] max-w-[480px] h-[80%] max-h-[660px] flex flex-col justify-evenly items-center rounded-xl m-auto bg-secondary'>
         <h2 className='font-semibold text-4xl'>LOG IN</h2>
 
         <input

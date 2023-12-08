@@ -15,6 +15,12 @@ interface UserContextType {
     setLoadingLogOut: React.Dispatch<React.SetStateAction<boolean>>
     sendFriendRequest: boolean
     setSendFriendRequest: React.Dispatch<React.SetStateAction<boolean>>
+    onlineFriends: string[]
+    setOnlineFriends: React.Dispatch<React.SetStateAction<string[]>>
+    friendRequests: User[]
+    setFriendRequests: React.Dispatch<React.SetStateAction<User[]>>
+    friends: string[]
+    setFriends: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -30,6 +36,12 @@ export const UserContext = createContext<UserContextType>({
     setLoadingLogOut: () => { },
     sendFriendRequest: false,
     setSendFriendRequest: () => { },
+    onlineFriends: [],
+    setOnlineFriends: () => { },
+    friendRequests: [],
+    setFriendRequests: () => { },
+    friends: [],
+    setFriends: () => { }
 })
 
 export const UserContextProvider = ({ children }: { children: ReactNode }) => {
@@ -42,6 +54,10 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
 
     const [sendFriendRequest, setSendFriendRequest] = useState<boolean>(false);
 
+    const [onlineFriends, setOnlineFriends] = useState<string[]>([])
+    const [friends, setFriends] = useState<string[]>([])
+    const [friendRequests, setFriendRequests] = useState<User[]>([])
+
     useEffect(() => {
         if (user) return
         const fetchUser = async () => {
@@ -49,6 +65,8 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
                 const res = await getSession()
                 if (res.data) {
                     setUser(res.data)
+                    setFriendRequests(res.data.friendRequests)
+                    setFriends(res.data.friends.map((friend:User) => friend.username))
                     setLoadingSession(false)
                 }
             } catch (error) {
@@ -74,6 +92,12 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
                 setLoadingLogOut,
                 sendFriendRequest,
                 setSendFriendRequest,
+                onlineFriends,
+                setOnlineFriends,
+                friendRequests,
+                setFriendRequests,
+                friends,
+                setFriends
             }
         }>
             {children}

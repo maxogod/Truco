@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import MainSideBar from "./shared/MainSideBar"
-import NavBar from "./shared/NavBar"
 import Main from "./pages/Main"
 import InGame from "./pages/InGame"
 import Profile from "./pages/Profile"
@@ -10,7 +9,7 @@ import LogIn from "./pages/LogIn"
 import SignUp from "./pages/SignUp"
 
 import { UserContext } from "./context/userContext"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { CgSpinner } from "react-icons/cg"
 import mate from './assets/mate.png'
 import FriendRequestPopUp from "./components/friendRequestPopUp"
@@ -19,21 +18,26 @@ import FriendRequestPopUp from "./components/friendRequestPopUp"
 const Router = () => {
 
     const { loadingSession, sendFriendRequest } = useContext(UserContext)
+    const [sideBarOpen, setSideBarOpen] = useState<boolean>(true)
+    const toggleSideBar = () => {
+        setSideBarOpen(!sideBarOpen)
+    }
 
     return (
         <BrowserRouter>
             {
                 !loadingSession &&
                 <div className='w-full h-[100vh] flex bg-background text-text'>
-                    <NavBar />
-                    <MainSideBar />
+                    <div className="absolute top-0 left-0 m-4 text-4xl font-bold z-50 cursor-pointer"
+                        onClick={toggleSideBar}>{sideBarOpen? "<" : ">"}</div>
+                    <MainSideBar sideBarOpen={sideBarOpen} toogleSideBar={toggleSideBar} />
                     {sendFriendRequest && <FriendRequestPopUp />}
                     <Routes>
                         <Route path="/" element={<Main />} />
                         <Route path="/play" element={<InGame />} />
                         <Route path="/profile" element={<Profile />} />
                         <Route path="/leader-board" element={<LeaderBoard />} />
-                        <Route path="/roules" element={<Rules />} />
+                        <Route path="/rules" element={<Rules />} />
                         <Route path="/login" element={<LogIn />} />
                         <Route path="/signup" element={<SignUp />} />
                     </Routes>

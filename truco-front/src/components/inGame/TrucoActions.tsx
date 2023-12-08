@@ -28,12 +28,12 @@ const TrucoActions: React.FC = () => {
   return (
     <div
       style={!isMyTurn ? { backgroundColor: "gray" } : {}}
-      className='w-[150px] flex flex-col justify-center items-center rounded-xl bg-primary absolute left-[-20px] text-white font-medium text-2xl'>
+      className='w-fit md:w-[150px] px-2 flex md:flex-col justify-center items-center gap-1 rounded-xl bg-primary absolute bottom-[-30px] md:bottom-[50%] md:translate-y-1/2 md:left-[-20px] text-white font-medium text-2xl z-20'>
 
       {actions.map((action: GameAction, index) => (
         action != GameAction.PLACE_CARD && <button
           onClick={() => handleAction(action)}
-          className='hover:bg-[#83A0BE] w-full py-4 text-center rounded-xl'
+          className='hover:bg-[#83A0BE] w-full py-2 md:py-4 text-center rounded-xl text-base md:text-base'
           key={index}>
           {actionNames[action]}
         </button>
