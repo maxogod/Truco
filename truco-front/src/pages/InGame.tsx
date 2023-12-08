@@ -20,7 +20,7 @@ const InGame: React.FC = () => {
 
   return (
     <div className='w-full h-screen flex justify-evenly text-center relative'>
-      <div className='w-[70%]'>
+      <div className='w-[70%] p-4 flex flex-col justify-evenly'>
         <Ratings />
         <GameBoard />
         <Ingametimer />

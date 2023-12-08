@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import TrucoLogo from '../components/navbarElements/TrucoLogo.tsx';
 import PlayNowButton from '../components/matchmaking/PlayNowButton.tsx';
 import FriendsList from '../components/navbarElements/FriendsList.tsx';
@@ -7,8 +7,19 @@ import LeaderBoardButton from '../components/navbarElements/LeaderBoardButton.ts
 import Surrender from '../components/inGame/Surrender.tsx';
 
 const MainSideBar: React.FC = () => {
+  const [divStyle, setDivStyle] = useState({});
+
+  const handleClick = () => {
+    setDivStyle({ transform: 'translateX(-100%)' });
+  };
+
   return (
-    <div className='w-[300px] relative h-screen flex flex-col items-center justify-evenly bg-secondary'>
+    <div className='md:max-w-[300px] md:min-w-[240px] md:relative w-full absolute h-full flex flex-col items-center justify-evenly bg-secondary gap-4 z-40' style={divStyle}>
+      <div 
+        className='md:hidden'
+        onClick={handleClick}>
+        {"<"}
+      </div>
       <TrucoLogo />
       <PlayNowButton />
       <Surrender />

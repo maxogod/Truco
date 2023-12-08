@@ -9,7 +9,7 @@ const NavBar: React.FC = () => {
   const { user } = useContext(UserContext)
 
   return (
-    <div className='absolute top-7 right-6 cursor-pointer z-20 flex flex-col items-center'>
+    <div className='absolute top-4 left-80 cursor-pointer z-20 flex items-center'>
       {user && <Link to='/profile'>
         <img src={profile} alt="" className=' w-[86px] h-[86px]' />
       </Link>}

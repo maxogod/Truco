@@ -4,7 +4,7 @@ import exampleScore from '../assets/exampleScore.png';
 const ExampleGameBoard = () => {
 
   return (
-    <div className="w-[715px] h-[715px] m-auto flex relative justify-evenly items-center rounded-2xl bg-[url('assets/mesa.jpg')] shadow-card">
+    <div className="w-4/5 max-w-[800px] h-[715px] m-auto flex relative justify-evenly items-center rounded-2xl bg-[url('assets/mesa.jpg')] shadow-card">
 
       <div
         className='w-[150px] h-[300px] flex flex-col justify-center items-center rounded-xl bg-primary absolute left-[-20px] text-white font-medium text-2xl'>

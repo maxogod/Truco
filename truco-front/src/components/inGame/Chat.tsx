@@ -25,7 +25,7 @@ const Chat: React.FC = () => {
   };
 
   return (
-    <div className='w-[280px] h-[715px] border-2 border-primary bg-secondary rounded-3xl relative top-[136px] p-4 overflow-auto text-sm'>
+    <div className='w-[30%] max-w-[300px] my-8 border-2 border-primary bg-secondary rounded-3xl relative p-4 overflow-auto text-sm'>
       {messages.map((message, index) => (
         <p key={index} className='text-left text-gray-300 mb-2'>
           {message}
