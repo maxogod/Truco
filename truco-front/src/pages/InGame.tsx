@@ -28,7 +28,7 @@ const InGame: React.FC = () => {
   }
   return (
     <div className='w-full h-screen flex justify-evenly text-center relative'>
-      <img className='absolute top-0 right-0 text-3xl m-4 w-8'
+      <img className='absolute top-0 right-0 text-3xl m-4 w-8 cursor-pointer'
         style={seeOpenChat}
         onClick={toggleChat}
         src={chatIcon}/>

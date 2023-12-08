@@ -57,7 +57,7 @@ const LogIn = () => {
 
   return (
     <div className='w-full flex flex-col items-center'>
-      <h1 className=' font-bold m-2 text-xl md:mt-14 md:text-4xl text-center'>Play Truco Online on the <span className='text-primary'>#1</span> Site!</h1>
+      <h1 className=' font-bold mt-4 text-xl md:mt-14 md:text-4xl text-center'>Play Truco Online on the <span className='text-primary'>#1</span> Site!</h1>
       <form
         onSubmit={handleSubmit}
         className='w-[90%] max-w-[480px] h-[80%] max-h-[660px] flex flex-col justify-evenly items-center rounded-xl m-auto bg-secondary'>

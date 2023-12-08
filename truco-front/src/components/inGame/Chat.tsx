@@ -37,7 +37,7 @@ const Chat: React.FC = ({ chatIsOpen, setIsOpen, toggleChat }) => {
           {message}
         </p>
       ))}
-      <div className='absolute top-0 right-0 text-3xl m-4' onClick={toggleChat}>{"<"}</div>
+      <div className='absolute top-0 right-0 text-3xl m-4 cursor-pointer' onClick={toggleChat}>{">"}</div>
       <div className='absolute bottom-4 right-1/2 translate-x-1/2 w-[80%]'>
         <input
           type="text"
