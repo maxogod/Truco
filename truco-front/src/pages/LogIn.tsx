@@ -3,13 +3,14 @@ import { useContext, useState } from 'react';
 import { UserContext } from '../context/userContext';
 import { CgSpinner } from "react-icons/cg";
 import { login } from '../services/login';
+import User from '../@types/UserType';
 
 const LogIn = () => {
 
   const userRegex = /^[a-zA-Z0-9]+$/; // only letters and numbers
   const passwordRegex = /^[a-zA-Z0-9!@#$%^&*()-_+=<>?]{8,}$/; // at least 8 characters, only letters, numbers and !@#$%^&*()-_+=<>?
 
-  const { setUser, loadingLogin, setLoadingLogin } = useContext(UserContext)
+  const { setUser, loadingLogin, setLoadingLogin,setFriends,setFriendRequests } = useContext(UserContext)
 
   const [username, setUsername] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -45,6 +46,8 @@ const LogIn = () => {
       const res = await login(username, password)
       if (res.data) {
         setUser(res.data)
+        setFriendRequests(res.data.friendRequests)
+        setFriends(res.data.friends.map((friend: User) => friend.username))
         setLoadingLogin(false)
         setError('')
         navigate('/')

@@ -9,7 +9,7 @@ export const usePusherListeners = (
     setGameEnded: (gameEnded: boolean) => void,
 ) => {
 
-    const { user, setOnlineFriends,setFriendRequests,setFriends } = useContext(UserContext)
+    const { user, setOnlineFriends,setFriendRequests,setFriends,friends } = useContext(UserContext)
 
     const {
         gameManager,
@@ -31,7 +31,7 @@ export const usePusherListeners = (
     useEffect(() => {
         if (!user) return
         const username = user.username
-        gameManager.initPusher(username, user.friends.map((friend) => friend.username))
+        gameManager.initPusher(username, friends)
     }, [user])
 
     useEffect(() => {
