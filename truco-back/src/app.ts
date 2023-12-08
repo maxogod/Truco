@@ -10,6 +10,7 @@ import { populateSession } from "./middlewares/sessions";
 import pusherRouter from "./routers/pusherRouter";
 import authRouter from "./routers/authRouter";
 import friendsRouter from "./routers/friendsRouter";
+import statsRouter from "./routers/statsRouter";
 
 dotenv.config();
 const app = express();
@@ -55,11 +56,15 @@ app.use(express.static(path.join(__dirname, 'public'))); // for serving static f
 
 app.use(requestLogger); // for logging requests and status codes
 
+// Routes
+
 app.use("/api/pusher", pusherRouter);
 
 app.use("/api/auth", authRouter);
 
 app.use("/api/friends", friendsRouter);
+
+app.use("/api/stats", statsRouter);
 
 app.use("/", (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
