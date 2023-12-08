@@ -3,12 +3,12 @@ import { Card } from "../gameLogic/Cards/Card"
 import { useNavigate } from "react-router-dom"
 import { GameContext } from "../context/gameContext"
 import { UserContext } from "../context/userContext"
-
+import WatchListEvent from "../gameLogic/type/WatchListEvent"
 export const usePusherListeners = (
     setGameEnded: (gameEnded: boolean) => void,
 ) => {
 
-    const { user } = useContext(UserContext)
+    const { user,setOnlineFriends } = useContext(UserContext)
 
     const {
         gameManager,
@@ -26,11 +26,14 @@ export const usePusherListeners = (
 
     const navigate = useNavigate()
 
+
     useEffect(() => {
         if (!user) return
-
         const username = user.username
-        gameManager.initPusher(username)
+        gameManager.initPusher(username, user.friends.map((friend) => friend.username))
+    }, [user])
+
+    useEffect(() => {
 
         gameManager.events.addMatchFoundListener((opponentName: string) => {
             setOpponentName(opponentName)
@@ -113,5 +116,14 @@ export const usePusherListeners = (
             setMyPoints(myPoints)
             setOpponentPoints(opponentPoints)
         })
-    }, [user])
+
+        gameManager.events.addOnUpdateOnlineFriendsListener((watchlistEvent: WatchListEvent) => {
+            if(watchlistEvent.name === "offline"){
+                setOnlineFriends((prev) => prev.filter((friend) => !watchlistEvent.user_ids.includes(friend)))
+            }
+            else if(watchlistEvent.name === "online"){
+                setOnlineFriends((prev) => [...prev, ...watchlistEvent.user_ids])
+            }
+        })
+    }, [])
 }

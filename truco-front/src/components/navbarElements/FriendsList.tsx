@@ -6,7 +6,7 @@ import { acceptFriendRequest } from '../../services/acceptFriendRequest';
 
 const FriendsList: React.FC = () => {
 
-  const { user, setUser, setSendFriendRequest } = useContext(UserContext)
+  const { user, setUser, setSendFriendRequest, onlineFriends} = useContext(UserContext)
 
   const [loading, setLoading] = React.useState<boolean>(false)
 
@@ -44,8 +44,11 @@ const FriendsList: React.FC = () => {
       <div className='w-full h-80 mt-10 flex flex-col gap-3'>
         {!user && <p className=''>You must be logged in to see your friends</p>}
         {user && user.friends?.length === 0 && <p className=''>You don't have any friends yet</p>}
-        {user && user.friends.length > 0 && user.friends.map((friend, i) => (
-          <p key={'friend' + i} className=''>{friend.username}</p>
+        {user && user.friends?.length > 0 && user.friends.map((friend, i) => (
+          <p key={'friend' + i} className=''>{friend.username}{
+            onlineFriends.includes(friend.username) &&
+            <span className='ml-1 text-green-500'>●</span>
+          }</p>
         ))}
         {
           user && user.friendRequests?.length > 0 &&
