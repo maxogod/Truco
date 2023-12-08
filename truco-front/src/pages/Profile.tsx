@@ -44,31 +44,31 @@ const Profile: React.FC = () => {
 
 
 
-      <div className="w-[715px] h-[715px] m-auto flex flex-col relative justify-evenly items-center rounded-2xl bg-[url('assets/mesa.jpg')] shadow-card">
+      <div className="w-[715px] h-[715px] m-auto flex flex-col relative justify-evenly items-center rounded-2xl bg-[url('assets/mesa.jpg')] shadow-card text-xl md:text-3xl">
         <img src={ProfileLogo} alt="" className='w-[150px] h-[150px]' />
-        <h2 className='text-3xl'>{user?.username}</h2>
+        <h2 className=''>{user?.username}</h2>
         <div className='flex w-full justify-evenly'>
           <div className='text-center'>
-            <h2 className='font-semibold text-3xl mb-2'>Matches</h2>
-            <p className='text-3xl'>{user && user.wins + user.losses}</p>
+            <h2 className='font-semibold  mb-2'>Matches</h2>
+            <p className=''>{user && user.wins + user.losses}</p>
           </div>
           <div className='text-center'>
-            <h2 className='font-semibold text-3xl mb-2'>Rating</h2>
-            <p className='text-3xl'>{user?.rating}</p>
+            <h2 className='font-semibold  mb-2'>Rating</h2>
+            <p className=''>{user?.rating}</p>
           </div>
           <div className='text-center'>
-            <h2 className='font-semibold text-3xl mb-2'>Ranking</h2>
-            <p className='text-3xl'>Ø</p>
+            <h2 className='font-semibold  mb-2'>Ranking</h2>
+            <p className=''>Ø</p>
           </div>
         </div>
         <div className='flex w-full justify-evenly'>
           <div className='text-center'>
-            <h2 className='font-semibold text-3xl mb-2'>Wins</h2>
-            <p className='text-3xl'>{user?.wins}</p>
+            <h2 className='font-semibold  mb-2'>Wins</h2>
+            <p className=''>{user?.wins}</p>
           </div>
           <div className='text-center'>
-            <h2 className='font-semibold text-3xl mb-2'>Losses</h2>
-            <p className='text-3xl'>{user?.rating}</p>
+            <h2 className='font-semibold  mb-2'>Losses</h2>
+            <p className=''>{user?.rating}</p>
           </div>
         </div>
       </div>

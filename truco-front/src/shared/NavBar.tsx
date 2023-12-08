@@ -9,13 +9,13 @@ const NavBar: React.FC = () => {
   const { user } = useContext(UserContext)
 
   return (
-    <div className='absolute top-4 left-80 cursor-pointer z-20 flex items-center'>
+    <div className='absolute top-0 right-0 cursor-pointer z-20'>
       {user && <Link to='/profile'>
-        <img src={profile} alt="" className=' w-[86px] h-[86px]' />
+        <img src={profile} alt="" className='w-[60px] md:w-[70px] md:h-[70px]' />
       </Link>}
 
       {!user && <Link to="/login">
-        <img src={login} alt="" className='w-[50px] h-[50px] p-3 bg-[#6282a3da] rounded-full' />
+        <img src={login} alt="" className='w-[70px] h-[70px] p-3 bg-[#6282a3da] rounded-full' />
       </Link>}
     </div>
   );
