@@ -1,4 +1,5 @@
 import User from "../models/User"
+import pusherController from "../controllers/pusherController";
 
 const sendFriendRequestService = async (username: string, targetUsername: string) => {
 
@@ -21,6 +22,7 @@ const sendFriendRequestService = async (username: string, targetUsername: string
 
     try {
         await targetUser.save();
+        pusherController.sendFriendRequest(targetUsername, user);
     } catch (err) {
         console.log(err);
         return false;

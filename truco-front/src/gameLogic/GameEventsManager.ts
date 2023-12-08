@@ -1,3 +1,4 @@
+import User from "../@types/UserType";
 import { Card } from "./Cards/Card";
 import { GameActionMessage } from "./type/GameActionMessage";
 import WatchListEvent from "./type/WatchListEvent";
@@ -46,6 +47,10 @@ export default class GameEventsManager {
     onPointsUpdateListeners: ((myPoints:number, opponentPoints: number) => void)[] = []
 
     onUpdateOnlineFriendsListeners: ((watchlistEvent:  WatchListEvent) => void)[] = []
+
+    onFriendRequestListeners: ((friendUser: User) => void)[] = []
+
+    onGameChallengeListeners: ((opponentName: string) => void)[] = []
 
 
     addOnMatchFoundListener(handler: (opponentName: string) => void) {
@@ -126,6 +131,14 @@ export default class GameEventsManager {
 
     addOnUpdateOnlineFriendsListener(handler: (watchlistEvent:  WatchListEvent) => void) {
         this.onUpdateOnlineFriendsListeners.push(handler)
+    }
+
+    addOnFriendRequestListener(handler: (friendUser: User) => void) {
+        this.onFriendRequestListeners.push(handler)
+    }
+
+    addOnGameChallengeListener(handler: (opponentName: string) => void) {
+        this.onGameChallengeListeners.push(handler)
     }
 
     triggerOnMatchFound(opponentName: string) {
@@ -338,6 +351,26 @@ export default class GameEventsManager {
     triggerOnUpdateOnlineFriends(watchlistEvent:  WatchListEvent) {
         try {
             this.onUpdateOnlineFriendsListeners.forEach(listener => listener(watchlistEvent))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+        }
+    }
+
+    triggerOnFriendRequest(friendUser: User) {
+        try {
+            this.onFriendRequestListeners.forEach(listener => listener(friendUser))
+        } catch (e) {
+            if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
+                return
+            }
+        }
+    }
+
+    triggerOnGameChallenge(opponentName: string) {
+        try {
+            this.onGameChallengeListeners.forEach(listener => listener(opponentName))
         } catch (e) {
             if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
                 return

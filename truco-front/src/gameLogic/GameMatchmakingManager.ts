@@ -18,6 +18,7 @@ export default class GameMatchmakingManager {
     private gameEventsManager: GameEventsManager
     private userName: string
     private matchChannel: Channel | null = null
+    private myChannel: Channel | null = null
 
     constructor(pusherManger: PusherManager) {
         this.pusherManager = pusherManger
@@ -27,10 +28,13 @@ export default class GameMatchmakingManager {
 
     public restart() {
         this.matchChannel = null
+        this.myChannel = this.joinSelfLobby()
     }
 
     public setUserName(userName: string) {
+        if(this.myChannel) this.pusherManager.disconnectChannel(makeChannel(this.userName))
         this.userName = userName
+        this.myChannel = this.joinSelfLobby()
     }
 
     public getUserName(): string {
@@ -51,12 +55,15 @@ export default class GameMatchmakingManager {
     }
 
     public joinMatchmaking() {
-        this.joinSelfLobby()
         this.pusherManager.connectChannel(ChannelName.Matchmaking, this.onConnectedToMatchmaking.bind(this))
     }
 
     public leaveMatchmaking() {
         this.pusherManager.disconnectChannel(ChannelName.Matchmaking)
+    }
+
+    public acceptChallenge(opponentName: string) {
+        this.onMatchFound({ opponentName, join: true })
     }
 
     private onMatchFound(data: any) {

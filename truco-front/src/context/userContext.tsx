@@ -17,6 +17,8 @@ interface UserContextType {
     setSendFriendRequest: React.Dispatch<React.SetStateAction<boolean>>
     onlineFriends: string[]
     setOnlineFriends: React.Dispatch<React.SetStateAction<string[]>>
+    friendRequests: User[]
+    setFriendRequests: React.Dispatch<React.SetStateAction<User[]>>
 }
 
 export const UserContext = createContext<UserContextType>({
@@ -34,6 +36,8 @@ export const UserContext = createContext<UserContextType>({
     setSendFriendRequest: () => { },
     onlineFriends: [],
     setOnlineFriends: () => { },
+    friendRequests: [],
+    setFriendRequests: () => { },
 })
 
 export const UserContextProvider = ({ children }: { children: ReactNode }) => {
@@ -47,6 +51,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     const [sendFriendRequest, setSendFriendRequest] = useState<boolean>(false);
 
     const [onlineFriends, setOnlineFriends] = useState<string[]>([])
+    const [friendRequests, setFriendRequests] = useState<User[]>([])
 
     useEffect(() => {
         if (user) return
@@ -54,8 +59,9 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
             try {
                 const res = await getSession()
                 if (res.data) {
-                    console.log(res.data)
                     setUser(res.data)
+                    console.log(res.data.friendRequests)
+                    setFriendRequests(res.data.friendRequests)
                     setLoadingSession(false)
                 }
             } catch (error) {
@@ -82,7 +88,9 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
                 sendFriendRequest,
                 setSendFriendRequest,
                 onlineFriends,
-                setOnlineFriends
+                setOnlineFriends,
+                friendRequests,
+                setFriendRequests
             }
         }>
             {children}

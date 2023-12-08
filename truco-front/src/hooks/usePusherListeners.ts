@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom"
 import { GameContext } from "../context/gameContext"
 import { UserContext } from "../context/userContext"
 import WatchListEvent from "../gameLogic/type/WatchListEvent"
+import User from "../@types/UserType"
 export const usePusherListeners = (
     setGameEnded: (gameEnded: boolean) => void,
 ) => {
 
-    const { user,setOnlineFriends } = useContext(UserContext)
+    const { user, setOnlineFriends,setFriendRequests } = useContext(UserContext)
 
     const {
         gameManager,
@@ -124,6 +125,14 @@ export const usePusherListeners = (
             else if(watchlistEvent.name === "online"){
                 setOnlineFriends((prev) => [...prev, ...watchlistEvent.user_ids])
             }
+        })
+
+        gameManager.events.addOnFriendRequestListener((friendUser: User) => {
+            setFriendRequests((prev) => [...prev, friendUser])
+        })
+
+        gameManager.events.addOnGameChallengeListener((challenger: string) => {
+            gameManager.acceptChallenge(challenger) // TODO replace with logic
         })
     }, [])
 }
