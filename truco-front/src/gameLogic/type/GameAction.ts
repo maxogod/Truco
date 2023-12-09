@@ -48,3 +48,20 @@ export const isEnvidoAction = (action: GameAction): boolean => {
 export const isTurnAction = (action: GameAction): boolean => {
     return action === GameAction.PLACE_CARD || action === GameAction.IR_AL_MAZO
 }
+
+export const getPrintableAction = (action: GameAction): string => {
+    if (action === GameAction.CALL_ENVIDO) return "Envido"
+    if (action === GameAction.CALL_ENVIDO_ENVIDO) return "Envido"
+    if (action === GameAction.CALL_REAL_ENVIDO) return "Real Envido"
+    if (action === GameAction.CALL_FALTA_ENVIDO) return "Falta Envido!!"
+    if (action === GameAction.CALL_ENVIDO_VA_PRIMERO) return "El Envido Va Primero"
+    if (action === GameAction.CALL_TRUCO) return "Te canto Truco!"
+    if (action === GameAction.CALL_RETRUCO) return "Quiero Retruco"
+    if (action === GameAction.CALL_VALE4) return "Quiero Vale 4"
+    if (action === GameAction.QUIERO) return "Pero más vale que Quiero"
+    if (action === GameAction.NO_QUIERO) return "No Quiero"
+    if (action === GameAction.PLACE_CARD) return "Juego carta"
+    if (action === GameAction.IR_AL_MAZO) return "Me voy al Mazo"
+    if (action === GameAction.SURRENDER) return "Me rindo"
+    return "None"
+}

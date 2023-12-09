@@ -1,7 +1,8 @@
 import { Card } from "./Cards/Card";
 import GameEventsManager from "./GameEventsManager";
-import { GameAction, getEnvidoPoints, getTrucoPoints, isEnvidoAction, isResponseAction, isTrucoAction, isTurnAction } from "./type/GameAction";
+import { GameAction, getEnvidoPoints, getTrucoPoints, isEnvidoAction, isResponseAction, isTrucoAction, isTurnAction, getPrintableAction } from "./type/GameAction";
 import { GameActionMessage } from "./type/GameActionMessage";
+import { toast } from "react-toastify"
 
 /* 
 Local triggers:
@@ -65,6 +66,9 @@ export default class GameActionsManager {
     }
 
     public handleAction(actionMessage: GameActionMessage, iCalled: boolean = false) {
+        if(!iCalled && actionMessage.action !== GameAction.PLACE_CARD && actionMessage.action !== GameAction.NONE){
+            toast(getPrintableAction(actionMessage.action))
+        }
         this.lastActionMessage = actionMessage
         const action = actionMessage.action
         if(action === GameAction.NONE){

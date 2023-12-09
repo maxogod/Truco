@@ -8,6 +8,8 @@ import Rules from "./pages/Rules"
 import LogIn from "./pages/LogIn"
 import SignUp from "./pages/SignUp"
 
+import { Flip, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from "./context/userContext"
 import { useContext, useState } from "react"
 import { CgSpinner } from "react-icons/cg"
@@ -53,6 +55,17 @@ const Router = () => {
                     </div>
                 </div>
             }
+            <ToastContainer 
+                position="top-center"
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                draggable
+                pauseOnHover={false}
+                theme="dark"
+                transition={Flip}/>
         </BrowserRouter>
     )
 }

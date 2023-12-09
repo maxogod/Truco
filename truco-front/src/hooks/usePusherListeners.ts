@@ -6,6 +6,7 @@ import { UserContext } from "../context/userContext"
 import { addLoss, addWin } from "../services/stats"
 import WatchListEvent from "../gameLogic/type/WatchListEvent"
 import User from "../@types/UserType"
+import { toast } from "react-toastify"
 
 export const usePusherListeners = (
     setGameEnded: (gameEnded: boolean) => void,
@@ -133,8 +134,8 @@ export const usePusherListeners = (
                 }
                 // TODO - add rating update
             }, 2000)
-            alert(IWon ? "You won!" : "You lost!")
-            navigate("/") // TODO - replace with a modal saying who won
+            {IWon ? toast.success("You won!", {theme: "colored", hideProgressBar: true, autoClose:3000}) : toast.error("You lost!", {theme: "colored", hideProgressBar: true, autoClose:3000})}
+            navigate("/")
         })
         gameManager.events.addOnPointsUpdateListener((myPoints: number, opponentPoints: number) => {
             console.log("points update")
@@ -154,11 +155,12 @@ export const usePusherListeners = (
         })
 
         gameManager.events.addOnFriendRequestListener((friendUser: User) => {
+            toast(friendUser.username + " sent you a friend request!")
             setFriendRequests((prev) => [...prev, friendUser])
         })
 
         gameManager.events.addOnGameChallengeListener((challenger: string) => {
-            alert(challenger + " challenged you to a game!")
+            toast(challenger + " challenged you to a game!")
             gameManager.acceptChallenge(challenger) // TODO replace with logic
         })
 

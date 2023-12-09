@@ -41,7 +41,7 @@ const PlayNowButton = () => {
     setTimeout(() => {
       if (!isSearchingRef.current) return
       gameManager.joinMatchmaking()
-    }, 4000)
+    }, 3000)
   }
 
   return (
