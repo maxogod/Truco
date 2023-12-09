@@ -28,6 +28,12 @@ const PlayNowButton = () => {
     }
   }, [gameEnded])
 
+  useEffect(() => {
+    if (opponentName !== "") {
+      closeSideBar()
+    }
+  }, [opponentName])
+
   const toggleMatchmaking = () => {
     if (isSearchingRef.current) {
       setIsSearching(false)
