@@ -1,11 +1,14 @@
 import axios from "axios";
 
-const addWin = async () => {
+const addWin = async (myRating:number, opponentRating:number) => {
 
     const baseUrl = import.meta.env.VITE_SERVER_URL + "/api/stats/addWin";
 
     const response = await axios.put(baseUrl,
-        {}, // empty body
+        {
+            myRating,
+            opponentRating,
+        },
         {
             withCredentials: true,
         }
@@ -14,12 +17,15 @@ const addWin = async () => {
     return response;
 };
 
-const addLoss = async () => {
+const addLoss = async (myRating:number, opponentRating:number) => {
 
     const baseUrl = import.meta.env.VITE_SERVER_URL + "/api/stats/addLoss";
 
     const response = await axios.put(baseUrl,
-        {}, // empty body
+        {
+            myRating,
+            opponentRating,
+        },
         {
             withCredentials: true,
         }
@@ -28,14 +34,11 @@ const addLoss = async () => {
     return response;
 };
 
-const updateRating = async (ratingDifferential: number) => {
+const getTopRating = async () => {
 
-    const baseUrl = import.meta.env.VITE_SERVER_URL + "/api/stats/updateRating";
+    const baseUrl = import.meta.env.VITE_SERVER_URL + "/api/stats/top";
 
-    const response = await axios.put(baseUrl,
-        {
-            ratingDifferential,
-        },
+    const response = await axios.get(baseUrl,
         {
             withCredentials: true,
         }
@@ -47,5 +50,5 @@ const updateRating = async (ratingDifferential: number) => {
 export {
     addWin,
     addLoss,
-    updateRating,
+    getTopRating
 };

@@ -84,7 +84,7 @@ export const GameContextProvider = ({ children }: { children: ReactNode }) => {
                 myPoints,
                 setMyPoints,
                 opponentPoints,
-                setOpponentPoints
+                setOpponentPoints,
             }
         }>
             {children}

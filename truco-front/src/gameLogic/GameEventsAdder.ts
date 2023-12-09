@@ -11,7 +11,7 @@ export default class GameEventsAdder{
         this.gameEventsManager = GameEventsManager.getInstance()
     }
 
-    public addMatchFoundListener(handler: (opponentName: string) => void) {
+    public addMatchFoundListener(handler: (opponentName: string, opponentRating:number) => void) {
         this.gameEventsManager.addOnMatchFoundListener(handler)
         this.gameEventsManager.addOnJoiningLobbyListener(handler)
     }
@@ -60,7 +60,7 @@ export default class GameEventsAdder{
         this.gameEventsManager.addOnFriendRequestAcceptedListener(handler)
     }
 
-    public addOnGameChallengeListener(handler: (challenger: string) => void) {
+    public addOnGameChallengeListener(handler: (data:{challengerName:string, challengerRating:number}) => void) {
         this.gameEventsManager.addOnGameChallengeListener(handler)
     }
 

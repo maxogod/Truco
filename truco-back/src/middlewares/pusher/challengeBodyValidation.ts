@@ -10,6 +10,9 @@ const challengeBodyValidation = async (req: Request, res: Response, next: NextFu
     const challengerName = req.body.challengerName;
     if(!challengerName) {errors.push(missingParam("challengerName"))}
     else if (typeof challengerName !== "string") {errors.push(invalidParamType("challengerName", "string", typeof challengerName))}
+    const challengerRating = req.body.challengerRating;
+    if(!challengerRating) {errors.push(missingParam("challengerRating"))}
+    else if (typeof challengerRating !== "number") {errors.push(invalidParamType("challengerRating", "number", typeof challengerRating))}
     if (errors.length > 0) {
         return res.status(400).json({errors});
     }
