@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 const InGame: React.FC = () => {
 
   const { opponentName } = useContext(GameContext)
-  const [chatIsOpen, setChatIsOpen] = React.useState<boolean>(false)
+  const [chatIsOpen, setChatIsOpen] = React.useState<boolean>(window.innerWidth > 768 ? true : false)
   const navigate = useNavigate()
 
   useEffect(() => {

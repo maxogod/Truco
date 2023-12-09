@@ -132,8 +132,9 @@ export const usePusherListeners = (
                     })
                 }
                 // TODO - add rating update
-                navigate("/") // TODO - replace with a modal saying who won
             }, 2000)
+            alert(IWon ? "You won!" : "You lost!")
+            navigate("/") // TODO - replace with a modal saying who won
         })
         gameManager.events.addOnPointsUpdateListener((myPoints: number, opponentPoints: number) => {
             console.log("points update")
@@ -157,6 +158,7 @@ export const usePusherListeners = (
         })
 
         gameManager.events.addOnGameChallengeListener((challenger: string) => {
+            alert(challenger + " challenged you to a game!")
             gameManager.acceptChallenge(challenger) // TODO replace with logic
         })
 

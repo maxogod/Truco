@@ -18,7 +18,7 @@ import FriendRequestPopUp from "./components/friendRequestPopUp"
 const Router = () => {
 
     const { loadingSession, sendFriendRequest } = useContext(UserContext)
-    const [sideBarOpen, setSideBarOpen] = useState<boolean>(true)
+    const [sideBarOpen, setSideBarOpen] = useState<boolean>(window.innerWidth > 768 ? true : false)
     const toggleSideBar = () => {
         setSideBarOpen(!sideBarOpen)
     }
@@ -28,7 +28,7 @@ const Router = () => {
             {
                 !loadingSession &&
                 <div className='w-full h-[100vh] flex bg-background text-text'>
-                    <div className="absolute top-0 left-0 m-4 text-4xl font-bold z-50 cursor-pointer"
+                    <div className="absolute top-0 left-0 p-4 text-4xl font-bold z-50 cursor-pointer"
                         onClick={toggleSideBar}>{sideBarOpen? "<" : ">"}</div>
                     <MainSideBar sideBarOpen={sideBarOpen} toogleSideBar={toggleSideBar} />
                     {sendFriendRequest && <FriendRequestPopUp />}
