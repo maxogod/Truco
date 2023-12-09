@@ -9,6 +9,7 @@ const PlayNowButton = () => {
   const {
     gameManager,
     opponentName,
+    closeSideBar,
   } = useContext(GameContext)
 
   const { user } = useContext(UserContext)
