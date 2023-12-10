@@ -12,7 +12,7 @@ export default class PusherManager {
         this.gameEventsManager = GameEventsManager.getInstance();
     }
 
-    public initPusher(userName: string, friends: string[]) {
+    public initPusher(userName: string, friends: string[], rating:number) {
         //Pusher.logToConsole = true; // TODO remove in production
         if (this.pusher) {
             this.disconnectPusher();
@@ -28,6 +28,7 @@ export default class PusherManager {
                         user_id: userName,
                         user_info: {
                             name: userName,
+                            rating: rating,
                         },
                     })
                 },
@@ -44,6 +45,7 @@ export default class PusherManager {
                         id: userName,
                         user_info: {
                             name: userName,
+                            rating: rating,
                         },
                         watchlist: friends
                     })

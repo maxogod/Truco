@@ -8,9 +8,9 @@ export default class GameEventsManager {
     public static instance: GameEventsManager
     public static STOP_PROPAGATION_ERROR = new Error("Stop propagation")
 
-    onMatchFoundListeners: ((opponentName: string) => void)[] = []
+    onMatchFoundListeners: ((opponentName: string,opponentRating:number) => void)[] = []
 
-    onJoiningLobbyListeners: ((opponentName: string) => void)[] = []
+    onJoiningLobbyListeners: ((opponentName: string,opponentRating:number) => void)[] = []
 
     onGameStartListeners: (() => void)[] = []
 
@@ -52,14 +52,14 @@ export default class GameEventsManager {
 
     onFriendRequestAcceptedListeners: ((friendUsername: string) => void)[] = []
 
-    onGameChallengeListeners: ((opponentName: string) => void)[] = []
+    onGameChallengeListeners: ((data:{challengerName:string, challengerRating:number}) => void)[] = []
 
 
-    addOnMatchFoundListener(handler: (opponentName: string) => void) {
+    addOnMatchFoundListener(handler: (opponentName: string,opponentRating:number) => void) {
         this.onMatchFoundListeners.push(handler)
     }
 
-    addOnJoiningLobbyListener(handler: (opponentName: string) => void) {
+    addOnJoiningLobbyListener(handler: (opponentName: string,opponentRating:number) => void) {
         this.onJoiningLobbyListeners.push(handler)
     }
 
@@ -143,13 +143,13 @@ export default class GameEventsManager {
         this.onFriendRequestAcceptedListeners.push(handler)
     }
 
-    addOnGameChallengeListener(handler: (opponentName: string) => void) {
+    addOnGameChallengeListener(handler: (data:{challengerName:string, challengerRating:number}) => void) {
         this.onGameChallengeListeners.push(handler)
     }
 
-    triggerOnMatchFound(opponentName: string) {
+    triggerOnMatchFound(opponentName: string,opponentRating:number) {
         try {
-            this.onMatchFoundListeners.forEach(listener => listener(opponentName))
+            this.onMatchFoundListeners.forEach(listener => listener(opponentName,opponentRating))
         } catch (e) {
             if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
                 return
@@ -158,9 +158,9 @@ export default class GameEventsManager {
         }
     }
 
-    triggerOnJoiningLobby(opponentName: string) {
+    triggerOnJoiningLobby(opponentName: string,opponentRating:number) {
         try {
-            this.onJoiningLobbyListeners.forEach(listener => listener(opponentName))
+            this.onJoiningLobbyListeners.forEach(listener => listener(opponentName,opponentRating))
         } catch (e) {
             if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
                 return
@@ -375,8 +375,6 @@ export default class GameEventsManager {
     }
 
     triggerOnFriendRequestAccepted(friendUsername: string) {
-        console.log("friend request accepted")
-        console.log(friendUsername)
         try {
             this.onFriendRequestAcceptedListeners.forEach(listener => listener(friendUsername))
         } catch (e) {
@@ -386,9 +384,9 @@ export default class GameEventsManager {
         }
     }
 
-    triggerOnGameChallenge(opponentName: string) {
+    triggerOnGameChallenge(data:{challengerName:string, challengerRating:number}) {
         try {
-            this.onGameChallengeListeners.forEach(listener => listener(opponentName))
+            this.onGameChallengeListeners.forEach(listener => listener(data))
         } catch (e) {
             if (e === GameEventsManager.STOP_PROPAGATION_ERROR) {
                 return

@@ -37,7 +37,9 @@ class PusherController {
     }
 
     public challengeFriend(req: Request, res: Response) {
-        this.pusher.sendToUser(req.body.opponentName, "game-challenge", req.body.challengerName);
+        const challengerName = req.body.challengerName;
+        const challengerRating = req.body.challengerRating;
+        this.pusher.sendToUser(req.body.opponentName, "game-challenge", { challengerName, challengerRating });
         res.sendStatus(200);
     }
 

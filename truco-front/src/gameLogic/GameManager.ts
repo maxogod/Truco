@@ -41,17 +41,18 @@ export default class GameManager {
         return this.gameTurnsManager.getGameChannel()
     }
 
-    public initPusher(username: string, friends: string[]) {
-        this.pusherManager.initPusher(username,friends)
+    public initPusher(username: string, friends: string[], rating: number) {
+        this.pusherManager.initPusher(username,friends,rating)
         this.setUserName(username)
+        this.setRating(rating)
     }
 
     public joinMatchmaking() {
         this.gameMatchmakingManager.joinMatchmaking()
     }
 
-    public acceptChallenge(opponentName: string) {
-        this.gameMatchmakingManager.acceptChallenge(opponentName)
+    public acceptChallenge(opponentName: string, opponentRating:number) {
+        this.gameMatchmakingManager.acceptChallenge(opponentName,opponentRating)
     }
     
 
@@ -61,6 +62,10 @@ export default class GameManager {
 
     public setUserName(userName: string) {
         this.gameMatchmakingManager.setUserName(userName)
+    }
+
+    public setRating(rating: number) {
+        this.gameMatchmakingManager.setRating(rating)
     }
 
     public getUserName(): string {
