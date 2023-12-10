@@ -155,8 +155,16 @@ export const usePusherListeners = (
             console.log("points update")
             console.log(myPoints)
             console.log(opponentPoints)
-            setMyPoints(myPoints)
-            setOpponentPoints(opponentPoints)
+            setMyPoints(
+                (prev) => {const diff = myPoints - prev;
+                if(diff > 0){ toast.success("You won " + diff + " points!", { autoClose: 4000, hideProgressBar: true, theme: "colored"}) }
+                return myPoints}
+            )
+            setOpponentPoints(
+                (prev) => {const diff = opponentPoints - prev;
+                if(diff > 0){ toast.error("You lost, opponent win " + diff + " points!", { autoClose: 4000, hideProgressBar: true, theme: "colored"}) }
+                return opponentPoints}
+            )
         })
 
         gameManager.events.addOnUpdateOnlineFriendsListener((watchlistEvent: WatchListEvent) => {
