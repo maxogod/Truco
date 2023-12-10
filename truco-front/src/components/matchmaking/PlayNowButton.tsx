@@ -9,6 +9,7 @@ const PlayNowButton = () => {
   const {
     gameManager,
     opponentName,
+    closeSideBar,
   } = useContext(GameContext)
 
   const { user } = useContext(UserContext)
@@ -27,6 +28,12 @@ const PlayNowButton = () => {
     }
   }, [gameEnded])
 
+  useEffect(() => {
+    if (opponentName !== "") {
+      closeSideBar()
+    }
+  }, [opponentName])
+
   const toggleMatchmaking = () => {
     if (isSearchingRef.current) {
       setIsSearching(false)
@@ -41,7 +48,7 @@ const PlayNowButton = () => {
     setTimeout(() => {
       if (!isSearchingRef.current) return
       gameManager.joinMatchmaking()
-    }, 4000)
+    }, 3000)
   }
 
   return (

@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import { acceptFriendRequest } from '../../services/acceptFriendRequest';
 import { challengeFriend } from '../../services/challengeFriend';
 import { GameContext } from '../../context/gameContext';
+import duel from '../../assets/duel.png'
 
 const FriendsList: React.FC = () => {
 
@@ -64,7 +65,7 @@ const FriendsList: React.FC = () => {
               onlineFriends.includes(friend) &&
               <span className='ml-1 text-green-500'>●</span>
             }</span>
-            {onlineFriends.includes(friend) && <button onClick={() => sendChallenge(friend)} className='ml-1 bg-white text-black'>Challenge</button>}
+            {onlineFriends.includes(friend) && <img src={duel} title='Challenge' onClick={() => sendChallenge(friend)} className='ml-1 text-black w-8 inline-block cursor-pointer'/>}
           </div>
         ))}
         {

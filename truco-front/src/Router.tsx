@@ -8,29 +8,29 @@ import Rules from "./pages/Rules"
 import LogIn from "./pages/LogIn"
 import SignUp from "./pages/SignUp"
 
+import { Flip, ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from "./context/userContext"
 import { useContext, useState } from "react"
 import { CgSpinner } from "react-icons/cg"
 import mate from './assets/mate.png'
 import FriendRequestPopUp from "./components/friendRequestPopUp"
+import { GameContext } from "./context/gameContext"
 
 
 const Router = () => {
 
     const { loadingSession, sendFriendRequest } = useContext(UserContext)
-    const [sideBarOpen, setSideBarOpen] = useState<boolean>(true)
-    const toggleSideBar = () => {
-        setSideBarOpen(!sideBarOpen)
-    }
+    const { sideBarOpen, setSideBarOpen } = useContext(GameContext)
+    const toggleSideBar = () => {setSideBarOpen(!sideBarOpen)}
 
     return (
         <BrowserRouter>
             {
                 !loadingSession &&
                 <div className='w-full h-[100vh] flex bg-background text-text'>
-                    <div className="absolute top-0 left-0 m-4 text-4xl font-bold z-50 cursor-pointer"
-                        onClick={toggleSideBar}>{sideBarOpen? "<" : ">"}</div>
-                    <MainSideBar sideBarOpen={sideBarOpen} toogleSideBar={toggleSideBar} />
+                    <div className="absolute top-0 left-0 p-4 text-4xl font-bold z-50 cursor-pointer" onClick={toggleSideBar}>{sideBarOpen? "<" : ">"}</div>
+                    {sideBarOpen && <MainSideBar />}
                     {sendFriendRequest && <FriendRequestPopUp />}
                     <Routes>
                         <Route path="/" element={<Main />} />
@@ -53,6 +53,7 @@ const Router = () => {
                     </div>
                 </div>
             }
+            <ToastContainer position="top-center" autoClose={2000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} draggable pauseOnHover={false} theme="dark" transition={Flip}/>
         </BrowserRouter>
     )
 }

@@ -48,3 +48,21 @@ export const isEnvidoAction = (action: GameAction): boolean => {
 export const isTurnAction = (action: GameAction): boolean => {
     return action === GameAction.PLACE_CARD || action === GameAction.IR_AL_MAZO
 }
+
+export const getPrintableAction = (action: GameAction): string => {
+    const random = Math.floor(Math.random()*3);
+    if (action === GameAction.CALL_ENVIDO) return ["Envido", "Te canto Envido", "Envido Querés?"][random]
+    if (action === GameAction.CALL_ENVIDO_ENVIDO) return ["Envido", "No se juega con Envido?", "Envido te suena?"][random]
+    if (action === GameAction.CALL_REAL_ENVIDO) return "Real Envido"
+    if (action === GameAction.CALL_FALTA_ENVIDO) return "Falta Envido!!"
+    if (action === GameAction.CALL_ENVIDO_VA_PRIMERO) return ["El Envido va Primero", "...Falta algo aca, ENVIDO", "Te estás olvidando del Envido!"][random]
+    if (action === GameAction.CALL_TRUCO) return ["Truco", "Te canto Truco!", "¡¡TRUCO!!"][random]
+    if (action === GameAction.CALL_RETRUCO) return ["Quiero Retruco", "Retruco!!", "Te bancás un Retruco?"][random]
+    if (action === GameAction.CALL_VALE4) return "¡Quiero vale 4!"
+    if (action === GameAction.QUIERO) return ["Pero más vale que Quiero", "¡¡¡QUIERO!!!", "Quiero!"][random]
+    if (action === GameAction.NO_QUIERO) return ["No Quiero!", "Mejor No Quiero", "Me achico, No Quiero"][random]
+    if (action === GameAction.PLACE_CARD) return "Juego carta"
+    if (action === GameAction.IR_AL_MAZO) return "Me voy al Mazo"
+    if (action === GameAction.SURRENDER) return "Me rindo"
+    return "None"
+}

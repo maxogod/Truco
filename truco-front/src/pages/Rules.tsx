@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import cardsOrder from '../assets/cardscut.png';
+import { GameContext } from '../context/gameContext';
 
 
 const Rules: React.FC = () => {
+  const {sideBarOpen} = useContext(GameContext)
+  const seeRulesOnSmallScreen = (sideBarOpen && window.innerWidth < 768) ? {display: 'none'} : {display: 'flex'}
   return (
-    <div className='h-fit md:h-full w-full flex flex-col md:flex-row justify-evenly items-start px-8 overflow-auto '>
+    <div className='h-fit md:h-full w-full flex flex-col md:flex-row justify-evenly items-start px-8 overflow-auto ' style={seeRulesOnSmallScreen}>
       <div className='w-full md:w-1/2 flex-1 overflow-y-scroll pb-10'>
         <h1 className='font-bold text-3xl my-10 text-center'>Truco Rules</h1>
         <h2 className='font-medium text-2xl my-2'>HOW TO PLAY</h2>
@@ -65,9 +68,9 @@ const Rules: React.FC = () => {
         </p>
 
       </div>
-      <div className="w-full md:w-1/2 h-[99vh] relative md:sticky md:top-1 justify-evenly items-center rounded-2xl bg-[url('assets/mesa.jpg')] overflow-auto shadow-card">
+      <div className="w-full md:w-1/2 h-fit md:h-full relative md:sticky md:top-1 justify-evenly items-center rounded-2xl bg-[url('assets/mesa.jpg')] shadow-card">
         <h1 className='font-bold text-3xl text-center m-4'>Cards from Best to Worst</h1>
-        <img src={cardsOrder} alt="cardsOrder" className='h-[90%] m-auto' />
+        <img src={cardsOrder} alt="cardsOrder" className='h-fit md:h-[90%] m-auto' />
       </div>
     </div>
   );

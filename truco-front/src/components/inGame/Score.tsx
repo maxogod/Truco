@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { GameContext } from '../../context/gameContext';
 
 const Score: React.FC = () => {
-
   const { myPoints, opponentPoints } = useContext(GameContext)
 
   return (

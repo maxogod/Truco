@@ -23,6 +23,9 @@ interface GameContextType {
     setMyPoints: React.Dispatch<React.SetStateAction<number>>
     opponentPoints: number
     setOpponentPoints: React.Dispatch<React.SetStateAction<number>>
+    sideBarOpen: boolean
+    setSideBarOpen: React.Dispatch<React.SetStateAction<boolean>>
+    closeSideBar: () => void
 }
 
 export const GameContext = createContext<GameContextType>({
@@ -45,6 +48,9 @@ export const GameContext = createContext<GameContextType>({
     setMyPoints: () => { },
     opponentPoints: 0,
     setOpponentPoints: () => { },
+    sideBarOpen: false || true,
+    setSideBarOpen: () => { },
+    closeSideBar: () => { },
 })
 
 export const GameContextProvider = ({ children }: { children: ReactNode }) => {
@@ -62,6 +68,8 @@ export const GameContextProvider = ({ children }: { children: ReactNode }) => {
     const [cardsOnBoard, setCardsOnBoard] = useState<(Card | null)[]>([null, null, null, null, null, null])
     const [myPoints, setMyPoints] = useState<number>(0)
     const [opponentPoints, setOpponentPoints] = useState<number>(0)
+    const [sideBarOpen, setSideBarOpen] = useState<boolean>(window.innerWidth > 768 ? true : false)
+    const closeSideBar = () => { window.innerWidth < 768 && setSideBarOpen(false) }
 
     return (
         <GameContext.Provider value={
@@ -85,6 +93,9 @@ export const GameContextProvider = ({ children }: { children: ReactNode }) => {
                 setMyPoints,
                 opponentPoints,
                 setOpponentPoints,
+                sideBarOpen,
+                setSideBarOpen,
+                closeSideBar,
             }
         }>
             {children}
