@@ -143,7 +143,7 @@ export const usePusherListeners = (
                 }
                 // TODO - add rating update
             }, 2000)
-            {IWon ? toast.success("You won!", {theme: "colored", hideProgressBar: true, autoClose:3000}) : toast.error("You lost!", {theme: "colored", hideProgressBar: true, autoClose:3000})}
+            {IWon ? toast.success("You won the game!", {theme: "colored", hideProgressBar: true, autoClose:3000}) : toast.error("You lost the game", {theme: "colored", hideProgressBar: true, autoClose:3000})}
             navigate("/")
         })
         gameManager.events.addOnPointsUpdateListener((myPoints: number, opponentPoints: number) => {
