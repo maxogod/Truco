@@ -7,6 +7,8 @@ import { addLoss, addWin } from "../services/stats"
 import WatchListEvent from "../gameLogic/type/WatchListEvent"
 import User from "../@types/UserType"
 import { toast } from "react-toastify"
+import { GameActionMessage } from "../gameLogic/type/GameActionMessage"
+import { GameAction, getPrintableAction } from "../gameLogic/type/GameAction"
 
 export const usePusherListeners = (
     setGameEnded: (gameEnded: boolean) => void,
@@ -100,6 +102,13 @@ export const usePusherListeners = (
             console.log("i played card: " + card.number + " " + card.suit)
         })
 
+        
+        gameManager.events.addOnOpponentActionListener((actionMessage:GameActionMessage) => {
+            if(actionMessage.action !== GameAction.PLACE_CARD && actionMessage.action !== GameAction.NONE){
+                toast(getPrintableAction(actionMessage.action))
+            }
+        })
+
         gameManager.events.addOnGameEndListener((IWon: boolean) => {
             console.log("game end")
             console.log(IWon)
@@ -155,7 +164,7 @@ export const usePusherListeners = (
         })
 
         gameManager.events.addOnFriendRequestListener((friendUser: User) => {
-            toast(friendUser.username + " sent you a friend request!")
+            toast(friendUser.username + " sent you a friend request!", {autoClose:4000})
             setFriendRequests((prev) => [...prev, friendUser])
         })
 
@@ -166,11 +175,13 @@ export const usePusherListeners = (
 
         gameManager.events.addOnFriendRequestAcceptedListener((username: string) => {
             if(!user) return
+            toast(username + " accepted your friend request!", {autoClose:4000})
             setFriends((prev) => {
                 const newFriends = [...prev, username]
                 gameManager.initPusher(user.username, newFriends)
                 return newFriends
             })
         })
+
     }, [])
 }

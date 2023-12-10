@@ -66,9 +66,6 @@ export default class GameActionsManager {
     }
 
     public handleAction(actionMessage: GameActionMessage, iCalled: boolean = false) {
-        if(!iCalled && actionMessage.action !== GameAction.PLACE_CARD && actionMessage.action !== GameAction.NONE){
-            toast(getPrintableAction(actionMessage.action))
-        }
         this.lastActionMessage = actionMessage
         const action = actionMessage.action
         if(action === GameAction.NONE){
