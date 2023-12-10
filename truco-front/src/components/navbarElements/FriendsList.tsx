@@ -28,7 +28,7 @@ const FriendsList: React.FC = () => {
         setUser(res.data)
         setFriends((prev) => {
           const newFriends = [...prev, username]
-          gameManager.initPusher(user?.username as string, newFriends)
+          gameManager.initPusher(user?.username as string, newFriends, user?.rating as number)
           return newFriends
         })
         setFriendRequests(friendRequests.filter(request => request.username !== username))
@@ -39,7 +39,7 @@ const FriendsList: React.FC = () => {
   }
 
   const sendChallenge = (username: string) => {
-    challengeFriend(username, user?.username || '')
+    challengeFriend(username, user?.username as string, user?.rating as number)
   }
 
   return (

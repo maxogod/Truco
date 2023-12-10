@@ -41,7 +41,7 @@ export const UserContext = createContext<UserContextType>({
     friendRequests: [],
     setFriendRequests: () => { },
     friends: [],
-    setFriends: () => { }
+    setFriends: () => { },
 })
 
 export const UserContextProvider = ({ children }: { children: ReactNode }) => {
@@ -57,6 +57,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
     const [onlineFriends, setOnlineFriends] = useState<string[]>([])
     const [friends, setFriends] = useState<string[]>([])
     const [friendRequests, setFriendRequests] = useState<User[]>([])
+
 
     useEffect(() => {
         if (user) return
@@ -97,7 +98,7 @@ export const UserContextProvider = ({ children }: { children: ReactNode }) => {
                 friendRequests,
                 setFriendRequests,
                 friends,
-                setFriends
+                setFriends,
             }
         }>
             {children}

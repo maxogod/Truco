@@ -15,7 +15,7 @@ function GameLogicTest() {
 
     useEffect(() => {
         const username = "test-name" + Math.floor(Math.random() * 10000) // TODO - replace with the real username once we have users
-        gameManager.initPusher(username,[])
+        gameManager.initPusher(username,[],0)
         gameManager.events.addMatchFoundListener((opponentName: string) => {
             setOpponentName(opponentName)
         })

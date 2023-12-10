@@ -4,13 +4,14 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/userContext';
 import { CgSpinner } from 'react-icons/cg';
 import { register } from '../services/register';
+import User from '../@types/UserType';
 
 const userRegex = /^[a-zA-Z0-9]+$/; // only letters and numbers
 const passwordRegex = /^[a-zA-Z0-9!@#$%^&*()-_+=<>?]{8,}$/; // at least 8 characters, only letters, numbers and !@#$%^&*()-_+=<>?
 
 const SignUp: React.FC = () => {
 
-  const { setUser, loadingRegister, setLoadingRegister } = useContext(UserContext)
+  const { setUser, loadingRegister, setLoadingRegister,setFriendRequests,setFriends } = useContext(UserContext)
 
   const [error, setError] = useState<string>('')
 
@@ -54,6 +55,8 @@ const SignUp: React.FC = () => {
       const res = await register(username, password)
       if (res.data) {
         setUser(res.data)
+        setFriendRequests(res.data.friendRequests)
+        setFriends(res.data.friends.map((friend: User) => friend.username))
         setLoadingRegister(false)
         setError('')
         navigate('/')

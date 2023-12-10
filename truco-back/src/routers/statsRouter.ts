@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { addLossController, addWinController, updateRatingController } from '../controllers/statsController';
+import { addLossController, addWinController,getTopRatingController } from '../controllers/statsController';
 
 const router = Router();
 
@@ -7,6 +7,7 @@ router.put('/addWin', addWinController);
 
 router.put('/addLoss', addLossController);
 
-router.put('/updateRating', updateRatingController);
+router.get('/top', getTopRatingController);
+
 
 export default router;

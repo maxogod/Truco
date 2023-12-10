@@ -26,7 +26,7 @@ export const usePusherListeners = (
         setIsMyTurn,
         setCardsOnBoard,
         setMyPoints,
-        setOpponentPoints,
+        setOpponentPoints
     } = useContext(GameContext)
 
 
@@ -39,12 +39,14 @@ export const usePusherListeners = (
             return
         }
         const username = user.username
-        gameManager.initPusher(username, friends)
+        gameManager.initPusher(username, friends, user.rating)
     }, [user])
 
     useEffect(() => {
+        let currentOpponentRating = 0
 
-        gameManager.events.addMatchFoundListener((opponentName: string) => {
+        gameManager.events.addMatchFoundListener((opponentName: string, opponentRating: number) => {
+            currentOpponentRating = opponentRating
             setOpponentName(opponentName)
             navigate("/play")
         })
@@ -123,25 +125,28 @@ export const usePusherListeners = (
             setCardsOnBoard((prev) => prev.map(() => null))
             setTimeout(async () => {
                 if (IWon) {
-                    await addWin()
+                    const newRating = await addWin(user?.rating as number, currentOpponentRating)
+                    gameManager.setRating(newRating.data.updatedRating)
                     setUser((prev) => {
                         if (!prev) return prev
                         return {
                             ...prev,
                             wins: prev.wins + 1,
+                            rating: newRating.data.updatedRating
                         }
                     })
                 } else {
-                    await addLoss()
+                    const newRating = await addLoss(user?.rating as number, currentOpponentRating)
+                    gameManager.setRating(newRating.data)
                     setUser((prev) => {
                         if (!prev) return prev
                         return {
                             ...prev,
                             losses: prev.losses + 1,
+                            rating: newRating.data.updatedRating
                         }
                     })
                 }
-                // TODO - add rating update
             }, 2000)
             {IWon ? toast.success("You won the game!", {theme: "colored", hideProgressBar: true, autoClose:3000}) : toast.error("You lost the game", {theme: "colored", hideProgressBar: true, autoClose:3000})}
             navigate("/")
@@ -155,10 +160,10 @@ export const usePusherListeners = (
         })
 
         gameManager.events.addOnUpdateOnlineFriendsListener((watchlistEvent: WatchListEvent) => {
-            if(watchlistEvent.name === "offline"){
+            if (watchlistEvent.name === "offline") {
                 setOnlineFriends((prev) => prev.filter((friend) => !watchlistEvent.user_ids.includes(friend)))
             }
-            else if(watchlistEvent.name === "online"){
+            else if (watchlistEvent.name === "online") {
                 setOnlineFriends((prev) => [...prev, ...watchlistEvent.user_ids])
             }
         })
@@ -168,17 +173,17 @@ export const usePusherListeners = (
             setFriendRequests((prev) => [...prev, friendUser])
         })
 
-        gameManager.events.addOnGameChallengeListener((challenger: string) => {
-            toast(challenger + " challenged you to a game!")
-            gameManager.acceptChallenge(challenger) // TODO replace with logic
+        gameManager.events.addOnGameChallengeListener((data: { challengerName: string, challengerRating: number }) => {
+            toast(data.challengerName + " challenged you to a game!")
+            gameManager.acceptChallenge(data.challengerName, data.challengerRating) // TODO replace with logic
         })
 
         gameManager.events.addOnFriendRequestAcceptedListener((username: string) => {
-            if(!user) return
+            if (!user) return
             toast(username + " accepted your friend request!", {autoClose:4000})
             setFriends((prev) => {
                 const newFriends = [...prev, username]
-                gameManager.initPusher(user.username, newFriends)
+                gameManager.initPusher(user.username, newFriends, user.rating)
                 return newFriends
             })
         })
