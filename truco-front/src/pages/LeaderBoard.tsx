@@ -11,7 +11,6 @@ const LeaderBoard: React.FC = () => {
   useEffect(() => {
     const setTop = async () => {
       const top = await getTopRating();
-      console.log(top.data)
       setLeaderBoard(top.data)
     }
     setTop()

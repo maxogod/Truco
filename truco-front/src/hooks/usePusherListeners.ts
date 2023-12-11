@@ -60,7 +60,6 @@ export const usePusherListeners = (
         })
 
         gameManager.events.addOnMyTurnStartListener(() => {
-            console.log("my turn start")
             const possibleActions = gameManager.getPossibleActions()
             const newActions = []
             for (let action of possibleActions) {
@@ -74,14 +73,12 @@ export const usePusherListeners = (
         })
 
         gameManager.events.addOnMyTurnEndListener(() => {
-            console.log("my turn end")
             setIsMyTurn(false)
             setTimerActive(false)
             setActions([])
         })
 
         gameManager.events.addOnCardPlayedListener((iCalled: boolean, card: Card) => {
-            console.log("card played")
             let newCardAdded = false
             setCardsOnBoard((prev) => prev.map((c) => {
                 if (!c && !newCardAdded) {
@@ -91,7 +88,6 @@ export const usePusherListeners = (
                 return c
             }))
             if (!iCalled) {
-                console.log("opponent played card: " + card.number + " " + card.suit)
                 setOpponentCardsNumber((prev) => prev - 1)
                 return;
             }
@@ -101,7 +97,6 @@ export const usePusherListeners = (
                 if (c.number === card.number && c.suit === card.suit) return null
                 return c
             }))
-            console.log("i played card: " + card.number + " " + card.suit)
         })
 
         
@@ -112,8 +107,6 @@ export const usePusherListeners = (
         })
 
         gameManager.events.addOnGameEndListener((IWon: boolean) => {
-            console.log("game end")
-            console.log(IWon)
             setGameEnded(true)
             setIsMyTurn(false)
             setActions([])
@@ -152,9 +145,6 @@ export const usePusherListeners = (
             navigate("/")
         })
         gameManager.events.addOnPointsUpdateListener((myPoints: number, opponentPoints: number) => {
-            console.log("points update")
-            console.log(myPoints)
-            console.log(opponentPoints)
             setMyPoints(
                 (prev) => {const diff = myPoints - prev;
                 if(diff > 0){ toast.success("You won " + diff + " points!", { autoClose: 4000, hideProgressBar: true, theme: "colored"}) }

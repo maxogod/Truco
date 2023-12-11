@@ -88,7 +88,6 @@ export default class CardsManager {
             }
             points = Math.max(points, suitPoints)
         }
-        console.log("ENVIDO POINTS: " + points)
         return points
     }
 

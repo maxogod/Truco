@@ -15,7 +15,6 @@ const challengeFriend = async (opponentName: string, challengerName: string,chal
         }
     );
 
-    console.log("response", response)
     return response;
 };
 

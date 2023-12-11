@@ -4,7 +4,7 @@ export default function CardComponent({ cardProps, onClick }:
   { cardProps: Card | null, onClick?: (card: Card) => void }) {
   return (
     cardProps && <img
-      src={`./src/assets/Cards/${cardProps.number}-${cardProps.suit.toLowerCase()}.png`}
+      src={`./${cardProps.number}-${cardProps.suit.toLowerCase()}.png`}
       alt="Spanish card"
       className="w-[60px] md:min-w-[88px] shadow-card rounded-lg cursor-pointer"
       onClick={() => onClick && onClick(cardProps)}
