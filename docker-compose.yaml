@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  truco-back:
+    build:
+      dockerfile: Dockerfile
+      context: ./truco-back
+    volumes:
+      - /app/node_modules
+      - ./truco-back:/app
+  truco-front:
+    stdin_open: true
+    build:
+      dockerfile: Dockerfile
+      context: ./truco-front
+    volumes:
+      - /app/node_modules
+      - ./truco-front:/app
+
+  nginx:
+    depends_on:
+      - truco-back
+      - truco-front
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - '3050:80' 

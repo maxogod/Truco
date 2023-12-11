@@ -23,7 +23,7 @@ if (process.env.DEBUG === "true") { // for development
     app.use(
         cors(
             {
-                origin: "http://localhost:3001", // Without this, the frontend can't access the backend
+                origin: "http://localhost:3050", // Without this, the frontend can't access the backend
                 credentials: true, // Origin can't be "*" when using credentials
             }
         )
