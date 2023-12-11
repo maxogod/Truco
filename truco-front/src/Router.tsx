@@ -8,10 +8,10 @@ import Rules from "./pages/Rules"
 import LogIn from "./pages/LogIn"
 import SignUp from "./pages/SignUp"
 
-import { Flip, ToastContainer, toast } from 'react-toastify';
+import { Flip, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from "./context/userContext"
-import { useContext, useState } from "react"
+import { useContext} from "react"
 import { CgSpinner } from "react-icons/cg"
 import mate from './assets/mate.png'
 import FriendRequestPopUp from "./components/friendRequestPopUp"

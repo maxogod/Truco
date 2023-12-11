@@ -37,7 +37,7 @@ const InGame: React.FC = () => {
         <GameBoard />
         <Ingametimer />
       </div>
-      <Chat chatIsOpen={chatIsOpen} setIsOpen={setChatIsOpen} toggleChat={toggleChat} />
+      <Chat chatIsOpen={chatIsOpen} toggleChat={toggleChat} />
     </div>
   );
 };

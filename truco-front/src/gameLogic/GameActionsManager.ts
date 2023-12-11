@@ -1,9 +1,7 @@
 import { Card } from "./Cards/Card";
 import GameEventsManager from "./GameEventsManager";
-import { GameAction, getEnvidoPoints, getTrucoPoints, isEnvidoAction, isResponseAction, isTrucoAction, isTurnAction, getPrintableAction } from "./type/GameAction";
+import { GameAction, getEnvidoPoints, getTrucoPoints, isEnvidoAction, isResponseAction, isTrucoAction, isTurnAction } from "./type/GameAction";
 import { GameActionMessage } from "./type/GameActionMessage";
-import { toast } from "react-toastify"
-
 /* 
 Local triggers:
     - OnEnvidoPlayed

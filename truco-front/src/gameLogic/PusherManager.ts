@@ -82,7 +82,7 @@ export default class PusherManager {
     }
 
     disconnectAll() {
-        this.channels.forEach((channel: Channel, channelName: string) => {
+        this.channels.forEach((_: Channel, channelName: string) => {
             this.disconnectChannel(channelName)
         })
 

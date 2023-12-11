@@ -3,7 +3,12 @@ import send from '../../assets/Send_hor_fill.png';
 import { GameContext } from '../../context/gameContext';
 import { Channel } from 'pusher-js';
 
-const Chat: React.FC = ({ chatIsOpen, setIsOpen, toggleChat }) => {
+type ChatProps = {
+  chatIsOpen: boolean;
+  toggleChat: () => void;
+};
+
+const Chat: React.FC<ChatProps> = ({ chatIsOpen, toggleChat }) => {
   const [message, setMessage] = useState<string>('');
   const [messages, setMessages] = useState<string[]>([]);
   const { gameManager, opponentName } = useContext(GameContext);

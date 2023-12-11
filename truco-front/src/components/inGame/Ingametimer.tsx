@@ -24,7 +24,7 @@ const Ingametimer = () => {
     return () => clearInterval(intervalId);
   }, [seconds, timerActive]); // Dependency array ensures the effect runs everytime seconds changes
 
-  const formatTime = (timeInSeconds) => {
+  const formatTime = (timeInSeconds:number) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const remainingSeconds = timeInSeconds % 60;
     return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
