@@ -13,7 +13,7 @@ export default class PusherManager {
     }
 
     public initPusher(userName: string, friends: string[], rating:number) {
-        //Pusher.logToConsole = true; // TODO remove in production
+        Pusher.logToConsole = true; // TODO remove in production
         if (this.pusher) {
             this.disconnectPusher();
         }
