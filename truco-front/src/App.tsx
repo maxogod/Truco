@@ -1,9 +1,18 @@
+import { GameContextProvider } from "./context/gameContext";
+import { UserContextProvider } from "./context/userContext";
+import Router from "./Router";
 
 function App() {
 
   return (
-    <h1 className="text-yellow-500">Hi</h1>
+    <UserContextProvider>
+      <GameContextProvider>
+        <Router />
+      </GameContextProvider>
+    </UserContextProvider>
   )
 }
+
+
 
 export default App
