@@ -19,6 +19,7 @@ const NavBar: React.FC = () => {
 
       {!user && <Link to="/login">
         <img src={loginIcon} alt="" className='w-[45px] h-[45px] m-1' />
+        <p className='text-center'>Login</p>
       </Link>}
     </div>
   );

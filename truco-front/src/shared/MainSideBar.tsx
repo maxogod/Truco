@@ -6,6 +6,7 @@ import HowToPlayButton from '../components/navbarElements/HowToPlayButton.tsx';
 import LeaderBoardButton from '../components/navbarElements/LeaderBoardButton.tsx';
 import Surrender from '../components/inGame/Surrender.tsx';
 import NavBar from './NavBar.tsx';
+import LogInWarning from '../components/navbarElements/LogInWarning.tsx';
 
 const MainSideBar: React.FC = () => {
 
@@ -14,6 +15,7 @@ const MainSideBar: React.FC = () => {
       <NavBar />
       <TrucoLogo />
       <PlayNowButton />
+      <LogInWarning />
       <Surrender />
       <FriendsList />
       <HowToPlayButton />

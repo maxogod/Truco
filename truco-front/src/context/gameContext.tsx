@@ -68,7 +68,7 @@ export const GameContextProvider = ({ children }: { children: ReactNode }) => {
     const [cardsOnBoard, setCardsOnBoard] = useState<(Card | null)[]>([null, null, null, null, null, null])
     const [myPoints, setMyPoints] = useState<number>(0)
     const [opponentPoints, setOpponentPoints] = useState<number>(0)
-    const [sideBarOpen, setSideBarOpen] = useState<boolean>(window.innerWidth > 768 ? true : false)
+    const [sideBarOpen, setSideBarOpen] = useState<boolean>(true)
     const closeSideBar = () => { window.innerWidth < 768 && setSideBarOpen(false) }
 
     return (
