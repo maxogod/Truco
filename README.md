@@ -1,6 +1,12 @@
 # Truco
 
-Play truco on truco.com, the best card game to play 1v1
+Play truco on truco.com, the best card game to play 1v1!
+
+You can play it now right [here](https://truco-ym7r.onrender.com/leader-board). although the sever is hosted with a free account and takes a couple minutes to start if nobody is online.
+
+[<img width=360 src="https://img.youtube.com/vi/Vi6hB6-XCsY/maxresdefault.jpg" alt="TRAILER" />](https://youtu.be/Vi6hB6-XCsY)
+
+**Click the thumbnail above to see gameplay!**
 
 ## About the game
 
@@ -11,6 +17,24 @@ Play truco on truco.com, the best card game to play 1v1
 * Add your friends and challenge them
 * Chat with your opponent as your play
 * Check out the rules and the order of strength of the cards (for the newbies)
+
+## Images
+
+### Friends & Challenges
+
+![friends&challenges](./docs/challenge.png)
+
+### Online Matches
+
+![match](./docs/ingame.png)
+
+### Global Leaderboard
+
+![leaderboard](./docs/leaderboard.png)
+
+### Personal Profiles
+
+![profile](./docs/profile.png)
 
 ## Tech stack
 
